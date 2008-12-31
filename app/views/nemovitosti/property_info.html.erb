@@ -1,0 +1,65 @@
+<div id="detail" class="nemovitost-detail">	
+	<table class="property">
+	 	<tr>
+	 		<td>
+			 	<div class="address">
+					<%= address_h %></div>
+				<div class="address" id="najem">
+					<table>
+						<tr>
+							<td><b><%= get_string(:Rent) + ":" %></b></td>
+							<td><%= najem_h %></td>
+						</tr>
+						<tr>
+							<td><b><%= get_string(:Fees) + ":" %></b></td>
+							<td><%= fees_h %></td>
+						</tr>
+					</table>
+				</div>
+			</td>
+			<td rowspan="2" valign="top">
+				<div class="renters" style="width: 100%">	
+					<table cellspacing="1" cellpading="3" style="width: 100%">
+						<thead>
+							<tr>
+								<th><%= get_string(:Number_of_rooms) %></th>
+								<th><%= get_string(:Renters_count) %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align: center"><%= @property.bedrooms %></td>
+								<td style="text-align: center"><%= @property.get_actual_renters.size %></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="renters" style="width: 100%">
+					<table class="property">
+					<% for renter in @property.get_actual_renters %>
+						<tr>
+						 <td><%= link_to(renter.full_name, :controller => 'manage_renter', :action => 'renter', :id => renter) %></td>
+						 <td><%= link_to(number_to_currency(renter.rent, :unit => "CZK", :separator => ",", :delimiter => " ", :format => "%n %u"),
+														 :controller => 'finances', :action => 'pending', :id => renter, :bills_for => 'renter') %></td>
+						</tr>	
+					<% end %>
+					</table>
+				</div>
+			</td>
+			</tr>
+			<tr>
+				<td>
+					<%= hidden_div_if(@property.notes == [], {:id => "note", :class => "address"}) %>
+						<b><%= get_string(:Notes) %>:</b><br/>
+						<% @property.reload %>					
+						<% for note in @property.notes %>
+							<%= note.content %> <br/>
+						<% end %>
+					</div>
+				</td>
+			</tr>
+	 </table>
+	 <div class="about">
+	 	<%=h @property.about %>
+	 </div>
+</div>

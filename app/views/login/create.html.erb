@@ -1,0 +1,22 @@
+<%= error_messages_for 'user' %>
+<div class="left">
+	<h3><%= get_string(:Create_login_for) %>: <%= @renter.full_name2 %></h3>	
+	<div>
+		<fieldset>
+			<legend><%= get_string(:Fill_information_about_user) %></legend>
+			
+			<% form_tag(:action => 'add_user', :id => @renter) do %>
+				<p><label for="user_name" class="login"><%= get_string(:Name2) %></label>
+				<%= text_field 'user', 'name', :size => 15, :value => @renter.generate_login %></p>
+				
+				<p><label for="user_password" class="login"><%= get_string(:Password) %></label>
+				<%= password_field :user, :password, :size => 40 %></p>
+				
+				<p><label for="user_password_confirmation" class="login"><%= get_string(:Confirm) %></label>
+				<%= password_field :user, :password_confirmation, :size => 40 %></p>
+				
+				<%= submit_tag "Add User", :class => 'submit'%>
+			<% end %>
+		</fieldset>
+	</div>
+</div>

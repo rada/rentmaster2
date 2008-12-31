@@ -1,0 +1,68 @@
+<% title(:Accommodation_history) %>
+<% submenu(Settings::SUBMENU[:renter]) %>
+<h1><%= get_string(:Accommodation_history_for) %> <%= @renter.full_name %></h1><br />
+<div class="left">
+	<h2><%= get_string(:Move_to_new_property) %></h2>
+	<% if !@renter.has_closed_rent %>
+	<% form_tag(:controller => 'manage_renter', :action => 'move_renter', :id => @renter) do %>
+		<p><label for="property_id"><%= get_string(:New_accommodation_in) %>:</label>
+			<select name="property_id" id="property_id" >
+				<option value="">...<%= get_string(:select_property) %>...</option>
+				<% for property in @properties do %>
+				<option value="<%= property.id %>" onclick="<%= remote_function(
+																			:before => "$('loader').show()",
+																			:update => "property_info",
+																			:url => {:controller => 'nemovitosti', :action => 'property_info', :id => property},
+																			:faliure => "alert('ERROR')",
+																			:complete => "$('loader').hide()") %>">
+					<%= property.name %>
+				</option>
+				<% end %>
+			</select>
+			<%= submit_tag get_string(:Move) %>
+			<img id="loader" src="/images/ajax_loaders/ajax_blue.gif" style="display:none" />
+		</p>
+	<% end %>
+	<% else %>
+	<p><%= get_string(:Renter_has_closed_rent__Cant_move_to_new_property) %></p>
+	<% end %>
+	<div id="property_info">
+		
+	</div>
+</div>
+<!--	--------------------------------------------------------	-->
+<div class="right">
+	<h2><%= get_string(:Actually_accommodated_in_property) %></h2>	
+	<% if @renter.has_closed_rent %>
+	<p><%= get_string(:None) %></p>
+	<% else %>
+	<p><%= link_to(@renter.property.name, :controller => 'nemovitosti', :action => 'detail', :id => @renter.property.id) %></p>
+	<% end %>
+	<h2><%= get_string(:Accommodation_history) %></h2>
+	<table class="blue" cellpadding="3" cellspacing="0" style="width: 100%">
+		<thead>
+			<tr>
+				<th><%= get_string(:Property) %></th>
+				<th><%= get_string(:From) %></th>
+				<th><%= get_string(:To) %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% bg_color = 0 %>
+			<% for accommodation in @renter.accommodation_histories do %>
+			<tr class="back<%= bg_color %>">
+				<td><%= accommodation.property.name %></td>
+				<td><%= MyDate::date_at(accommodation.from) %></td>
+				<td><%= MyDate::date_at(accommodation.to) %></td>
+				<td style="width: 20px;"><%= link_to_function(image_tag('icons/note_small.png', :title => get_string(:Note)),"$('note#{accommodation.id}').toggle()") if accommodation.note %></td>
+			</tr>
+			<% if accommodation.note %>
+			<tr class="back<%= bg_color %>">
+				<td colspan="4" style="display:none;" id="note<%= accommodation.id %>"><%=h accommodation.note %></td>
+			</tr>
+			<% end %>
+			<% end %>
+		</tbody>
+	</table>
+</div>

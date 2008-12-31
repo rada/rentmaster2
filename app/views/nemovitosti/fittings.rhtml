@@ -1,0 +1,188 @@
+<% title(get_string(:Property_fittings)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<h1><%= @property.name %></h1><br />
+<table cellspacing="0" style="margin-left: 5px">
+	<tr>
+		<td class="focused_tab" id="rooms_info_tab"><%= link_to_function(get_string(:Rooms_info), "select_tab('rooms_info')") %></td>
+		<td></td>
+		<td class="unfocused_tab" id="fittings_tab"><%= link_to_function(get_string(:Fittings), "select_tab('fittings')") %></td>
+		<td></td>
+		<td class="unfocused_tab" id="additionals_tab"><%= link_to_function(get_string(:Additional_info), "select_tab('additionals')") %></td>
+	</tr>
+</table>
+<div class="left">
+	<div id="rooms_info">
+		<% form_tag(:action => 'update_rooms', :id => @property.id) do %>
+			<%= render :partial => 'room_area' %>	
+		<%= submit_tag 'Update!' %>
+		<% end %>
+		<hr/>
+		<% if @property.has_accessories %>
+		<table>
+			<h3><b><%= get_string(:Room_accessories_data) %></b></h3>
+			<%= render :partial => 'accessories_table', :locals => {:typ => :accessory} %>
+		</table>
+		<hr/>
+		<% end %>
+		<% if @property.has_services %>
+		<table>
+			<h3><b><%= get_string(:Services_data) %></b></h3>
+			<%= render :partial => 'accessories_table', :locals => {:typ => :service} %>
+		</table>
+		<hr/>
+		<% end %>
+	</div>
+	<div id="additionals" class="address" style="display: none; width: 300px">
+		<table cellspacing="0" style="width: 100%">
+			<tr>
+				<td colspan="3"><%= image_tag(Settings::DEFAULT_PICS[:ajax_blue], :id => "additional_indicator", :style => "display: none") %></td>
+		<% for additional in @additionals %>
+			<tr>
+				<td><b><%= additional.name %>:</b></td>
+				<td><%= additional.content %></td>
+				<td><%= link_to_remote image_tag(Settings::DEFAULT_PICS[:edit], :style => "border: none"),
+								:before => "$('additional_indicator').show()",
+								:url => {:controller => 'additional', :action => 'edit_additional', :id => additional, :name => additional.name},
+								:failure => "alert('Error')",
+								:complete => "$('additional_indicator').hide()" %>
+						<%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :controller => 'additional', :action => 'delete_additional', :id => additional) %>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+	<div id="edit"></div>
+	<div id="fittings" style="display: none">
+		<h2><%= get_string(:Fittings) %></h2>
+		<%= render :partial => 'fittings_list' %>	
+		<%= link_to_function 'Pridat vybaveni', "new Effect.toggle('add_fitting', 'blind')" %>
+		<div id="add_fitting" style="display: none;">
+			<%= render :partial => 'fitting' %>
+		</div>
+	</div>
+</div>
+<!------------------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------------------------------>
+<div class="right">
+	<%= link_to_function(get_string(:Add_more_data),"new Effect.toggle('add','blind')") %><p></p>
+	<div  id="add" style="display: none">
+		<div id="rooms">
+			<% form_tag(:action => 'add_room', :id => @property) do %>
+			<fieldset>
+			<legend>
+				<select name="room_area[room_id]">
+				<option onclick="$('new_room').hide()"><%= get_string(:Select_room) %></option>
+				<% for room in Room.find(:all, :order => "name ASC") %>
+				<option value="<%= room.id %>" onclick="$('new_room').show()"><%= get_string(room.name.to_sym) %></option>
+				<% end %>
+			</select>
+			</legend>
+			<p></p>
+			<div id="new_room" style="display: none">
+				<div>
+					<input type="checkbox" onclick="$('room_area_name').toggle()">
+					<b><%= get_string(:Name) %></b>
+					<%= text_field :room_area, :name, :size => 25, :style => "display: none" %>
+				</div><br />
+				<table>
+					<tr>
+						<th><%= get_string(:Area_total) %></th>
+						<th><%= get_string(:Area_chargable) %></th>
+						<th><%= get_string(:Area_for_UT) %></th>
+						<th><%= get_string(:Area_for_TUV) %></th>
+					</tr>
+					<tr>
+						<td style="text-align: center;"><%= text_field :room_area, :total, :size => 6 %></td>
+						<td style="text-align: center;"><%= text_field :room_area, :chargable, :size => 6 %></td>
+						<td style="text-align: center;"><%= text_field :room_area, :UT, :size => 6 %></td>
+						<td style="text-align: center;"><%= text_field :room_area, :TUV, :size => 6 %></td>
+					</tr>
+				</table>
+			<p></p>
+			<%= submit_tag get_string(:Add_room) %>
+			</div>
+			</fieldset>
+			<% end %>
+		</div>
+		<hr/>
+		<div>
+			<fieldset>
+				<legend><%= get_string(:New_property_accessory) %></legend>
+				<% form_tag(:action => 'add_accessory', :id => @property.id ) do %>
+				<table>
+					<tr>
+						<td><%= get_string(:Typ) %></td>
+						<td>
+							<select name="accessory[typ]">
+								<option value="accessory"><%= get_string(:Accessory) %></option>
+								<option value="service"><%= get_string(:Service) %></option>
+							</select>
+						</td>
+					</tr>
+					<% for column in Accessory.content_columns %>
+					<% if column.name != 'typ' %>
+					<tr>
+						<td><%= get_string(column.name.to_sym) %></td>
+						<td><%= text_field 'accessory', column.name, :size => 15 %> <%= "%" if column.name == "tax" %></td>
+					</tr>
+					<% end %>
+					<% end %>
+				</table><p></p>
+				<%= submit_tag get_string(:Add_accessory) %>
+				<% end %>
+			</fieldset>
+		</div>
+		<hr/>
+		<div>
+			<fieldset>
+				<legend><%= get_string(:Choose_contacs) %></legend>
+				<% form_tag(:controller => 'nemovitosti', :action => 'add_contacts', :id => @property.id) do %>
+				<table>
+				<% for contact in @user.contacts %>
+					<% if contact.typ == :contact %>
+					<tr>
+						<td><input type="checkbox" name="contacts[]" value="<%= contact.id %>"/></td>
+						<td><%= contact.name %></td>
+						<td><%= contact.profesion %></td>
+						<td><a href="http://<%= contact.website %>"><%= contact.website %></a></td>
+					</tr>
+					<% end %>
+				<% end %>
+				</table>
+				<%= submit_tag get_string(:Add) %>
+				<% end %>
+			</fieldset>
+		</div>
+		<hr/>
+		<div>	
+			<%= error_messages_for 'additional' %>
+			<h2>Přidat další údaj o nemovitosti</h2>
+			<% form_tag( {:controller => 'additional', :action => 'add_additional', :id => @property, :owner => :property}) do %>
+				<p><label for="additional_name">Name:</label><br/>
+				<%= text_field 'additional', 'name', {:size => 20} %>
+				<%= text_field 'additional', 'content' %>
+				
+				<%= submit_tag 'Pridej' %>
+			<% end %>
+		</div>
+	</div>
+	<hr/>
+	<% if !@property.contacts.empty? %>
+	<h3><b><%= get_string(:Contacts) %></b></h3>
+	<table class="blue" style="width: 100%" cellspacing="0">
+		<tr class="back0">
+			<th><%= get_string(:Profesion) %></th>
+			<th><%= get_string(:Name2) %></th>
+			<th><%= get_string(:Address) %></th>
+		</tr>
+		<% background = 0%>
+		<% for contact in @property.contacts %>
+		<% background = 1 - background %>
+		<tr class="back<%= background %>">
+			<td><%=h contact.profesion %></td>
+			<td><%=h contact.name %></td>
+			<td><%=h contact.address %><br /><%=h contact.telephone1 %>, <%=h contact.telephone2 %></td>
+		</tr>
+		<% end # for%>
+	</table>
+	<% end # if%>
+</div>

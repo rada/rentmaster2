@@ -1,0 +1,64 @@
+<div style="float: left;">
+  <table style="width: 300px">
+		<tr>
+			<th>Stav</th>
+			<th>Očekávaný</th>
+			<th>Skutečný</th>
+			<th>Čistý</th>
+		</tr>
+		<tr>
+			<td>příjem</td>
+			<td><%= link_to_remote(number_to_currency(@income[:expected], :unit => "", :separator => ",", :delimiter => " "),
+								:before => "$('blue_loader').show();",
+								:update => "bills_table",
+								:url => {:action => 'show_bills', :bills => @income[:expected_bills_ids]},
+								:failure => "alert('error')",
+								:complete => "$('blue_loader').hide();$('bills_table').show()") %></td>
+			<td><%= link_to_remote(number_to_currency(@income[:real], :unit => "", :separator => ",", :delimiter => " "),
+								:before => "$('blue_loader').show();",
+								:update => "bills_table",
+								:url => {:action => 'show_bills', :bills => @income[:real_bills_ids]},
+								:failure => "alert('error')",
+								:complete => "$('blue_loader').hide();$('bills_table').show()") %></td>
+			<td><%= number_to_currency(@income[:net], :unit => "", :separator => ",", :delimiter => " ") %></td>
+		</tr>
+		<tr>
+			<td>výdaje</td>
+			<td><%= link_to_remote(number_to_currency(@outcome[:expected], :unit => "", :separator => ",", :delimiter => " "),
+								:before => "$('blue_loader').show();",
+								:update => "bills_table",
+								:url => {:action => 'show_bills', :bills => @outcome[:expected_bills_ids]},
+								:failure => "alert('error')",
+								:complete => "$('blue_loader').hide();$('bills_table').show()") %></td>
+			<td><%= link_to_remote(number_to_currency(@outcome[:real], :unit => "", :separator => ",", :delimiter => " "),
+								:before => "$('blue_loader').show();",
+								:update => "bills_table",
+								:url => {:action => 'show_bills', :bills => @outcome[:real_bills_ids]},
+								:failure => "alert('error')",
+								:complete => "$('blue_loader').hide();$('bills_table').show()") %></td>
+			<td><img id="blue_loader" style="display: none;" src="/images/ajax_loaders/ajax_blue.gif" /></td>
+		</tr>
+	</table>
+</div>
+<div style="float: left;">
+	<table style="width: 300px">
+		<tr>
+			<th><%= get_string(:Payments) %></th>
+			<th><%= get_string(:Expected) %>*</th>
+			<th><%= get_string(:Realized) %></th>
+		</tr>
+		<tr>
+			<td><%= get_string(:Income) %></td>
+			<td><%= @income[:expected_bills_ids].size %></td>
+			<td><%= @income[:real_bills_ids].size %></td>
+		</tr>
+		<tr>
+			<td><%= get_string(:Outcome) %></td>
+			<td><%= @outcome[:expected_count] %></td>
+			<td><%= @outcome[:real_count] %></td>
+		</tr>
+		<tr>
+			<td colspan="3"><p style="color: grey; font-size: xx-small;">*<%= get_string(:Expected) %> = <%= get_string(:Bills_with_deadline_in_selected_month) %></td>
+		</tr>
+	</table>
+</div>

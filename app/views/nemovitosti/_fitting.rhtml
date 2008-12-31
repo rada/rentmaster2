@@ -1,0 +1,7 @@
+<%= error_messages_for 'fitting' %>
+
+<% form_tag(:action => 'add_fitting', :id => @property) do %>
+	<%= render :partial => '/nemovitosti/fitting_attributes' %>
+	<%= submit_tag get_string(:Add_fitting) %>
+<% end %>
+

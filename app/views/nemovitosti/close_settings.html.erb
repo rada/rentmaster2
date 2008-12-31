@@ -1,0 +1,53 @@
+<% title(get_string(:Close_property)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<h1><%= get_string(:Close_property) %>: <%= @property.name %></h1><br />
+<div id="" class="left" style="border: ">
+	<% form_tag(:action => 'close_property', :id => @property ) do %>
+		<p><%= get_string(:When_you_close_property_you_wont_be_able_to_accomodate_renters_in_it__You_can_open_property_at_any_time) %></p>
+		<p><%= get_string(:Renters_actually_accomodated_in_property) %>:</p>
+		<table class="blue" cellspacing="0" cellpadding="3" style="width: 100%">
+			<% bg_color = 0 %>
+			<tr class="back<%= bg_color %>">
+				<th><%= get_string(:Name) %></th>
+				<th><%= get_string(:Rent_from) %></th>
+				<th><%= get_string(:Rent_to) %></th>
+				<th><%= get_string(:Days_left) %></th>
+				<th><%= get_string(:Action) %></th>
+			</tr>
+			<% for renter in @property.get_actual_renters do %>
+			<% bg_color = 1 - bg_color %>
+			<tr class="back<%= bg_color %>">
+				<td><%= renter.full_name %></td>
+				<td><%= MyDate::date_at(renter.start_date) %></td>
+				<td><%= MyDate::date_at(renter.end_date) %></td>
+				<td style="text-align: center;"><%= MyDate::seconds_to_days(renter.end_date - Time.now.to_i) %></td>
+				<td>
+					<select name="renter_action[<%= renter.id %>]">
+						<option value="none" <%= "onclick=\"$('property#{renter.id}').hide()\"" %>><%= get_string(:No_action) %></option>
+						<option value="move" <%= "onclick=\"$('property#{renter.id}').show()\"" %>><%= get_string(:Move) %></option>
+						<% if renter.has_unpaid_bills %>
+						<option value="" <%= "onclick=\"alert('#{get_string(:Cant_close_rent__User_has_unpaid_bills)}')\"" %>>
+							<%= get_string(:Close_rent) %>[x]
+						</option>
+						<% else %>
+						<option value="close_rent" <%= "onclick=\"$('property#{renter.id}').hide()\"" %>><%= get_string(:Close_rent) %></option>
+						<% end %>
+					</select>
+					<select id="property<%= renter.id %>" name="property_id[<%= renter.id %>]" style="display: none">
+						<option><%= get_string(:Select_property) %></option>
+						<% for property in User.get_properties(session[:user_id]) do %>
+						<option value="<%= property.id %>"><%= property.name %></option>
+						<% end %>
+					</select>
+				</td>
+			</trclass>
+			<% end %>
+		</table>
+		<p><h2><%= get_string(:Autopays_associated_with_property) %></h2></p>
+		<p>
+			<%= get_string(:Select_autopays_to_stop_generating_them) %>.
+			<%= get_string(:When_moving_renters_Unselected_autopays_which_belongs_to_renters_will_be_updated_with_new_property) %>.</p>
+		<%= render :partial => '/finances/autopay_table' %>
+		<p style="text-align: right"><%= submit_tag get_string(:Close_property) %></p>
+	<% end %>
+</div>

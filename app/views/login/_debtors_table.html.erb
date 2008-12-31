@@ -1,0 +1,22 @@
+<table>
+	<tr>
+		<th><%= get_string(:Renter) %></th>
+		<th><%= get_string(:Debit) %></th>
+		<th><%= get_string(:Days_late) %></th>
+		<th><%= get_string(:Deadline) %></th>
+		<th><%= get_string(:Property) %></th>
+	</tr>
+	<% for renter in @debit_renters do %>
+	<tr>
+		<td><%= link_to(renter.full_name, :controller => 'finances', :action => 'pending', :id => renter, :bills_for => 'renter') %>
+		<td><%= link_to( number_to_currency(renter.debit[:amount], 
+																				:unit => "",
+																				:separator => ',',
+																				:delimiter => " "), 
+						:controller => 'finances', :action => 'pending', :show => 'debit', :id => renter, :bills_for => 'renter') %></td>
+		<td><%= renter.debit[:deadline] != 0 ? renter.debit[:days] : "---" %></td>
+		<td><%= renter.debit[:deadline] != 0 ? MyDate::date_at(renter.debit[:deadline]) : "---" %></td>
+		<td><%= renter.property.name %></td>
+	</tr>
+	<% end %>
+</table>

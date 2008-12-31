@@ -1,0 +1,68 @@
+require 'MyDate'
+class TodosController < ApplicationController
+  before_filter :check_user_is_admin, :except => [:show_info]
+  
+  # REnders table of all todos and reminders
+  def list
+    @todos = Todo.paginate(:all, :page => params[:page], :conditions => ["user_id = ?", session[:user_id]])
+  end
+
+  def add_todo
+    params[:todo][:user_id] = User.get_admin_id(session[:user_id])
+    params[:todo][:property_id] = 0 if params[:todo][:property_id] == ''
+    params[:todo][:added] = Time.now.to_i
+    params[:todo][:notif] =  MyDate::date_from_date_select(params[:warn_date],'').to_i if params[:todo][:notif] == "2"
+    params[:todo][:deadline] = MyDate::date_from_date_select(params[:deadline],'todo').to_i if params[:deadline]["todo(3i)"]
+    if (params[:todo][:id] && params[:todo][:id] != "")
+      @todo = Todo.find(params[:todo][:id])
+    else
+      @todo = Todo.new
+    end
+    @todo.update_attributes((params[:todo]))
+    if @todo.save
+      flash[:notice] = 'Task has been added'
+    else
+      flash[:notice] = 'Task, actor and deadline must be filled'
+    end
+    @todos = Todo.find(:all, :conditions => ["user_id = ?", session[:user_id]], :order => 'property_id')
+    if params[:return] == 'todos'
+      redirect_to :controller => 'todos', :action => 'list'
+    else
+      redirect_to :controller => 'nemovitosti', :action => 'detail', :id => params[:id]
+    end
+  end
+  
+  
+  def show_info
+    admin_id = User.get_admin_id(session[:user_id])
+        
+    @todo = Todo.find(:first, :conditions => ["id = ? AND user_id = ?", params[:id], admin_id])
+    render :partial => 'todo_info'
+  end
+  
+  # This action will update todo and mark it as fullfiled
+  def fulfilled
+    @todo = Todo.find(params[:id])
+    @todo.update_attributes({:fulfilled => true})
+    redirect_to :controller => 'nemovitosti', :action => 'detail', :id => @todo.property_id
+  end
+  
+  def destroy
+    todo = Todo.find(params[:id])
+    property_id = todo.property_id
+    if todo.belongs_to_user(session[:user_id])
+      todo.destroy
+      redirect_to :controller => 'todos', :action => 'list', :id => property_id
+    end
+  end
+  
+  def edit
+    @todo = Todo.find(params[:id])
+    if @todo.user_id != session[:user_id]
+      redirect_to :list
+    else
+      params[:property_id] = @todo.property_id.to_s
+      render :partial => 'todo2'
+    end
+  end
+end

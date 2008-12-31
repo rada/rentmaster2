@@ -1,0 +1,117 @@
+<% title(get_string(:Rent_info)) %>
+<% submenu(Settings::SUBMENU[:renter]) %>
+<h1><%= get_string(:Rent_information) %></h1><br />
+<div class="left">
+	<p><h2><%= @renter.full_name2 %></h2></p>
+	<div class="address" id="actual_rent" style="width: 300px;">
+		<p><b><%= get_string(:Rent) %></b></p>
+		<ul>
+			<li><%= get_string(:Actual_rent) %>: <%= number_to_currency(@renter.rent, :unit => "CZK", :delimiter => " ", :separator => ",", :format => "%n %u") %></li>
+			<li><%= get_string(:Charged_from) %>: <%= MyDate::date_at(@renter.actual_rent.from_date) if @renter.actual_rent%></li>
+<!--			<li><%= link_to(get_string(:Rent_precept), :controller => '/renters/finances', :action => 'rent_precept', :id => '') if ((@renter.actual_rent) && (@renter.actual_rent.typ == :percept)) %></li> -->
+		</ul>
+		<% if @renter.has_closed_rent %>
+		<p style="text-decoration: line-through;"><%= link_to_function(get_string(:Change_rent), "alert('#{get_string(:Renter_has_closed_rent__Cant_change_rent)}')") %></p>
+		<% else %>
+		<p><%= link_to_function(get_string(:Change_rent), "new Effect.toggle('new_rent', 'blind')") %></p>
+		<% form_tag(:controller => 'manage_renter', :action => 'update_rent', :id => @renter.id) do %>
+		<div id="new_rent" style="display: none;">
+			<fieldset>
+				<legend><%= get_string(:New_rent) %></legend>
+				
+				<p><label for="rent_price"><%= get_string(:New_value) %>:</label>
+				<%= text_field 'rent', 'price' %></p>
+
+				<p><label for="rent_date_from"><%= get_string(:Charge_from) %>:</label>
+				<%= date_select('rent', 'from_date', :use_month_numbers => 'true', :order => [:day, :month, :year] ) %></p>
+				<hr/>
+				
+				<% if ((@renter.actual_rent) && (@renter.actual_rent.has_autopay)) %>
+				<p><input type="checkbox" id="autopay_check" name="update_autopay" value="update" onclick="$('autopay_update').toggle()"/>
+				 <label for="autopay_check"><%= get_string(:Update_autopay) %></label></p>
+				<div id="autopay_update" style="display: none;">
+					<p>
+						<label for="auto_pay_deadline"><%= get_string(:First_pay) %></label><br/>
+						<%= date_select("autopay", "first_pay", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+					</p>
+					<p>
+						<%= get_string(:Periodicaly_repeat_every) %><br/>
+						<select name="times">
+							<% 1.upto(31) do |i| %>
+							<option value=<%= i %>><%= i %></option>
+							<% end %>
+						</select>
+						<select name="period" >
+							<option id="day" value="1"><%= get_string(:Days2) %></option>
+							<option id="week" value="7"><%= get_string(:Weeks2) %></option>
+							<option id="month" value="31"><%= get_string(:Months2) %></option>
+						</select>
+					</p>
+					<p><input type="checkbox" id="add_penalty" name="add_penalty" onclick="$('penalty_list').toggle()" />
+						<label for="add_penalty"><%= get_string(:Add_penalty_for_late_pay) %></label>
+					</p>
+					<div id="penalty_list" style="display: none; border: solid thin green; float: none; margin-top: 9px; margin-left: 5px; padding: 5px; background-color: white;">
+						<% for penalty in @penalties do %>
+						<input type="radio" id="penalty<%= penalty.id %>" name="penalty_id" <%= "value='#{penalty.id}'" %>/><label for="penalty<%= penalty.id %>"><%= penalty.name %></label><br />
+						<% end %>
+					</div>
+				</div>
+				<% end %>
+				<hr/>
+				<p><input id="note_check" type="checkbox" onclick="$('rent_note').toggle(); $('rent_note').value=''" /> <label for="note_check"><%= get_string(:Add_note) %></label></p>
+				<%= text_area 'rent', 'note', :cols => 30, :rows => 3, :style => "display: none;" %>
+				<p style="text-align: right"><%= submit_tag get_string(:Change_rent) %></p>
+			</fieldset>	
+		</div>
+		<% end # end form_tag %>
+		<% end # end if %>
+	</div>
+</div>
+
+<div class="right">
+	<% if ((@renter.actual_rent) && (@renter.actual_rent.has_autopay)) %>
+	<h2><%= get_string(:Autopay_for_actual_rent) %></h2>
+	<div>
+		<table class="fittings" style="width: 100%">
+			<tr>
+				<th><%= get_string(:Name2) %></th>
+				<th><%= get_string(:Amount) %></th>
+				<th><%= get_string(:Ends_on) %></th>
+			</tr>
+			<tr>
+				<td><%= link_to_remote @renter.actual_rent.auto_pay.object,
+								:before => "$('autopay').show()",
+								:url => {:controller => '/finances', :action => 'auto_detail', :id => @renter.actual_rent.auto_pay.id },
+								:failure => "alert('Error occured')",
+								:complete => "$('autopay').hide()" %>
+					<%= image_tag(Settings::DEFAULT_PICS[:stop]) if !@renter.actual_rent.auto_pay.is_active %>
+				</td>
+				<td><%= @renter.actual_rent.auto_pay.price%></td>
+				<td><%= MyDate::date_at(@renter.actual_rent.auto_pay.end_pay) %></td>
+				<td style="width: 20px"><%= link_to image_tag("/images/icons/red_cross_small.png"), { :controller => 'finances', :action => 'destroy_autopay', :id => @renter.actual_rent.auto_pay.id }, :confirm => 'Are you sure?', :method => :post %></td>
+				<td style="width: 20px"><img src="/images/ajax_loaders/ajax1.gif" id='autopay' style="display: none;"></td>
+			</tr>
+			<tr>
+				<td colspan="3" <%= "id=detail_#{@renter.actual_rent.auto_pay.id}" %> style="display: none"></td>
+			</tr>
+		</table>
+	</div>
+	<% end %>
+	<div>
+		<h2><%= get_string(:Rent_history) %></h2>
+		<table width="100%;">
+			<tr>
+				<th><%= get_string(:Rent) %></th>
+				<th><%= get_string(:From) %></th>
+				<th><%= get_string(:Note) %></th>
+			</tr>
+			<% for rent in @renter.rents do %>
+			<tr>
+				<td><%= number_to_currency(rent.price, :unit => "CZK", :delimiter => " ", :separator => ",", :format => "%n %u") %></td>
+				<td><%= MyDate::date_at(rent.from_date) %></td>
+				<td><%= rent.note %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

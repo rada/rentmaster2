@@ -1,0 +1,71 @@
+<!-- <div class="left"> -->
+	<% form_remote_tag(:before => "$('bill_edit').show();$('edit_loader').show();", 
+										 :update => "bill_info#{@bill.id}",
+										 :url => {:controller => 'finances', :action => 'update_bill', :id => params[:id]},
+ 		 		 						 :failure => "alert('ERROR')",
+	 		 		 					 :complete => "$('bill_edit').hide(); $('edit_loader').hide();$('bill_info#{@bill.id}').visualEffect('highlight',{endcolor:'#00ff00'})") do %>
+	<div style="background-color: white;">
+		<fieldset class="payment">
+			<legend><%= get_string(:Edit_bill) %></legend>
+			<span style="text-align:right; float: right"><%= link_to_function(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none", :title => get_string(:Close)), "$('bill_edit').hide()") %></span>
+			
+			<p><label for="bill_object"> Predmet platby </label><br/>
+			<%= text_field 'bill', 'object' %></p>
+			
+			<p><label for="bill_price"> Cena </label><br/>
+			<%= text_field 'bill', 'price' %></p>
+			<p>
+			<%= radio_button('bill', 'category', 'in') %> Prijem
+			<%= radio_button('bill', 'category', 'out') %> Vydaj <p/>
+			
+			<p><label for="bill_group">Skupina:</label>
+			<select id="bill_groupp" name="bill[groupp]">
+				<% for group in Bill::Group do %>
+				<%= onclick_option_if(group[1]=="jine","$('other_group').show()",{:value=>group[1],:name=>group[0],:onclick=>"$('other_group').hide();$('other_group').value=''"}) %>
+				<% end %>
+			</select><br/>
+			<%= text_field 'bill', 'groupp', {:id => 'other_group', :style => "display: none"} %>
+			</p>
+			
+			<p>
+				<input type="radio" name="owner" value="property" onchange="$('bill_property_id').toggle();$('bill_renter_id').toggle()" checked='checked'/>Nemovitost 
+				<input type="radio" name="owner" value="renter" onchange="$('bill_renter_id').toggle();$('bill_property_id').toggle()" /><%= get_string(:Renter) %>
+			</p>
+		
+			<p>
+			<%= collection_select('bill', 'property_id', Property.find(:all,:conditions => ["user_id = ?",session[:user_id]]),:id,:name, {:prompt => ''}) %>
+			<%= collection_select('bill','renter_id', Renter.find_by_sql(["SELECT r.id, r.property_id, r.name, r.surname 
+																																		FROM renters AS r, properties AS p 
+																																		WHERE 
+																																		r.property_id = p.id AND 
+																																		p.user_id = ?
+																																		ORDER BY r.surname ASC", session[:user_id]]),:id,:full_name2,{:prompt => ''},:style => 'display: none') %>
+			</p>
+			
+			<p id="deadline"><label for="bill_deadline"><%= get_string(:Deadline) %></label><br/>
+			<%= date_select(:deadline, :date, {:order => [:day, :month, :year], 
+																			 :use_month_numbers => true, 
+																			 :default => {:year => Time.at(@bill.deadline).year,
+														 		 		 							  :month => Time.at(@bill.deadline).month,
+															 		 								  :day => Time.at(@bill.deadline).day} }) %>
+			</p>
+			<p>
+				<input type="checkbox" id="penalties_check" name="penalties" onchange="$('penalty_list').toggle()"/>
+				<label for="penalties_check"><%= get_string(:Add_penalty_for_late_pay) %></label>
+			</p>
+			<p id="bill_paid_on" style="display: none">
+				Datum platby:<br/>
+				<%= date_select("pay_date", "", {:order => [:day, :month, :year], :use_month_numbers => true}) %>
+			</p>
+			<input type="hidden" name="nemovitost" <%= "value='#{@bill.property.id.to_s if @bill.property}'"%> />
+			<%= submit_tag get_string(:Edit), :id => 'submit' %> <img id="edit_loader" src="/images/ajax_loaders/ajax_blue_line.gif" style="display: none" />
+		</fieldset>
+	</div>
+	<div id="penalty_list" style="display: none; border: solid thin green; float: left; margin-top: 9px; margin-left: 5px; padding: 5px; background-color: white;">
+	<% for penalty in @penalties do %>
+	<%= checked_checkbox_if(@bill.penalties.include?(penalty), {:name => "penalty_ids[]", :value => penalty.id, :id => "penalty#{penalty.id}"}) %>
+	<label for="penalty<%= penalty.id %>"><%= penalty.name %></label><br/>
+		<% end %>
+	</div>
+	<% end %>
+<!-- </div> -->

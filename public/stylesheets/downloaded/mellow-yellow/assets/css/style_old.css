@@ -1,0 +1,43 @@
+/* CSS Document */
+
+body { font-family:Tahoma; color:#333333; font-size:12px; background:url(../images/headerbg.gif) repeat-x #A4A4A4; }
+
+a { color:#2D2D2D; text-decoration:none; }
+h1 { font-size:16px; }
+h2 { font-size:14px; }
+
+#wrapper { width:760px; margin:0 auto; padding:0; }
+
+#header { position:relative; width:100%; height:185px; }
+#header .logo { float:left; }
+#headinfo { float:right; width:242px; height:20px; }
+#headinfo a { color:#EFEFEF; }
+#headinfo a:hover { color:#D2D2D2; text-decoration:underline; }
+
+.logotext { float:left; width:200px; margin:55px 0 50px 30px; font-face:Trebuchet MS; font-size:22px; color:#FFFFFF; }
+.logotext strong { color:#EFEFEF; }
+.logotext2 { font-size:14px; }
+
+#nav { position:absolute; top:155px; right:11px; width:100%; padding:1px; margin:0; }
+#nav ul { margin:0; padding:0; }
+#nav ul li.on { display:block; width:100px; padding:8px 0; margin:0 1px 0 0; background:url(../images/buttonbg.gif); text-align:center; background:url(../images/buttonbgon.gif); }
+#nav ul li { float:right; list-style:none; padding:0; }
+#nav ul li a { display:block; width:100px; padding:7px 0; margin:0 1px 0 0; background:url(../images/buttonbg.gif); text-align:center;  }
+#nav ul li a:hover { height:25px; padding-top:3px; margin-bottom:-5px; border-top:2px solid #b8a85f; background:url(../images/buttonbgover.gif); color:#999999; }
+
+#content { width:100%; padding:0 20px; background:url(../images/contentbg.gif) repeat-y; }
+
+#left { float:left; width:140px; }
+#left ul { margin: 0; padding:0; }
+#left ul li { list-style:none; margin:1px 0; padding:0; }
+#left ul li a { display:block; width:120px; margin:0; padding:5px; background-color:#E6E6E6; }
+#left ul li a:hover { background-color:#e8d67b; background-image:url(../images/buttonbgover.gif); }
+#left ul li ul { margin: 0; padding:0; }
+#left ul li ul li { list-style:none; margin:1px 0; padding:10; }
+#left ul li ul li a { padding:5px; background-color:#EFEFEF; }
+
+#breadcrumb { float:left; width:566px; background-color:#e8d67b; border-bottom:1px dotted #333333; padding:6px 10px; }
+
+#right { float:left; width:70%; }
+#right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
+#right p a { color:#FFCD59; font-weight:bold; text-decoration:underline; }

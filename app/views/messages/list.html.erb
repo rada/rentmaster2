@@ -1,0 +1,89 @@
+<h1><%= get_string(:Messages) %></h1>
+<% if @new_messages.empty? %>
+	<h3><%= get_string(:No_new_messages) %></h3>
+<% else %>
+	<h3><%= get_string(:You_have) %> <%= @new_messages.size %> <%= get_string(:new_messages) %></h3>
+<% end %>
+<div class="left">
+	<%= link_to_function(get_string(:Incoming), "$('incoming_messages').show(); $('outgoing_messages').hide()") %> | 
+	<%= link_to_function(get_string(:Outgoing), "$('incoming_messages').hide(); $('outgoing_messages').show()") %> |
+	<%= link_to_remote(get_string(:New_message), 
+												:before => "$('loader').show();",
+												:update => "show_message",
+												:url => {:controller => 'messages', :action => 'new', :id => @renter},
+												:failure => "alert('ERROR')",
+												:complete => "$('loader').hide()") %>
+	<img src="/images/ajax_loaders/ajax_blue.gif" id="loader" style="display: none"/>
+	<div id="incoming_messages">
+		<table style="width: 100%">
+		<tr>
+			<th><%= get_string(:From) %></th>
+			<th><%= get_string(:Subject) %></th>
+			<th><%= get_string(:Date) %></th>
+			<th></th>
+			<th></th>
+		</tr>
+		<% for message in @incoming_messages %>
+		<tr id="message_<%= message.id %>" class="<%= message.is_new('read','') %>">
+			<td><%= message.from %></td>
+			<td><%=h message.subject %></td>
+			<td><%= MyDate.date_at(message.sent_at, true) %></td>
+			<td>
+				<% link_to(get_string(:Read), :action => 'show', :id => message) %>
+				<%= link_to_remote( get_string(:Read),
+														:update => "show_message",
+														:url => {:action => 'show', :id => message},
+														:failure => "alert('ERROR')",
+														:complete => "$('message_#{message.id}').className='';") %>
+			</td>
+			<td><%= link_to_remote(get_string(:Reply),
+														 :update => "show_message",
+														 :url => {:controller => 'messages', :action => 'show_reply_form', :id => message},
+														 :failure => "alert('ERROR')",
+														 :complete => "$('message_#{message.id}').className='';" ) %>
+		 	</td>
+			<td><%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :controller => 'messages', :action => 'delete', :id => message) %></td>
+		</tr>
+		<% end %>
+		</table>
+	</div>
+	<div id="outgoing_messages" style="display: none;">
+		<table style="width: 100%">
+		<tr>
+			<th><%= get_string(:Subject) %></th>
+			<th><%= get_string(:To) %></th>
+			<th><%= get_string(:Date) %></th>
+			<th></th>
+			<th></th>
+			<th><%= get_string(:Read2) %></th>
+		</tr>
+		<% for message in @outgoing_messages %>
+		<tr id="message_<%= message.id %>" class="<%= message.is_new('read','') %>">
+			<td><%=h message.subject %></td>
+			<td><%= message.to %></td>
+			<td><%= MyDate.date_at(message.sent_at, true) %></td>
+			<td>
+				<% link_to(get_string(:Read), :action => 'show', :id => message) %>
+				<%= link_to_remote(get_string(:Read),
+														:update => "show_message",
+														:url => {:action => 'show', :id => message},
+														:failure => "alert('ERROR')") %>
+			</td>
+			<td><%= link_to_remote(get_string(:Forward),
+														 :update => "show_message",
+														 :url => {:controller => 'messages', :action => 'forward', :id => message},
+														 :failure => "alert('ERROR')" ) %>
+		 	</td>
+			<td><%= MyDate::date_at(message.read, true) %></td>
+			<td><%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :controller => 'messages', :action => 'delete', :id => message) %></td>
+		</tr>
+		<% end %>
+		</table>
+	</div>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------>
+
+<div class="right" id="show_message">
+	
+</div>

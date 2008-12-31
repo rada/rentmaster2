@@ -1,0 +1,43 @@
+<% title(:Property_info) %>
+
+<div class="left" style="width: 30%; clear: left;">
+	<p><h2><%= get_string(:Property) %>: <%= @property.name %></h2></p>
+	<div id="property_address" class="address" style="width: auto; padding-left: 15px;">
+		<p style="text-align: center"><b><%= get_string(:Address) %></b></p>
+		<p><%= @property.address %></p>
+		<p><%= @property.psc %> <%= @property.city %></p>
+	</div>
+	<% if @property.notes %>
+	<div class="address"  style="width: auto;">
+		<ul>
+			<% for note in @property.notes do %>
+			<li><%=h note.content %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+	<% if @property.contacts %>
+	<h2><%= get_string(:Contacts) %></h2>
+	<div class="address" style="width: auto;">
+		<ul>
+		<% for contact in @property.contacts do %>
+				<li>
+					<p><b><%= link_to_function(contact.profesion, "$('contact#{contact.id}').toggle();") %></b></p>
+					<div id="contact<%= contact.id %>" style="display: none;">
+						<%=h contact.name %><br />
+						<%= contact.address.gsub("\n", "<br />") %><br />
+						<%= contact.telephone1 %> <br /><%= contact.telephone2 if contact.telephone2 != 0 %><br />
+						<a href="http://<%= contact.website %>"><%= contact.website %></a>
+					</div>
+				</li>
+		<% end %>
+		</ul>
+	</div>
+	<% end %>
+</div>
+
+
+<div class='left' style="width: auto">
+	<h2><%= get_string(:Tasks) %></h2>
+	<%= render :partial => '/nemovitosti/list_todo' %>
+</div>

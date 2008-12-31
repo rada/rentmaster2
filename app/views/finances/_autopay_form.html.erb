@@ -1,0 +1,65 @@
+<% form_tag(:action => 'add_auto_pay', :id => params[:id] ) do %>
+	<fieldset class="payment">
+	<legend>Vytvořit automatickou platbu</legend>	
+	<p><label for="auto_pay_object"> Predmet platby (Nazev) </label><br/>
+	<%= text_field 'auto_pay', 'object' %></p>
+	
+	<p><label for="auto_pay_name"><%= get_string(:Name_for_users)%></label><br/>
+	<%= text_field 'auto_pay', 'name' %></p>
+	
+	<p><label for="auto_pay_price"> Cena </label><br/>
+	<%= text_field 'auto_pay', 'price' %></p>
+
+	<%= radio_button('auto_pay', 'category', 'in') %> Prijem
+	<%= radio_button('auto_pay', 'category', 'out') %> Vydaj <br/>
+	
+	<p>
+		<input type="radio" value="" onclick="$('auto_pay_property_id').show();$('auto_pay_renter_id').hide()" />Nemovitost
+		<input type="radio" value="" onclick="$('auto_pay_property_id').hide();$('auto_pay_renter_id').show();" />Nájemník
+	</p>
+	<%= collection_select('auto_pay','renter_id', Renter.find_by_sql("SELECT r.id, r.property_id, r.name, r.surname 
+																																		FROM renters AS r, properties AS p 
+																																		WHERE r.property_id = p.id AND p.user_id = #{session[:user_id]}"),
+																																		:id,:full_name2,{:include_blank => true},:style => 'display: none') %>
+	<%= collection_select('auto_pay', 'property_id', User.get_properties(session[:user_id]),:id,:name, {:prompt => ''}, :style => 'display: none') %>
+
+	<p><label for="auto_pay_group">Skupina:</label>
+	<select id="auto_pay_groupp" name="auto_pay[groupp]">
+		<% for group in Bill::Group do %>
+		<%= onclick_option_if(group[1]=="jine","$('other_group').show()",{:value=>group[1],:name=>group[0],:onclick=>"$('other_group').hide();$('other_group').value=''"}) %>
+		<% end %>
+	</select>
+	<%= text_field 'auto_pay', 'groupp', {:id => 'other_group', :style => "display: none"} %>
+	</p>
+
+	<p><label for="auto_pay_deadline"><%= get_string(:First_pay) %></label><br/>
+	<%= date_select("first", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+	</p>
+	<p><label for="auto_pay_end"><%= get_string(:Last_pay) %></label><br />
+	<%= date_select("end", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year + 1}) %>
+	</p>
+	
+	Pravidelne opakovat platbu každých<br/>
+	<select name="times">
+		<% 1.upto(31) do |i| %>
+		<option value=<%= i %>><%= i %></option>
+		<% end %>
+	</select>
+	<select name="period" >
+		<option id="day" value="1">Dnů</option>
+		<option id="week" value="7">Týdnů</option>
+		<option id="month" value="31">Měsíců</option>
+	</select>	
+
+	<%= text_field 'auto_pay', 'renter_id', {:value =>'', :style => "display: none" } %>
+	<%= text_field 'auto_pay', 'property_id', {:value =>'' , :style => "display: none" } %><br/><br/>
+	<%= submit_tag 'Add auto pay' %>
+<% end %>
+</fieldset>
+	
+	
+	
+	
+	
+	
+	

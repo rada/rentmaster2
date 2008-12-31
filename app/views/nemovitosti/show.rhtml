@@ -1,0 +1,9 @@
+<% for column in Property.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @property.send(column.name) %>
+	<%= in_place_editor_field :property, column.name %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @property %> |
+<%= link_to 'Back', :action => 'list' %>

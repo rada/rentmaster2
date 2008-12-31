@@ -1,0 +1,28 @@
+<td colspan="3">
+	<label <%= "for=\"note_#{@bill.id}\"" %>>
+	<input type="checkbox" <%= "id=\"note_#{@bill.id}\" onclick=\"$('show_note_#{@bill.id}').toggle()\"" %> />
+	<%= get_string(:Add_note) %></label><br />
+	<textarea cols="20" rows="2" <%= "id=\"show_note_#{@bill.id}\" name=\"notes[#{@bill.id}]\"" %> style="display: none"></textarea>
+</td>
+<td><input type="text" size="6" <%= "name=partial_prices[#{@bill.id}] id='partial_amount#{@bill.id}' value='#{@bill.price}'" %>></td>
+<td><input type="text" size="6" <%= "name=penalty[#{@bill.id}] id='penalty_price#{@bill.id}' value='#{number_with_precision(@bill.penalty_total,2)}'" %>></td>
+<td colspan="2">
+		<!--
+	<select name="bill[paid_to]">
+		<option value="cash" selected="selected">hotovost</option>
+		<%# if User.find(session[:user_id]).bank_accounts %>
+			<%# for bank in User.find(session[:user_id]).bank_accounts %>
+			<option <%# "value='#{bank.name}'" %>><%# bank.name %></option>
+			<%# end %>
+		<%# end %> -->
+	</select>
+</td>
+<td colspan="4">
+	<%= date_select('date', @bill.id, 
+								 {:default => {:day => Time.at(@bill.deadline).day, :month => Time.at(@bill.deadline).mon, :year => Time.at(@bill.deadline).year},
+									:order => [:day, :month, :year], 
+									:use_month_numbers => true}) %>
+</td>
+<% for temp_bill in @bill.temp_bills %>
+
+<% end %>

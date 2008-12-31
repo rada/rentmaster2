@@ -1,0 +1,26 @@
+<table cellspacing="1" style="width: 100%">
+	<tr>
+		<th><%= get_string(:name) %></th>
+		<th><%= get_string(:count) %></th>
+		<th><%= get_string(:tarif) %></th>
+		<th><%= get_string(:base) %></th>
+		<th><%= get_string(:tax) %>(%)</th>
+		<th><%= get_string(:price_with_tax) %></th><th></th>
+	</tr>
+	<% for accessory in @property.accessories do %>
+	<% if accessory.typ == typ %>
+	<tr>
+		<td><%= accessory.name %></td>
+		<td><%= accessory.count %></td>
+		<td><%= accessory.tarif %></td>
+		<td><%= accessory.base %></td>
+		<td><%= accessory.tax %></td>
+		<td align="center"><%= accessory.price_with_tax * accessory.count %></td>
+		<td>
+			<%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :controller => 'nemovitosti', :action => 'delete_accessory', :id => accessory.id) %>
+			<%= link_to(image_tag(Settings::DEFAULT_PICS[:edit], :style => "border: none"), :action => 'edit_accessory', :id => accessory) %>
+		</td>
+	</tr>
+	<% end %>
+	<% end %>
+</table>

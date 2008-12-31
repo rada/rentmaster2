@@ -1,0 +1,20 @@
+<% for column in Renter.content_columns %>
+<p>
+  <table>
+  	<tr>
+  		<td><b><%= column.human_name %>:</b></td>
+		<td><%=h @renter.send(column.name) %></td>
+	</tr>
+  </table>
+</p>
+<% end %>
+		
+<% if params[:back] == 'property' then %>
+	<%= link_to('back', :controller => 'nemovitosti', :action => 'detail', :id => @property) %>
+	<% else %>
+	<%= link_to('back', :action => 'list') %>	
+<% end %>
+<!--
+<%= link_to 'Edit', :action => 'edit', :id => @renter %> |
+<%= link_to 'Back', :action => 'list' %>
+-->

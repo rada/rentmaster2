@@ -1,0 +1,115 @@
+<% title(:Accommodation_info) %>
+<% submenu(Settings::SUBMENU[:renters_property]) %>
+<h1><%=h @property.name %></h1><br />
+<div class="left">
+	<div id = "detail" class = "nemovitost-detail">
+	<div style = "">
+	 <table class="property">
+	 	<tr>
+	 		<td>
+			 	<div class = "address">
+			 		<b><%= get_string(:Address) %></b><br/>
+					<%= address_h %></div>
+			</td>
+			<td rowspan="2" style="width: 100%" valign="top">
+				<div class="renters">
+					<ul>
+					<% for renter in @property.renters %>
+						 <li><%= renter.name %> <%= renter.surname %></li>
+					<% end %>
+					</ul>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<%= hidden_div_if(!@property.notes, {:id => "note", :class => "address"}) %>
+			
+					<b><%= get_string(:Notes) %>:</b><br/>
+					<% @property.reload %>					
+					<% for note in @property.notes %>
+						<%= note.content %> <br/>
+					<% end %>
+				</div>
+			</td>
+		</tr>
+	 </table>
+ <div class="about">
+ 	<%=h @property.about %>
+ </div>	
+	</div>
+	</div> 
+	<br/>
+	<div id="additionals" class="address" style=" width: 300px">
+		<table cellspacing="0" style="width: 100%">
+			<tr>
+				<td colspan="3"><%= image_tag(Settings::DEFAULT_PICS[:ajax_blue], :id => "additional_indicator", :style => "display: none") %></td>
+		<% for additional in @property.additionals %>
+			<tr>
+				<td><b><%= additional.name %>:</b></td>
+				<td><%= additional.content %></td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------------------>
+<% if @property.owner_id != 0 || @property.administrator_id != 0 %>
+<div class="right">
+	<% if @property.owner_id != 0 %>
+	<fieldset class="owner">
+		<legend><%= get_string(:Owner) %></legend>
+		<div id="owner">
+			<% if ((@property.owner_id ) && (@property.owner_id != 0)) %>
+			<p><%= link_to_function(@property.owner.name, "$('owner_info').toggle()") %></p>
+			<div id="owner_info" style="display: none;">
+				<p><%= @property.owner.address %></p>
+				<p><%= get_string(:Tel)%>: <%=h @property.owner.telephone1 %>, <%=h @property.owner.telephone2 %></p>
+				<%= @property.owner.email if @property.owner.email %>
+			</div>
+			<% end %>
+		</div>
+	</fieldset>
+	<% end %>
+	<% if @property.administrator_id != 0 %>
+	<fieldset class="owner">
+		<legend><%= get_string(:Administrator) %></legend>
+		<div>
+			<% if ((@property.administrator_id) && (@property.administrator_id != 0)) %>
+			<p><%= link_to_function(@property.administrator.name, "$('admin_info').toggle()") %></p>
+			<div id="admin_info" style="display: none;">
+				<p><%= @property.administrator.address %></p>
+				<p><%= get_string(:Tel)%>: <%=h @property.administrator.telephone1 %>, <%=h @property.administrator.telephone2 %></p>
+				<%= @property.administrator.email if @property.administrator.email %>
+			</div>
+			<% end %>
+		</div>
+	</fieldset>
+	<% end %>
+	<hr />
+	<h2><%= link_to_function(get_string(:Contacts), "$('contacts').toggle()") %></h2>
+	<div id="contacts">
+		<% if !@renter.property.contacts.empty? %>
+		<table class="blue" style="width: 100%" cellspacing="0">
+			<tr>
+				<th><%= get_string(:Profesion) %></th>
+				<th><%= get_string(:Name2) %></th>
+				<th><%= get_string(:Address) %></th>
+			</tr>
+			<% background = 0 %>
+			<% for contact in @renter.property.contacts %>
+			<% background = 1 - background %>
+			<tr class="back<%= background %>">
+				<td><%=h contact.profesion %></td>
+				<td><%=h contact.name %></td>
+				<td><%=h contact.address %><br /><%=h contact.telephone1 %>, <%=h contact.telephone2 %><br/>
+						<a href="http://<%= contact.website %>"><%= contact.website %></a><br/>
+						<%= contact.email %></td>
+			</tr>
+			<% end # for %>
+		</table>
+		<% end # if %>
+	</div>
+</div>
+<% end %>

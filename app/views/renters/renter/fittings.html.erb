@@ -1,0 +1,30 @@
+<% title(get_string(:Fittings)) %>
+<% submenu(Settings::SUBMENU[:renters_property]) %>
+<h1><%= get_string(:Fittings) %></h1><br />
+<div class="left" style="margin: auto">
+	<table class="blue" cellspacing="0" style="width: 100%">
+		<tr>
+			<th><%= get_string(:Name) %></th>
+			<th><%= get_string(:Price) %></th>
+			<th><%= get_string(:Count) %></th>
+			<th></th>
+		</tr>
+		<% background_no = 0 %>
+		<% for fitting in @renter.property.fittings %>
+		<% background_no = 1 - background_no %>
+		<tr class="back<%= background_no %>" id="fitting<%= fitting.id %>">
+			<td><%= link_to_remote fitting.name,
+					:before => "$('indicator"+fitting.id.to_s+"').show()",
+					:url => {:action => 'fitting_detail', :id => fitting.id.to_s },
+					:failure => "alert('Error occured')",
+					:complete => "$('indicator"+fitting.id.to_s+"').hide()" %>
+			</td>
+			<td><%= fitting.price %></td>
+			<td><%= fitting.count %></td>
+			<td></td>
+			<td style="width: 20px"><img src="/images/ajax_loaders/ajax1.gif" id=<%= "indicator"+fitting.id.to_s %> style="display: none;"/></td>
+			</tr>
+		<tr class="back<%= background_no %>"><td colspan="4" id=<%= fitting.id.to_s %> style="display: none"></td></tr>
+		<% end %>
+	</table>
+</div>

@@ -1,0 +1,27 @@
+<div style="padding: 2px; border: solid thin black;">
+	<% form_remote_tag(:url => {:controller => 'messages', :action => 'reply', :id => @message},
+										 :before => "$('loader_line').show()",
+										 :failure => "alert('ERROR')",
+										 :complete => "$('message_sent').show();$('loader_line').hide()") do %>
+	<div>
+		<b><%= get_string(:Subject) %>:</b>
+		<%= text_field 'message', 'subject', :size => 50 ,:value => "RE:#{@message.subject}" %><p></p>
+		
+		<%= text_area 'message', 'content', :cols => 50, :rows => 10, :value => '', :onclick => "$('message_sent').hide()" %>
+	</div><p></p>
+	<%= submit_tag get_string(:Send) %> <img src="/images/ajax_loaders/ajax_blue_line.gif" id="loader_line"  style="display: none;">
+	<span id="message_sent" style="display: none;"><%= get_string(:Message_succesfully_sent) %></span>
+	<% end %>
+</div>
+
+<div style="padding: 2px; border: dashed thin black;">
+	<div style="text-decoration: underline;"><b><%= get_string(:Oiginal_message) %></b></div>
+	<div id="from"><%= @message.content %></div>
+	<hr />
+	<div id="from">
+		<b><%= get_string(:From) %>:</b>
+		<%= @message.from %><br />
+		
+		<b><%= get_string(:Subject) %>:</b> <%= @message.subject %>
+	</div>
+</div>

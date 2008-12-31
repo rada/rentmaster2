@@ -1,0 +1,26 @@
+<% title(get_string(:New_message)) %>
+<% form_remote_tag(:url => {:action => 'create'}, 
+									 :before => "$('loader_line').show()",
+									 :complete => "$('loader_line').hide();$('message_sent').show()",
+									 :failure => "alert('ERROR')") do %>
+<% if @user.typ == :admin %>
+<select name="renter">
+	<% for renter in @renters %>
+	<%= selected_option2_if(renter.id == params[:id].to_i, {:value => renter.id}) %><%= renter.full_name2 %></option>
+	<% end %>
+</select>
+<% end %>
+
+<p><label for="message_subject"><%= get_string(:Subject) %>:</label>
+<%= text_field 'message', 'subject', :size => 55, :onclick => "$('message_sent').hide()" %></p>
+
+<p><label for="message_content"><%= get_string(:Message) %>:</label><br />
+<%= text_area 'message', 'content', {	:cols => 50, 
+																			:rows => 10, 
+																			:maxlength => 500, 
+																			:onKeyUp => "toCount('message_content','char_count', '{CHAR}', 500);"} %><br />
+<span id="char_count" class="minitext">500</span> <span class="minitext"><%= get_string(:Char_left) %></span></p>
+
+<%= submit_tag get_string(:Send) %> <img src="/images/ajax_loaders/ajax_blue_line.gif" id="loader_line"  style="display: none;"> 
+<span id="message_sent" style="display: none;"><%= get_string(:Message_succesfully_sent) %></span>
+<% end %>

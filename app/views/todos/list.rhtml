@@ -1,0 +1,35 @@
+<% title(get_string(:Todos)) %>
+<h1><%= get_string(:Todos) %></h1>
+<div class="left">
+	<div id="todos">
+		<table class="">
+				<tr>
+					<th><%= get_string(:Added) %></th>
+					<th><%= get_string(:Task) %></th>
+					<th><%= get_string(:Actor) %></th>
+					<th>Deadline</th>
+					<th><%= get_string(:Price) %></th>
+					<th><%= get_string(:Property) %></th>
+					<th></th><th></th>
+				</tr>
+			<%= render :partial => 'list_todos', :collection => @todos %>
+			</table>		
+	</div><p></p>
+	<div class="digg_pagination">
+		<div clas="page_info">
+      <%= page_entries_info @todos %>
+    </div>
+		<%= will_paginate @todos %>
+	</div>
+</div>
+	<div class="right">
+		<%= link_to_function( 'Pridat ukol', "$('task_manager2').toggle()") %> <br/>
+		<div id="task_manager2" style="display: none ; z-index: 20; text-align: left;" >
+		<% form_tag(:controller => 'todos', :action => 'add_todo') do %>
+			<div id="todo_form">
+				<%= render :partial => 'todos/todo2' %>
+			</div>
+			<center><%= submit_tag 'pridaj' %></center>				
+		<% end %>
+	</div>
+</div>

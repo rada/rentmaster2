@@ -1,0 +1,42 @@
+<div class="right">
+	<h2><%= get_string(:Report_event) %></h2>
+	<% form_tag(:controller => 'todos', :action => 'add_todo') do%>
+	<div id="task_manager" style="text-align: left;" >
+		<table class="todo" width="100%" style="border-bottom: thin dotted grey">
+			<tr>
+				<td>Task manager</td>
+				<td><%= image_tag("/images/close.jpg", :align => 'right', :onclick => "$('task_manager').toggle()", :style => "cursor: pointer;") %></td>
+			</tr>
+		</table>
+		<!--[form:todo]-->
+		<br/>
+		<table class="todo">
+			<tr>
+				<td><label for="todo_task">*Task:</label></td>
+				<td><%= text_field 'todo', 'task' %></td>
+			</tr>
+			<tr>
+				<td><label for="todo_description">*Description:</label></td>
+				<td><%= text_area 'todo', 'description', :cols => 32, :rows => 5 %></td>
+			</tr>
+			<td>Priorita</td>
+				<td id="check_pri">
+					<div>
+						<%= radio_button 'todo', 'priority', 'high' %> Vysoka
+						<%= radio_button 'todo', 'priority', 'medium' %> Stredni
+						<%= radio_button 'todo', 'priority', 'low', :checked => 'checked' %> Nizka				
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><label for="todo_deadline">Deadline:</label></td>
+				<td id="deadline" style="display: none;">
+				<%= date_select("deadline", "todo", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+				</td>
+				<td><input type="checkbox" onchange="$('deadline').toggle()"/></td>		
+			</tr>
+		</table>
+	</div>
+	<p style="text-align: center"><%= submit_tag get_string(:Add) %></p>
+	<% end %>
+</div>

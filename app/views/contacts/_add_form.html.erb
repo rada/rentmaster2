@@ -1,0 +1,29 @@
+<%= error_messages_for 'contact' %>
+
+	<p><label for="contact_name"><%= get_string(:Name) %></label><br />
+	<%= text_field 'contact', 'name' %></p>
+	
+	<p><label for="contact_typ"><%= get_string(:Type) %></label><br />
+	<select>
+		<option value='contact' onclick="$('contact_profesion').value=''"><%= get_string(:Contact) %></option>
+		<option value='owner' onclick="$('contact_profesion').value='owner'"><%= get_string(:Owner) %></option>
+		<option value='administrator' onclick="$('contact_profesion').value='administrator'"><%= get_string(:Administrator) %></option>
+	</select></p>
+	
+	<p><label for="contact_profesion"><%= get_string(:Profesion) %></label><br />
+	<%= text_field 'contact', 'profesion' %></p>
+	
+	<p><label for="contact_address"><%= get_string(:Address) %></label><br />
+	<%= text_area 'contact', 'address', :rows => '4', :cols => 25 %></p>
+	
+	<p><label for="contact_telephone1"><%= get_string(:Telephone) %> 1</label><br />
+	<%= text_field 'contact', 'telephone1' %></p>
+	
+	<p><label for="contact_telephone2"><%= get_string(:Telephone) %> 2</label><br />
+	<%= text_field 'contact', 'telephone2' %></p>
+	
+	<p><label for="contact_email"><%= get_string(:Email) %></label><br />
+	<%= text_field 'contact', 'email' %></p>
+	
+	<p><label for="contact_website"><%= get_string(:Website) %></label><br />
+	<%= text_field 'contact', 'website' %></p>

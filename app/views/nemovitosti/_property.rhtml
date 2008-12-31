@@ -1,0 +1,82 @@
+<div>
+ <table class="property">
+ 	<tr>
+ 		<td valign="top">
+		 	<div class = "address">
+				<%= address_h %></div>
+			<div class="address" id="najem">
+				<table>
+					<tr>
+						<td><b><%= get_string(:Rent) + ":" %></b></td>
+						<td><%= najem_h %></td>
+					</tr>
+					<tr>
+						<td><b><%= get_string(:Fees) + ":" %></b></td>
+						<td><%= fees_h %></td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		<td rowspan="2" valign="top">
+			<div class="renters" style="width: 100%">	
+					<table cellspacing="1" cellpading="3" style="width: 100%">
+						<thead>
+							<tr>
+								<th><%= get_string(:Number_of_rooms) %></th>
+								<th><%= get_string(:Renters_count) %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align: center"><%= @property.bedrooms %></td>
+								<td style="text-align: center"><%= @property.get_actual_renters.size %></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			<div class="renters"  style="width: 100%">
+				<table class="property">
+				<% for renter in @property.get_actual_renters %>
+					<tr>
+					 <td><%= link_to(renter.full_name, :controller => 'manage_renter', :action => 'renter', :id => renter) %></td>
+					 <td><%= link_to(number_to_currency(renter.rent, :unit => "CZK", :separator => ",", :delimiter => " ", :format => "%n %u"),
+													 :controller => 'finances', :action => 'pending', :id => renter, :bills_for => 'renter') %></td>
+					</tr>	
+				<% end %>
+				</table>
+				<hr/>
+				<% if @property.is_closed %>
+				<p style="text-decoration: line-through;">
+					<%= link_to_function(get_string(:Add_renter), "alert('#{get_string(:Property_is_closed__Cant_add_renter)}')") %>
+				</p>
+				<% else %>
+				<%= link_to get_string(:Add_renter), {:controller => 'manage_renter', :action => 'new', :id => @property} %>
+				<% end %>
+			</div>
+		</td>
+		</tr>
+<!--		<tr>
+			<td>
+				<%= hidden_div_if(!@property.notes, {:id => "note", :class => "address"}) %>
+					<b><%= get_string(:Notes) %>:</b><br/>
+					<% @property.reload %>					
+					<% for note in @property.notes %>
+						<%= note.content %> <br/>
+					<% end %>
+				</div>
+				
+				<p style="font-size: small; padding-left: 5px;"><%= link_to_function('Add note', "new Effect.toggle('add_note', 'blind')") %></p>
+				
+				<div id="add_note" style="display: none">					
+				<% form_tag(:action => 'add_note', :id => @property) do %>
+						<p><%= text_area 'note', 'content', {:cols => 25, :rows => 3, :value => '' } %></p>
+						<%= submit_tag 'Pridej poznamku' %>	
+				</div> 
+				<% end %>
+			</td>
+		</tr>-->
+ </table>
+ <div class="about">
+ 	<%=h @property.about %>
+ </div>	
+</div>

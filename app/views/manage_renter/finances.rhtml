@@ -1,0 +1,38 @@
+<%= error_messages_for 'bill' %>
+<div class="finances_left">
+	<div><h1 style="text-align: left;"><%= @renter.name %> <%= @renter.surname %></h1>
+	<p>
+	<table>
+		<tr>
+			<td>Pronajmuto:</td>
+			<td><%= @renter.property.name %></td>
+		</tr>
+		<tr>
+			<td>Tel:</td>
+			<td><%= @renter.telephone %></td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><%= @renter.email %></td>
+		</tr>
+		<tr>
+			<td>Stav účtu:</td>
+			<td><%= @renter.account %> CZK</td>
+		</tr>
+	</table></p></div>
+	<hr/>
+		<% form_remote_tag(:update => 'bills_table',
+											 :url => {:action => 'process_bills'},
+											 :failure => "alert('error')") do %>
+		<div id="bills_table"><%= render :partial => '/finances/pending_bills_table' %></div>
+		<% end %>
+	</div>
+<div class="finances_right">
+	<% form_remote_tag(:before => "$('ajax_loader_line').show()",
+										 :update => 'bills_table',
+										 :url => {:action => 'finances'},
+										 :failure => "alert('error')",
+										 :complete => "$('ajax_loader_line').hide()") do %>
+	<%= render '/finances/bill_settings' %>
+	<% end %>
+</div>

@@ -1,0 +1,29 @@
+<h1><%= get_string(:Welcome) %></h1>
+<div style="width: 1000px; margin: auto">
+<%= link_to_remote(get_string(:Task_and_Reminders),
+		:before => "$('loader').show()",
+		:update => "info_table",
+		:url => {:controller => 'login', :action => 'show_info_table', :id => 'task'},
+		:failure => "alert('error')",
+		:complete => "$('loader').hide()") %> |
+		
+<%= link_to_remote(get_string(:Debtor),
+		:before => "$('loader').show()",
+		:update => "info_table",
+		:url => {:controller => 'login', :action => 'show_info_table', :id => 'debtors'},
+		:failure => "alert('error')",
+		:complete => "$('loader').hide()") %> |
+		
+<%= link_to_remote(get_string(:Rent_expiry),
+		:before => "$('loader').show()",
+		:update => "info_table",
+		:url => {:controller => 'login', :action => 'show_info_table', :id => 'rent_expiry'},
+		:failure => "alert('error')",
+		:complete => "$('loader').hide()") %>
+		
+<img id="loader" style="display: none" src="/images/ajax_loaders/ajax_blue.gif" />
+		
+<div id="info_table">
+	<%= render :partial => 'list_todo' %>
+</div>
+</div>

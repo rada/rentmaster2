@@ -1,0 +1,12 @@
+<%= error_messages_for 'additional' %>
+
+<% form_tag({:controller => 'additional', :action => 'update_additional', :owner_id => @additional.type_id, :id => @additional, :return_to => request.parameters[:controller]}) do %>
+	<p><label for="additional_name">Name</label><br/>
+		<%= text_field 'additional', 'name' %></p>
+		
+	<p><label for="additional_name">Content</label><br/>
+		<%= text_field 'additional', 'content' %></p>
+	
+	<%= submit_tag 'Update' %>
+<% end %>
+<%= link_to_function 'hide', "new Effect.toggle('edit', 'blind')" %>

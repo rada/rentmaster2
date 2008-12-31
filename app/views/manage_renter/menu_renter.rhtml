@@ -1,0 +1,12 @@
+<div class="menu_small">
+		<%= link_to(get_string(:edit), {:controller => 'manage_renter', :action => 'edit', :id => @renter}) %> | 
+		<%= link_to(get_string(:new_renter), {:controller => 'manage_renter', :action => 'new'}) %> |
+		<%= link_to(get_string(:close_rent), {:controller => 'manage_renter', :action => 'close_rent', :id => @renter}) %> | 
+		<%= link_to(get_string(:delete), {:controller => 'manage_renter', :action => 'delete', :id => @renter},{:confirm => get_string(:By_Deleting_user_will_you_will_loose_all_associated_data_like_bills_and_history_of_accommodation__Continue?)}) %> | 
+</div>
+<div style="text-align: center;">
+<%= link_to get_string(:Renter_info), :controller => 'manage_renter',:action => 'renter', :id => @renter %> | 
+<%= link_to get_string(:Finances), :controller => 'finances',:action => 'pending', :id => @renter, :bills_for => 'renter' %> |
+<%= link_to get_string(:Statistics), :controller => 'statistics', :action => 'renter', :id => @renter %> |
+<%= link_to get_string(:Accommodation_history), :controller => 'manage_renter', :action => 'accommodation_history', :id => @renter %> |
+</div>

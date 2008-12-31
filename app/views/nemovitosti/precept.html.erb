@@ -1,0 +1,35 @@
+<div class="left">
+	<% if !@autopay.precepts.empty? %>
+	<table>
+		<tr>
+			<th><%= get_string(:Item) %></th>
+			<th><%= get_string(:Price) %></th>
+		</tr>
+		<% for items in @autopay.precepts %>
+		<tr>
+			<td><%=h item.object %></td>
+			<td><%= item.price %></td>
+		</tr>
+		<% end %>
+	</table>
+	<% else %>
+	<p><%= get_string(:Percept_has_no_items) %></p>
+	<% end %>
+</div>
+
+<!----------------------------------------------------------------------------------------------->
+
+<div class="right">
+	<fieldset>
+		<legend><%= get_string(:New_precept_item) %></legend>
+		<% form_tag(:action => 'add_item_to_percept', :id => @autopay.id) do %>
+		<p><label for="precept_object"><%= get_string(:Object) %></label><br />
+		<%= text_field 'precept', 'object' %></p>
+		
+		<p><label for="precept_price"><%= get_string(:Price) %></label><br />
+		<%= text_field 'precept', 'price' %></p>
+		
+		<%= submit_tag get_string(:Add) %>
+		<% end %>
+	</fieldset>
+</div>

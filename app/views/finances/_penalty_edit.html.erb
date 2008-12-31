@@ -1,0 +1,17 @@
+<fieldset class="base">
+	<legend><%= get_string(:Edit_penalty) %></legend>
+	<% form_tag(:action => 'edit_penalty', :edit => true) do %>
+	<p><label for="penalty_name">Název penále</label><br/>
+	<%= text_field 'penalty', 'name' %></p>
+	
+	<p><label for="penalty_after">Aplikovat po každých(x dnech)</label><br/>
+	<%= text_field 'penalty', 'after' %></p>
+	
+	<p><label for="penalty_price">Penále</label><br/>
+	<%= checked_radio_if(!@penalty.percent, {:name => "penalty[percent]", :value => 0}) %><%= get_string(:Price) %>
+	<%= checked_radio_if(@penalty.percent, {:name => "penalty[percent]", :value => 1}) %><%= get_string(:Percent) %><br />
+	<%= text_field 'penalty', 'price', :dir => 'right' %></p>
+	
+	<%= submit_tag get_string(:Edit) %>
+	<% end %>
+</fieldset>

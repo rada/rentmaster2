@@ -1,0 +1,301 @@
+!SESSION 2008-12-04 11:35:38.203 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_06
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=cs_CZ
+Framework arguments:  D:\Program Files\Aptana Studio\Aptana Studio\AptanaStudio.exe Studio
+Command-line arguments:  -os win32 -ws win32 -arch x86 D:\Program Files\Aptana Studio\Aptana Studio\AptanaStudio.exe Studio
+
+!ENTRY org.eclipse.ui 4 4 2008-12-04 11:36:42.656
+!MESSAGE Unable to find Action Set: com.aptana.ide.server.ui.launchActionSet
+
+!ENTRY org.eclipse.ui 4 4 2008-12-04 11:36:42.765
+!MESSAGE Unable to find Action Set: com.aptana.ide.editors.perspective.actionSet
+
+!ENTRY org.eclipse.ui 4 4 2008-12-04 11:36:42.843
+!MESSAGE Unable to find Action Set: com.aptana.ide.intro.actionSet
+
+!ENTRY org.eclipse.ui 4 4 2008-12-04 11:36:52.640
+!MESSAGE Invalid Menu Extension (Path is invalid): org.rubypeople.rdt.debug.ui.actions.ModifyCatchpoint
+
+!ENTRY com.aptana.ide.core 4 0 2008-12-04 11:37:06.093
+!MESSAGE (Build 1.2.0.018852) [ERROR] (Build 1.2.0.018852) [ERROR] An error occurred while executing a query
+!STACK 0
+ERROR 42Y55: 'DROP TABLE' cannot be performed on 'PROXY_CACHE' because it does not exist.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.sql.compile.DDLStatementNode.getTableDescriptor(Unknown Source)
+	at org.apache.derby.impl.sql.compile.DDLStatementNode.getTableDescriptor(Unknown Source)
+	at org.apache.derby.impl.sql.compile.DropTableNode.bind(Unknown Source)
+	at org.apache.derby.impl.sql.GenericStatement.prepMinion(Unknown Source)
+	at org.apache.derby.impl.sql.GenericStatement.prepare(Unknown Source)
+	at org.apache.derby.impl.sql.conn.GenericLanguageConnectionContext.prepareInternalStatement(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedStatement.execute(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedStatement.execute(Unknown Source)
+	at com.aptana.ide.core.db.AptanaDB.execute(AptanaDB.java:106)
+	at com.aptana.ide.server.jetty.portal.PortalProxyServlet.dropTable(PortalProxyServlet.java:426)
+	at com.aptana.ide.server.jetty.portal.PortalProxyServlet.initCache(PortalProxyServlet.java:330)
+	at com.aptana.ide.server.jetty.portal.PortalProxyServlet.<init>(PortalProxyServlet.java:105)
+	at com.aptana.ide.server.jetty.portal.PortalServer.start(PortalServer.java:262)
+	at com.aptana.ide.server.jetty.portal.PortalServer.getServer(PortalServer.java:354)
+	at com.aptana.ide.intro.actions.StartPortalAction.init(StartPortalAction.java:48)
+	at org.eclipse.ui.internal.WWinPluginAction.initDelegate(WWinPluginAction.java:189)
+	at org.eclipse.ui.internal.PluginAction.createDelegate(PluginAction.java:123)
+	at org.eclipse.ui.internal.PluginAction.selectionChanged(PluginAction.java:278)
+	at org.eclipse.ui.internal.WWinPluginAction.refreshSelection(WWinPluginAction.java:275)
+	at org.eclipse.ui.internal.WWinPluginAction.<init>(WWinPluginAction.java:121)
+	at org.eclipse.ui.internal.ActionDescriptor.createAction(ActionDescriptor.java:259)
+	at org.eclipse.ui.internal.ActionDescriptor.<init>(ActionDescriptor.java:170)
+	at org.eclipse.ui.internal.PluginActionSetBuilder.createActionDescriptor(PluginActionSetBuilder.java:132)
+	at org.eclipse.ui.internal.PluginActionBuilder.readElement(PluginActionBuilder.java:158)
+	at org.eclipse.ui.internal.registry.RegistryReader.readElements(RegistryReader.java:138)
+	at org.eclipse.ui.internal.registry.RegistryReader.readElementChildren(RegistryReader.java:127)
+	at org.eclipse.ui.internal.PluginActionBuilder.readElement(PluginActionBuilder.java:141)
+	at org.eclipse.ui.internal.registry.RegistryReader.readElements(RegistryReader.java:138)
+	at org.eclipse.ui.internal.PluginActionSetBuilder.readActionExtensions(PluginActionSetBuilder.java:259)
+	at org.eclipse.ui.internal.PluginActionSetBuilder.processActionSets(PluginActionSetBuilder.java:221)
+	at org.eclipse.ui.internal.ActionPresentation.setActionSets(ActionPresentation.java:187)
+	at org.eclipse.ui.internal.WorkbenchWindow.updateActionSets(WorkbenchWindow.java:2826)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2636)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyOpenPage(WorkbenchWindow.java:658)
+	at org.eclipse.ui.internal.Workbench.busyOpenWorkbenchWindow(Workbench.java:811)
+	at org.eclipse.ui.internal.Workbench.doOpenFirstTimeWindow(Workbench.java:1453)
+	at org.eclipse.ui.internal.Workbench.access$10(Workbench.java:1451)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1415)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.openFirstTimeWindow(Workbench.java:1413)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.openFirstTimeWindow(WorkbenchConfigurer.java:190)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:708)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at com.aptana.ide.rcp.AbstractIDEApplication.run(AbstractIDEApplication.java:116)
+	at com.aptana.ide.rcp.Application.run(Application.java:57)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY com.aptana.ide.intro 4 0 2008-12-04 11:37:10.109
+!MESSAGE (Build 1.2.0.018852) [ERROR] Feature store does not exist
+
+!ENTRY org.eclipse.atf.mozilla.ide.core 1 0 2008-12-04 11:37:10.890
+!MESSAGE Initializing XulRunner installed at: D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.mozilla.xulrunner.win32.win32.x86_1.8.1.3-20070404\xulrunner
+
+!ENTRY org.eclipse.atf.mozilla.ide.core 1 0 2008-12-04 11:37:12.187
+!MESSAGE Using XulRunner profile at: C:\DOCUME~1\RADAM4~1.ROT\LOCALS~1\Temp\swt-mozilla-60834.tmp
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.500
+!MESSAGE Got system PATH: C:\Program Files\Borland\Delphi7\Bin;C:\Program Files\Borland\Delphi7\Projects\Bpl\;"C:\Program Files\Microsoft DirectX SDK (February 2006)\Utilities\Bin\x86";C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Common Files\GTK\2.0\bin;C:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\PROGRA~1\GNU\WINCVS~1.3\CVSNT;C:\WINDOWS\system32\nls;C:\WINDOWS\system32\nls\ENGLISH;C:\Program Files\Java\jdk1.6.0\bin\;C:\Program Files\Java\jre1.6.0\bin\C:\Program Files\MiKTeX 2.5\miktex\bin;C:\Program Files\OpenAFS\Client\Program;C:\Program Files\OpenAFS\Common;
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.562
+!MESSAGE Checking path: C:\Program Files\Borland\Delphi7\Bin
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.640
+!MESSAGE Checking path: C:\Program Files\Borland\Delphi7\Projects\Bpl\
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.734
+!MESSAGE Checking path: "C:\Program Files\Microsoft DirectX SDK (February 2006)\Utilities\Bin\x86"
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.796
+!MESSAGE Checking path: C:\WINDOWS\system32
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.875
+!MESSAGE Checking path: C:\WINDOWS
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:12.953
+!MESSAGE Checking path: C:\WINDOWS\System32\Wbem
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.031
+!MESSAGE Checking path: C:\Program Files\Common Files\GTK\2.0\bin
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.109
+!MESSAGE Checking path: C:\Program Files\Microsoft SQL Server\90\Tools\binn\
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.187
+!MESSAGE Checking path: C:\PROGRA~1\GNU\WINCVS~1.3\CVSNT
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.265
+!MESSAGE Checking path: C:\WINDOWS\system32\nls
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.328
+!MESSAGE Checking path: C:\WINDOWS\system32\nls\ENGLISH
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.421
+!MESSAGE Checking path: C:\Program Files\Java\jdk1.6.0\bin\
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.484
+!MESSAGE Checking path: C:\Program Files\Java\jre1.6.0\bin\C:\Program Files\MiKTeX 2.5\miktex\bin
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.562
+!MESSAGE Checking path: C:\Program Files\OpenAFS\Client\Program
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.640
+!MESSAGE Checking path: C:\Program Files\OpenAFS\Common
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.718
+!MESSAGE Got path to Windows dir: C:\Program Files\Borland\Delphi7\Bin
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:13.812
+!MESSAGE Trying to copy included file: vendor/sqlite3.exe to: C:\Program Files\Borland\Delphi7\Bin\sqlite3.exe
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:14.093
+!MESSAGE Trying to copy included file: vendor/sqlite3.dll to: C:\Program Files\Borland\Delphi7\Bin\sqlite3.dll
+
+!ENTRY com.aptana.radrails.sqlite3.win32 1 -1 2008-12-04 11:37:14.218
+!MESSAGE Trying to copy included file: vendor/sqlite3.def to: C:\Program Files\Borland\Delphi7\Bin\sqlite3.def
+
+!ENTRY org.rubypeople.rdt.launching 4 4 2008-12-04 11:37:16.812
+!MESSAGE Failed to retrieve default libraries for D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2
+
+!ENTRY org.eclipse.ui 4 4 2008-12-04 11:37:17.515
+!MESSAGE Part already exists in page layout: org.rubypeople.rdt.ui.RubyExplorer.
+
+!ENTRY org.rubypeople.rdt.launching 1 -1 2008-12-04 11:37:20.203
+!MESSAGE Starting: java -Xverify:none -Xmx512m -Xss1024k -cp "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-analysis-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-commons-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-tree-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-util-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\bsf.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jline-0.9.93.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jna.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\joda-time-1.5.1.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\joni.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jruby.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\com.aptana.ide.libraries_1.2.0.18696\derbyclient.jar" -Djruby.base="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2" -Djruby.home="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2" -Djruby.lib="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib" -Djruby.shell="cmd.exe" -Djruby.script="jruby.bat" org.jruby.Main -- "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\bin\gem" sources -l
+
+!ENTRY org.rubypeople.rdt.launching 1 -1 2008-12-04 11:37:20.328
+!MESSAGE Starting: java -Xverify:none -Xmx512m -Xss1024k -cp "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-analysis-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-commons-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-tree-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-util-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\bsf.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jline-0.9.93.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jna.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\joda-time-1.5.1.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\joni.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jruby.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\com.aptana.ide.libraries_1.2.0.18696\derbyclient.jar" -Djruby.base="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2" -Djruby.home="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2" -Djruby.lib="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib" -Djruby.shell="cmd.exe" -Djruby.script="jruby.bat" org.jruby.Main -- "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\bin\gem" -v
+
+!ENTRY org.rubypeople.rdt.launching 1 -1 2008-12-04 11:37:38.718
+!MESSAGE Starting: java -Xverify:none -Xmx512m -Xss1024k -cp "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-analysis-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-commons-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-tree-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\asm-util-3.0.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\bsf.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jline-0.9.93.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jna.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\joda-time-1.5.1.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\joni.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib\jruby.jar;D:\Program Files\Aptana Studio\Aptana Studio\plugins\com.aptana.ide.libraries_1.2.0.18696\derbyclient.jar" -Djruby.base="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2" -Djruby.home="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2" -Djruby.lib="D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\lib" -Djruby.shell="cmd.exe" -Djruby.script="jruby.bat" org.jruby.Main -- "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.jruby_1.1.0.5965_RC2p2\bin\gem" query -d
+
+!ENTRY org.eclipse.osgi 2 1 2008-12-04 11:38:01.296
+!MESSAGE NLS unused message: AutomaticUpdatesPreferencePage_LimitGeneric0 in: com.aptana.ide.core.ui.update.UpdateSchedulerResources
+
+!ENTRY org.eclipse.ui 4 4 2008-12-04 11:38:35.781
+!MESSAGE Unhandled event loop exception
+
+!ENTRY org.eclipse.ui 4 0 2008-12-04 11:38:35.890
+!MESSAGE Failed to execute runnable (java.lang.NullPointerException)
+!STACK 0
+org.eclipse.swt.SWTException: Failed to execute runnable (java.lang.NullPointerException)
+	at org.eclipse.swt.SWT.error(SWT.java:3563)
+	at org.eclipse.swt.SWT.error(SWT.java:3481)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:126)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3659)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3296)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:820)
+	at org.eclipse.jface.window.Window.open(Window.java:796)
+	at org.eclipse.update.internal.ui.wizards.ResizableInstallWizardDialog.open(ResizableInstallWizardDialog.java:59)
+	at com.aptana.ide.core.ui.update.UpdateJobChangeAdapter.openInstallWizard2(UpdateJobChangeAdapter.java:275)
+	at com.aptana.ide.core.ui.update.UpdateJobChangeAdapter.access$4(UpdateJobChangeAdapter.java:263)
+	at com.aptana.ide.core.ui.update.UpdateJobChangeAdapter$4.run(UpdateJobChangeAdapter.java:210)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at com.aptana.ide.core.ui.update.UpdateJobChangeAdapter.asyncNotifyUser(UpdateJobChangeAdapter.java:206)
+	at com.aptana.ide.core.ui.update.UpdateJobChangeAdapter.access$3(UpdateJobChangeAdapter.java:169)
+	at com.aptana.ide.core.ui.update.UpdateJobChangeAdapter$2.runInUIThread(UpdateJobChangeAdapter.java:119)
+	at org.eclipse.ui.progress.UIJob$1.run(UIJob.java:94)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:123)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3659)
+	at org.eclipse.swt.widgets.Display.messageProc(Display.java:2770)
+	at org.eclipse.swt.internal.win32.OS.GetOpenFileNameW(Native Method)
+	at org.eclipse.swt.internal.win32.OS.GetOpenFileName(OS.java:2506)
+	at org.eclipse.swt.widgets.FileDialog.open(FileDialog.java:306)
+	at org.eclipse.jface.preference.FileFieldEditor.getFile(FileFieldEditor.java:147)
+	at org.eclipse.jface.preference.FileFieldEditor.changePressed(FileFieldEditor.java:84)
+	at org.eclipse.jface.preference.StringButtonFieldEditor$1.widgetSelected(StringButtonFieldEditor.java:117)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:227)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:938)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3682)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3293)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:820)
+	at org.eclipse.jface.window.Window.open(Window.java:796)
+	at org.eclipse.ui.internal.OpenPreferencesAction.run(OpenPreferencesAction.java:65)
+	at org.eclipse.jface.action.Action.runWithEvent(Action.java:499)
+	at org.eclipse.jface.action.ActionContributionItem.handleWidgetSelection(ActionContributionItem.java:539)
+	at org.eclipse.jface.action.ActionContributionItem.access$2(ActionContributionItem.java:488)
+	at org.eclipse.jface.action.ActionContributionItem$5.handleEvent(ActionContributionItem.java:400)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:938)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3682)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3293)
+	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:1930)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1894)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at com.aptana.ide.rcp.AbstractIDEApplication.run(AbstractIDEApplication.java:116)
+	at com.aptana.ide.rcp.Application.run(Application.java:57)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+Caused by: java.lang.NullPointerException
+	at org.eclipse.update.internal.ui.wizards.ReviewPage$TreeContentProvider.getParent(ReviewPage.java:181)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.getParentElement(AbstractTreeViewer.java:1448)
+	at org.eclipse.jface.viewers.TreeViewer.getParentElement(TreeViewer.java:858)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.internalExpand(AbstractTreeViewer.java:1375)
+	at org.eclipse.jface.viewers.CheckboxTreeViewer.setCheckedElements(CheckboxTreeViewer.java:436)
+	at org.eclipse.update.internal.ui.wizards.ContainerCheckedTreeViewer.setCheckedElements(ContainerCheckedTreeViewer.java:155)
+	at org.eclipse.update.internal.ui.wizards.ReviewPage.selectTrueUpdates(ReviewPage.java:567)
+	at org.eclipse.update.internal.ui.wizards.ReviewPage.access$10(ReviewPage.java:560)
+	at org.eclipse.update.internal.ui.wizards.ReviewPage$2.run(ReviewPage.java:540)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.update.internal.ui.wizards.ReviewPage.performPostSearchProcessing(ReviewPage.java:534)
+	at org.eclipse.update.internal.ui.wizards.ReviewPage.access$8(ReviewPage.java:533)
+	at org.eclipse.update.internal.ui.wizards.ReviewPage$1.run(ReviewPage.java:527)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:123)
+	... 58 more
+
+!ENTRY org.eclipse.osgi 2 1 2008-12-04 11:39:08.421
+!MESSAGE NLS unused message: 1) in: org.rubypeople.rdt.internal.debug.ui.RdtDebugUiMessages
+
+!ENTRY org.rubypeople.rdt.launching 1 -1 2008-12-04 11:39:34.937
+!MESSAGE Starting: "D:\Program Files\InstantRails-2.0-win\ruby\bin\ruby.exe" -I "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.rubypeople.rdt.launching_1.0.3.200807071913NGT\ruby\flush" -rrdt_stream_sync.rb -- "D:\Program Files\InstantRails-2.0-win\ruby\bin\gem" -v
+
+!ENTRY org.rubypeople.rdt.launching 1 -1 2008-12-04 11:39:39.875
+!MESSAGE Starting: "D:\Program Files\InstantRails-2.0-win\ruby\bin\ruby.exe" -I "D:\Program Files\Aptana Studio\Aptana Studio\plugins\org.rubypeople.rdt.launching_1.0.3.200807071913NGT\ruby\flush" -rrdt_stream_sync.rb -- "D:\Program Files\InstantRails-2.0-win\ruby\bin\gem" query -d
+
+!ENTRY com.aptana.ide.core 4 0 2008-12-04 11:42:27.187
+!MESSAGE (Build 1.2.0.018852) [ERROR] An error occurred while shutting down the database
+!STACK 0
+java.sql.SQLException: No suitable driver found for jdbc:derby:;shutdown=true
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at com.aptana.ide.core.db.AptanaDB.shutdown(AptanaDB.java:320)
+	at com.aptana.ide.core.AptanaCorePlugin.stop(AptanaCorePlugin.java:89)
+	at org.eclipse.osgi.framework.internal.core.BundleContextImpl$3.run(BundleContextImpl.java:1032)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.framework.internal.core.BundleContextImpl.stop(BundleContextImpl.java:1028)
+	at org.eclipse.osgi.framework.internal.core.BundleHost.stopWorker(BundleHost.java:396)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.stop(AbstractBundle.java:400)
+	at org.eclipse.core.runtime.internal.adaptor.BundleStopper.basicStopBundles(BundleStopper.java:86)
+	at org.eclipse.core.runtime.internal.adaptor.BundleStopper.stopBundles(BundleStopper.java:73)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAdaptorHook.frameworkStopping(EclipseAdaptorHook.java:156)
+	at org.eclipse.osgi.baseadaptor.BaseAdaptor.frameworkStopping(BaseAdaptor.java:288)
+	at org.eclipse.osgi.framework.internal.core.Framework.shutdown(Framework.java:538)
+	at org.eclipse.osgi.framework.internal.core.Framework.close(Framework.java:449)
+	at org.eclipse.osgi.framework.internal.core.OSGi.close(OSGi.java:41)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.shutdown(EclipseStarter.java:423)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:193)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)

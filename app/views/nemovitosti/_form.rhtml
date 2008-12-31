@@ -1,0 +1,106 @@
+<% title(get_string(:New_property)) %>
+<%= error_messages_for 'property' %>
+<div style="margin: 2px; padding: 2px;">
+	<div id="type_name">
+		<table cellspacing="0" cellpadding="4">
+			<tr>
+				<th colspan="3"><%= get_string(:New_property) %></th>
+				<th><%= get_string(:Address) %></th>
+			</tr>
+			<tr>
+				<td style="border: solid 1px black; border-right: none; border-bottom: none;">
+					<p><label for = "property_name"><%= get_string(:Name) + ":" %></label><br/>
+					<%= text_field 'property', 'name' %><br/>
+					
+					<label for = "property_rooms"><%= get_string(:Number_of_rooms) + ":" %></label><br/>
+					<%= text_field 'property', 'bedrooms', :onchange => "$(property_space_arrangement).value = $('property_bedrooms').value + ' +'" %><br/>
+				    
+				  <label for="property_space_arrangement"><%= get_string(:Space_arrangement) %></label><br/>
+					<%= text_field 'property', 'space_arrangement'  %><br />
+									
+					<label for = "property_area"><%= get_string(:Area) + ":(m<sup>2</sup>)"%></label><br/>
+				    <%= text_field 'property', 'area' %> 	
+				</td>
+				<td style="border-top: solid 1px black;">
+					<% for room in Room.find(:all, :conditions => ["name != ?", 'room']) %>
+					<%= checked_checkbox_if(@property.rooms.include?(room), {:value => room.id, :name => "rooms[]"}) %> <%= room.name %><br />
+					<% end %>
+					<p>
+						<input type="checkbox" name="property[show_fittings]" id="property_show_fittings" checked="checked"/>
+						<label for="property_show_fittings"><%= get_string(:Show_fittings_to_renters) %></label>
+					</p>
+				</td>
+				<td style="border-top: solid 1px black;">
+					<%= get_string(:Administrator) %>:<br />
+					<%= collection_select(:property, :administrator_id, @administrators, :id, :name, {:include_blank => true}) %>
+				<br/>
+					<%= get_string(:Owner) %>:<br />
+					<%= collection_select(:property, :owner_id, @administrators, :id, :name, {:include_blank => true}) %>
+				</td>
+				<td rowspan="2" style="border: solid 1px black">
+					<label for="property_address">Address</label><br/>
+					<%= text_area 'property', 'address', {:cols => '25', :rows => '2'} %><br/>
+					
+					<label for="property_psc">Psc</label><br/>
+					<%= text_field 'property', 'psc'  %><br/>
+					
+					<label for="property_city">City</label><br/>
+					<%= text_field 'property', 'city'  %><br/>
+					
+					<label for="property_about">About</label><br/>
+					<%= text_area 'property', 'about', {:rows => '5'}  %><br/>
+					
+					<label for="property_rent">Rent</label><br/>
+					<%= text_field 'property', 'rent'  %><br/>
+					
+					<label for="property_fees">Fees</label><br/>
+					<%= text_field 'property', 'fees' %><br/>
+					
+					<label for="property_locality">Locality</label><br/>
+					<%= text_area 'property', 'locality', {:rows => '3'}  %>
+				</td>
+			</tr>
+			<tr>
+				<td style="border: solid 1px black; border-right: none;">
+					<label for="property_heating"><%= get_string(:Heating) %></label><br/>
+					<%= text_field 'property', 'heating', :value => @property.get_value_for(:heating) %>	<br />			
+					
+					<label for="property_bathroom"><%= get_string(:Bathroom) %></label><br/>
+					<%= text_field 'property', 'bathroom', :value => @property.get_value_for(:bathroom) %><br />
+					
+					<label for="property_wc"><%= get_string(:WC) %></label><br/>
+					<%= text_field 'property', 'wc', :value => @property.get_value_for(:wc) %><br />
+					
+				 <label for="property_warm_water"><%= get_string(:Warm_water) %></label><br/>
+					<%= text_field 'property', 'warm_water', :value => @property.get_value_for(:warm_water) %>
+				</td>
+				<td style="border-top: solid 1px black; border-bottom: solid 1px black;">
+					<label for="property_floor"><%= get_string(:Floor) %></label><br/>
+					<%= text_field 'property', 'floor'  %><br />
+					
+					<label for="property_cathegory"><%= get_string(:Cathegory) %></label><br/>
+					<%= text_field 'property', 'cathegory' %><br />
+					
+					<label for="property_room_height"><%= get_string(:Room_height) %></label><br/>
+					<%= text_field 'property', 'room_height'  %><br />
+					
+				  <label for="property_chimneys"><%= get_string(:Chimneys) %></label><br/>
+					<%= text_field 'property', 'chimneys'  %>
+				</td>
+				<td style="border-top: solid 1px black; border-bottom: solid 1px black;">
+					<label for="property_cadaster"><%= get_string(:Cadaster) %></label><br/>
+					<%= text_field 'property', 'cadaster'  %><br />
+									
+					<label for="property_house"><%= get_string(:Building) %></label><br/>
+					<%= text_field 'property', 'building'  %><br />
+					
+					<label for="property_house"><%= get_string(:House) %></label><br/>
+					<%= text_field 'property', 'house'  %><br />
+					
+					<label for="property_flat"><%= get_string(:Flat) %></label><br/>
+					<%= text_field 'property', 'flat'  %>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

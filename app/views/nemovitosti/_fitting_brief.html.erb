@@ -1,0 +1,17 @@
+<td><%= link_to_remote @fitting.name,
+						:before => "$('indicator"+@fitting.id.to_s+"').show()",
+						:url => {:action => 'fitting_detail', :id => @fitting.id.to_s },
+						:failure => "alert('Error occured')",
+						:complete => "$('indicator"+@fitting.id.to_s+"').hide()" %>
+</td>
+<td><%= @fitting.price %></td>
+<td><%= @fitting.count %></td>
+<td>
+	<%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:edit], {:style => "border: none", :title => get_string(:Edit)}),
+										 :url => {:controller => 'nemovitosti', :action => 'show_fitting_edit_form', :id => @fitting},
+										 :before => "$('indicator"+@fitting.id.to_s+"').show()",
+										 :update => "add_fitting",
+										 :failure => "alert('Error')",
+										 :complete => "$('add_fitting').show(); $('indicator"+@fitting.id.to_s+"').hide()") %>
+	<%= link_to image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none", :title => get_string(:delete)), { :action => 'destroy_fitting', :id => @fitting }, :confirm => 'Are you sure?', :method => :post %>
+</td>

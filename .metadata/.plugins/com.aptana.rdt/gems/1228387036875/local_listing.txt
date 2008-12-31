@@ -1,0 +1,17 @@
+
+*** LOCAL GEMS ***
+
+activerecord-jdbc-adapter (0.7.2)
+    JDBC adapter for ActiveRecord, for use within JRuby on Rails.
+
+jruby-openssl (0.1.1)
+    OpenSSL add-on for JRuby
+
+ruby-debug-base (0.10.0)
+    Java implementation of Fast Ruby Debugger
+
+ruby-debug-ide (0.1.10)
+    IDE interface for ruby-debug.
+
+sources (0.0.1)
+    This package provides download sources for remote gem installation

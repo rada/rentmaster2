@@ -1,0 +1,9 @@
+ <% form_tag :action => 'add_note', :id => @property do %>
+ 
+	<p><label for="property_note">Poznamka</label><br/>
+	<%= text_field 'property', 'note'  %></p>
+  
+  <%= submit_tag 'Pridej' %>
+<% end %>
+
+<%= link_to 'Back', :action => 'detail', :id => @property %>

@@ -1,0 +1,42 @@
+<% if @new_messages.empty? %>
+	<h3><%= get_string(:No_new_messages) %></h3>
+<% else %>
+	<h3><%= get_string(:You_have) %> <%= @new_messages.size %> <%= get_string(:new_messages) %></h3>
+<% end %>
+<div class="left">
+	<table style="width: 100%">
+		<tr>
+			<th><%= get_string(:Subject) %></th>
+			<th><%= get_string(:Content) %></th>
+			<th><%= get_string(:Date) %></th>
+			<th></th>
+			<th></th>
+		</tr>
+		<% for message in @messages %>
+		<tr id="message_<%= message.id %>" class="<%= message.is_new('read','') %>">
+			<td><%=h message.subject %></td>
+			<td><%=h truncate(message.content, 30) %></td>
+			<td><%= MyDate.date_at(message.sent_at) %></td>
+			<td>
+				<% link_to(get_string(:Read), :action => 'show', :id => message) %>
+				<%= link_to_remote("#{get_string(:Read)}&#x2192;",
+														:update => "show_message",
+														:url => {:action => 'show', :id => message},
+														:failure => "alert('ERROR')",
+														:complete => "$('message_#{message.id}').className='';") %>
+			</td>
+			<td><%= link_to_remote(get_string(:Reply),
+														 :udpate => "show_messages",
+														 :url => {:controller => 'messages', :action => 'reply', :id => message},
+														 :failure => "alert('ERROR')",
+														 :complete => "$('message_#{message.id}').className='';" ) %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------>
+
+<div class="right" id="show_message">
+	
+</div>

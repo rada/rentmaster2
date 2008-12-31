@@ -1,0 +1,24 @@
+<div style="text-align: right; margin-left: 5px; position: absolute;">
+	<%= link_to(get_string(:edit), {:controller => 'nemovitosti', :action => 'edit', :id => @property}, {:style => "font-size: 70%"} ) %> | 
+	<%= link_to(get_string(:new), {:controller => 'nemovitosti', :action => 'new'}, {:style => "font-size: 70%; font-align: right"} ) %> |
+	<% if @property.is_closed %>
+	<%= link_to(get_string(:open), {:controller => 'nemovitosti', :action => 'open', :id => @property}, {:style => "font-size: 70%; font-align: right"}) %> |
+	<% else %>
+	<%= link_to(get_string(:close), {:controller => 'nemovitosti', :action => 'close_settings', :id => @property}, {:style => "font-size: 70%; font-align: right"}) %> |
+	<% end %>
+	<%= link_to(get_string(:delete), {:controller => 'nemovitosti', :action => 'delete', :id => @property}, {:style => "font-size: 70%; font-align: right"}) %>
+</div>
+<div style="text-align: center">
+	|
+	<%= link_to 'Detail', :controller => 'nemovitosti', :action => 'detail', :id => @property %>
+	|
+	<%= link_to 'Vybaveni', :controller => 'nemovitosti', :action => 'fittings', :id => @property %>
+	|
+	<%= link_to 'Finance', :controller => 'finances', :action => 'pending', :bills_for => 'property', :id => @property %>
+	|
+	<%= link_to 'Statistiky', :controller => 'statistics', :action => 'property', :id => @property %>
+	|
+	<%= link_to get_string(:Evidence_list), :controller => 'nemovitosti', :action => 'evidence_list', :id => @property  %>	
+	|
+	<%= link_to get_string(:Accommodation_history), :controller => 'nemovitosti', :action => 'accommodation_history', :id => @property %>
+</div>

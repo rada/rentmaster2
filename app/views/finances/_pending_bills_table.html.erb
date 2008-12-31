@@ -1,0 +1,81 @@
+	<%= render :partial => 'finances/pending_operations' %>
+	<%= submit_tag get_string(:Pay) %>
+	<table cellpadding="1" cellspacing="1">
+		<tr>
+			<th></th>
+			<th><%= get_string(:Status) %></th>
+			<th><%= get_string(:Obejct_of_pay) %></th>
+			<th><%= get_string(:Price) %></th>
+			<th><%= get_string(:Penalty) %></th>
+			<th><%= get_string(:Belongs_to) %></th>
+			<th><%= get_string(:Group) %></th>
+			<th><%= get_string(:Deadline) %></th>
+			<th><%= get_string(:Paid) %></th><th colspan="4"></th>
+		</tr>
+		<%# i = 0 %>
+		<% for bill in @bills_to_show do %>
+		<%# i += 1 %>
+		<tr <%= "class='#{bill.late_or_wait?}'" %> id="bill_info<%= bill.id %>">
+			<td><input type="checkbox" <%= " id='check#{bill.id}' value='#{bill.id}' name='#{bill.check_status(false)}[]'" %>/></td>
+			<%= bill.check_status(true) %>
+			<td><%= bill.object %></td>
+			<td><%= bill.price %></td>
+			<td <%= "id='penalty#{bill.id}'"%>><%= link_to_remote(number_with_precision(bill.penalty_total,2),
+															:before => "$('loader#{bill.id}').show()",
+															:update => 'penalties'+bill.id.to_s,
+															:url => {:controller => 'finances', :action => 'show_penalty_history', :id => bill.id},
+															:complete => "$('penalties#{bill.id}').show();$('loader#{bill.id}').hide()",
+															:failure => "alert('error')")  if (bill.deadline < MyDate.today) %></td>
+			<td><%= bill.belongs_to %></td>
+			<td><%= "#{bill.groupp}(#{bill.category})" %></td>
+			<td><%= MyDate.date_at(bill.deadline.to_i) %></td>
+			<td><%= link_to_remote(get_string(:Pay),
+						 :before => "$('loader#{bill.id}').show();$('check#{bill.id}').checked = true;",
+						 :update => bill.id,
+						 :url => {:controller => 'finances', :action => 'date_select', :id => bill.id},
+						 :complete => "$('loader#{bill.id}').hide()") if bill.paid == 0 %>
+					<%= MyDate.date_at(bill.paid) if bill.paid > 0 %>
+			</td>
+			<td>
+				<%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:green_flag], {:style => "border: none", :title => get_string(:User_paid)}),
+													:before => "$('loader#{bill.id}').show(); $('paid#{bill.id}').show()",
+													:update => 'paid'+bill.id.to_s,
+													:url => {:controller => 'finances', :action => 'show_temp_bills', :id => bill.id},
+													:complete => "$('loader#{bill.id}').hide()",
+													:failure => "alert('error')")  if (bill.temp_bills != []) %></td>													 
+			</td>
+			<td>
+				<%= link_to_function(image_tag(Settings::DEFAULT_PICS[:note], :style => "border: none", :title => get_string(:Notes)),"$('notes#{bill.id}').toggle()") if bill.notes != [] %>
+			</td>
+			<td><%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:edit], {:style => "border: none", :title => get_string(:Edit)}),
+															:before => "moveIt($('bill_edit'),event.y+'px',event.x+25+'px');$('loader#{bill.id}').show()",
+															:update => "bill_edit",
+															:url => {:controller => 'finances', :action => 'edit_bill', :id => bill.id},
+															:failure => "alert('ERROR')",
+															:complete => "$('loader#{bill.id}').hide();$('bill_edit').show()") %>
+			</td>
+			<td>
+				<%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:delete], {:style => "border: none", :title => get_string(:Delete)}),
+														:before => "",
+														:confirm => "#{get_string(:Delete_bill?)}",
+														:url => {:controller => 'finances', :action => 'delete_bill', :id => bill.id},
+														:complete => "",
+														:failure => "alert('ERROR')") %>
+			</td>
+			<td id="loader<%= bill.id %>" style="display: none"><img src="/images/ajax_loaders/ajax_blue.gif"/></td>
+		</tr>
+		<tr <%= "id='#{bill.id}'"%> style="background-color: #dddfff;"></tr>
+		<tr <%= "id='paid#{bill.id}'"%> style="background-color: #e6e6f8;"></tr>
+		<tr>
+			<td></td><td></td><td></td>
+			<td colspan="8"  <%= "id='penalties#{bill.id}'" %>></td>
+		</tr>
+		<tr><td colspan="11" <%= "id='notes#{bill.id}'" %> style="display: none"><%= render :partial => 'finances/bill_notes', :locals => {:bill => bill} %></tr></td>
+		<% end %>	
+	</table>
+	<br />
+	<p style="text-align: right"><%= submit_tag get_string(:Pay) %></p>
+	<input type="hidden" value="10" value="<%= params[:per_page] %>" id="per_page" name="per_page" />
+	<div class="digg_pagination" style="clear: both; margin:0 auto;">
+	<p><%= paginated_entries_info(@bills_to_show) %></p>
+	</div>

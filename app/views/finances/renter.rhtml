@@ -1,0 +1,27 @@
+<%= error_messages_for 'bill' %>
+<% submenu(Settings::SUBMENU[:renter]) %>
+<div class="finances_left">
+	<h1 style="text-align: left;"><%= @renter.name %> <%= @renter.surname %></h1>
+	<hr/>
+	<div style="width: 600px">
+		<h2><%= get_string(:Autopays) %></h2>
+		<%= render :partial => 'finances/autopay_table' unless @autos==[] %>
+		<%= get_string(:No_defined_autopays_for_property) if @autos==[] %>
+	</div>
+	<hr/>
+		<div id="bill_edit" style="cursor: move; display: none;"><p style="text-align: right">[x]</p></div>
+		<%= draggable_element :bill_edit %>
+		<% form_remote_tag(:update => 'bills_table',
+											 :url => {:controller => 'finances', :action => 'pay_bills'},
+											 :failure => "alert('error')") do %>
+		<div id="bills_table"><%= render :partial => '/finances/pending_bills_table' %></div>
+		<% end %>
+	</div>
+<div class="finances_right">
+	<% form_remote_tag(:before => "$('ajax_loader_line').show()",
+										 :url => {:controller => 'finances', :action => 'pending', :bills_for => 'renter' },
+										 :failure => "alert('error')",
+										 :complete => "$('ajax_loader_line').hide()") do %>
+	<%= render '/finances/bill_settings' %>
+	<% end %>
+</div>

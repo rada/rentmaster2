@@ -1,0 +1,20 @@
+<div id="auto" style="display: none; border: dashed thin green; padding: 5px; width: 300px">
+		<p><label for="auto_pay_object"> Predmet platby (Nazev) </label><br/>
+		<%= text_field 'auto_pay', 'object', :value => "Najem:" %></p>
+		
+		<p><label for="auto_pay">První platba</label><br/>
+		<%= date_select("first", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+		</p>
+		
+		Pravidelne opakovat platbu každých<br/>
+		<select name="times">
+			<% 1.upto(31) do |i| %>
+			<option value=<%= i %>><%= i %></option>
+			<% end %>
+		</select>
+		<select name="period" >
+			<option id="day" value="1">Dnù</option>
+			<option id="week" value="7">Týdnù</option>
+			<option id="month" value="31">Mìsícù</option>
+		</select>	
+	</div>

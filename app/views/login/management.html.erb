@@ -1,0 +1,80 @@
+<% title(get_string(:Login_management)) %>
+<h1><%= get_string(:Login_management) %></h1>
+<br/>
+<%= error_messages_for 'user' %>
+<div class="left">
+	<h2><%= get_string(:Your_current_login) %></h2>
+	<table class="blue" style="width: 50%" cellspacing="0">
+		<thead>
+			<tr>
+				<th><%= get_string(:Name2) %></th>
+				<th><%= get_string(:Login) %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="back0">
+				<td><%= @user.full_name ? @user.full_name : @user.name%></td>
+				<td><%= @user.name %></td>
+				<td><%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:edit], :style => "border: none", :title => get_string(:Edit)),
+														:before => "$('login_indicator').show()",
+														:update => "edit_login",
+														:url => {:action => 'edit_login', :id => @user },
+														:failure => "alert('ERROR')",
+														:complete => "$('login_indicator').hide()"	) %></td>
+			</tr>
+		</tbody>
+	</table>
+	<hr />
+	<div id="edit_login">	
+		<%= render :partial => 'edit_login' %>
+	</div>
+</div>
+
+
+<div class="right">
+	<h2><%= get_string(:Renters_logins) %> <%= image_tag(Settings::DEFAULT_PICS[:ajax_blue], :style => "display: none", :id => "login_indicator") %></h2>
+	<table class="blue" style="width: 100%" cellspacing="0">
+		<thead>
+			<tr>
+				<th><%= get_string(:Login) %></th>
+				<th><%= get_string(:Name2) %></th>
+				<th><%= get_string(:Property) %></th>
+				<th></th><th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% bgcolor = 1 %>
+			<% for renter in @renters do %>
+			<% bgcolor = 1 - bgcolor %>
+			<tr class="back<%= bgcolor %>">
+				<td><%= renter.user.name if renter.user %></td>
+				<td><%= renter.full_name %></td>
+				<td><%= renter.property.name %></td>
+				<td>
+					<% if renter.user %>
+					<%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:edit], :style => "border: none", :title => get_string(:Edit)),
+														:before => "$('login_indicator').show()",
+														:update => "edit_login",
+														:url => {:action => 'edit_login', :id => renter.user },
+														:failure => "alert('ERROR')",
+														:complete => "$('login_indicator').hide()"	) %></td>
+					<% else %>
+					<%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:add], :style => "border: none", :title => get_string(:Create)),
+														:before => "$('login_indicator').show()",
+														:update => "edit_login",
+														:url => {:action => 'create', :id => renter},
+														:failure => "alert('ERROR')",
+														:complete => "$('login_indicator').hide()"	) %>
+					<% end %>
+				<td>
+						<%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none", :title => get_string(:Delete)), :controller => 'login', :action => 'delete_user', :id => renter.user.id) if renter.user %>
+				</td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% for renter in @renters do %>
+	
+	<% end %>
+</div>

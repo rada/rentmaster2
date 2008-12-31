@@ -1,0 +1,26 @@
+<table class="blue" cellspacing="0" style="width: 100%">
+	<tr>
+		<th>Název</th>
+		<th>Aplikovat po</th>
+		<th>Částka</th>
+		<th></th><th></th>
+	</tr>
+	<% bg_color = 0 %>
+	<% for penalty in @penalties do %>
+	<% bg_color = 1 - bg_color %>
+	<tr class="back<%= bg_color %>">
+		<td><%= penalty.name %></td>
+		<td><%= penalty.after %> dnech</td>
+		<td><%= penalty.price %><%= "%" if penalty.percent %></td>
+		<td style="width: 40px">
+			<%= link_to image_tag("/images/icons/red_cross_small.png", :style => "border: none"), { :controller => 'finances', :action => 'destroy_penalty', :id => penalty }, :confirm => 'Delete penalty. Are you sure?', :method => :post %>
+			<%= link_to_remote(image_tag("/images/icons/pencil_small.png", :style => "border: none"),
+												 :before => "$('"+penalty.id.to_s+"').show()",
+												 :url => {:controller => 'finances', :action => 'edit_penalty', :id => penalty },
+												 :failure => "alert('Error')",
+												 :complete => "$('"+penalty.id.to_s+"').hide()") %>
+		</td>
+		<td style="width: 20px"><img src="/images/ajax_loaders/ajax1.gif" id='<%= penalty.id %>' style="display: none;" /></td>
+	</tr>
+	<% end %>
+</table>

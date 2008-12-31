@@ -1,0 +1,7 @@
+	<input type="checkbox" id="check_late" value="1" onclick="check_all_in_document_name(window.document,'late[]','check_late')" />
+	Označit všechny meškající
+	
+	<input type="checkbox" name="check_wait" value="1" onclick="check_all_in_document_name(window.document,'wait[]','check_wait')" />
+	Označit všechny čekající<br/>
+	<p>Označené platby proběhly dne: 
+	<%= date_select("date", "default", {:order => [:day, :month, :year], :use_month_numbers => true})%></p>

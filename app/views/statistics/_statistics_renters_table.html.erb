@@ -1,0 +1,47 @@
+<table style="width: 300px">
+				<tr>
+					<th><%= get_string(:renter) %> <%= image_tag("/images/ajax_loaders/ajax_blue.gif", :style => "display: none;", :id => "bill_loader") %></th>
+					<th></th>
+					<th><%= get_string(:expected) %></th>
+					<th><%= get_string(:real) %></th>
+				</tr>
+				<% for renter in @renters %>
+				<tr>
+					<td rowspan="2" style="border-bottom: solid thin black"><%= renter[:name] %></td>
+					<td>+</td>
+					<td><%= link_to_remote(number_to_currency(renter[:income][:expected], :unit => "", :separator => ",", :delimiter => " "),
+															:before => "$('bill_loader').show();",
+															:update => "bills_table",
+															:url => {:action => "show_bills", :bills => renter[:income][:expected_bills_ids]},
+															:failure => "alert('error')",
+															:complete => "$('bill_loader').hide();$('bills_table').show()") %>
+					</td>
+					<td ><%= link_to_remote(number_to_currency(renter[:income][:real], :unit => "", :separator => ",", :delimiter => " "),
+															:before => "$('bill_loader').show();",
+															:update => "bills_table",
+															:url => {:action => "show_bills", :bills => renter[:income][:real_bills_ids]},
+															:failure => "alert('error')",
+															:complete => "$('bill_loader').hide();$('bills_table').show()") %>
+					</td>
+				</tr>
+				<tr>
+					<td style="border-bottom: solid thin black">-</td>
+					<td style="border-bottom: solid thin black">
+						<%= link_to_remote(number_to_currency(renter[:outcome][:expected], :unit => "", :separator => ",", :delimiter => " "),
+															:before => "$('bill_loader').show();",
+															:update => "bills_table",
+															:url => {:action => "show_bills", :bills => renter[:outcome][:real_bills_ids]},
+															:failure => "alert('error')",
+															:complete => "$('bill_loader').hide();$('bills_table').show()") %>
+					</tdstyle>
+					<td style="border-bottom: solid thin black">
+						<%= link_to_remote(number_to_currency(renter[:outcome][:real], :unit => "", :separator => ",", :delimiter => " "),
+															:before => "$('bill_loader').show();",
+															:update => "bills_table",
+															:url => {:action => "show_bills", :bills => renter[:outcome][:real_bills_ids]},
+															:failure => "alert('error')",
+															:complete => "$('bill_loader').hide();$('bills_table').show()") %>
+					</td>
+				</tr>
+				<% end %>
+			</table>

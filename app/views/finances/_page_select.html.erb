@@ -1,0 +1,7 @@
+<span><%= link_to_function("<--", "$('page_select').selectedIndex=$('page_select').selectedIndex - 1 ") %></span>
+<select id="page_select" name="page">
+	<% for page_number in 1..@bills_to_show.total_pages do %>
+	<%= selected_option_if(params[:page] == page_number.to_s, :value => page_number)%>
+	<% end %>
+</select>
+<span><%= link_to_function("-->", "$('page_select').selectedIndex=$('page_select').selectedIndex + 1 ") %></span>

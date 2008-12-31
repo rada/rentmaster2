@@ -1,0 +1,16 @@
+<%= @graph %>
+			
+	<div id="income" style="display: ; border: solid thin black">
+		
+	</div>
+	<script type="text/javascript">
+		function test(group){
+			var g = group 
+			
+			new Ajax.Request('/finances/update_income/'+g,
+							{asynchronous:true,
+							evalScripts:true, 
+							onFailure:function(request){alert('There was an error. ')}}); 
+			return false;	
+		}
+	</script>

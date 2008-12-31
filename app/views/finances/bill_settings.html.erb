@@ -1,0 +1,50 @@
+<fieldset>
+	<legend><%= get_string(:Show_payments) %></legend>
+	<p>
+		<label for="date">
+		<input id="date" type="checkbox" name="settings[include_date]" value="1" onclick="$('date_from').toggle(); $('date_to').toggle();$('date_type').toggle()"/>
+		<%= get_string(:Date) %></label>
+	</p>
+	<p id="date_from" style="display: none;">Od: <%= date_select('settings', 'date_from', :order	=> [:day, :month, :year], :use_month_numbers => true) %></p>
+	<p id="date_to" style="display: none;">Do: <%= date_select('settings', 'date_to', :order	=> [:day, :month, :year], :use_month_numbers => true) %></p>
+	<p id="date_type" style="display: none;">
+		<label for="settings_date_from">
+		<input id="settings_date_from" type="radio" value="deadline" checked="checked" name="settings[date_type]"/><%= get_string(:Deadline_date) %></label>
+		<label for="settings_date_to">
+		<input id="settings_date_to" type="radio" value="paid" name="settings[date_type]"/><%= get_string(:Pay_date) %></label>
+	</p>
+	<hr/>
+	<p><label for="pending"><input type="radio" id="pending" name="settings[bills_type]" value="pending" checked="checked" />	nezaplacené</label></p>
+	<p><label for="paid"><input type="radio" id="paid" name="settings[bills_type]" value="paid" /> zaplacené</label></p>
+	<p><label for="all"><input type="radio" id="all" name="settings[bills_type]" value="all" /> všechny</label></p>
+	<hr/>
+	<p><%= get_string(:Order) %>
+		 <input type="radio" value="ASC" name="settings[sort]" checked="checked">&#x2191;
+		 <input type="radio" value="DESC" name="settings[sort]">&#x2193;
+	</p>
+	<p>
+		<%= get_string(:Order_by) %>
+		<select name=settings[sort_by]>
+			<option value="deadline">Deadline</option>
+			<option value="object">Předmět</option>
+			<option value="price">Cena</option>
+			<option value="renter_id">Nájemník</option>
+			<option value="groupp">Skupina</option>
+			<option value="category">Příjem/Výdaj</option>
+			<option value="paid">Den zaplacení</option>
+		</select>
+	</p>
+	<p>
+	 <%= get_string(:Records_per_page)%>
+	 <select name='settings[per_page]'>
+	 <% (10..100).step(10){|int| %>
+	 	 <option value="<%= int %>" onclick="$('per_page').value=this.value"><%= int %></option>
+	 <%	} %>
+	 </select>
+	</p>
+	<p style="text-align: center" id="pages">
+		<%= render :partial => '/finances/page_select' %>
+	</p>
+	<p style="text-align: center;"><%= submit_tag get_string(:Show) %></p>
+	<p style="text-align: center;"><img style="display: none;" src="/images/ajax_loaders/ajax_blue_line.gif" id="ajax_loader_line"></p>
+</fieldset>

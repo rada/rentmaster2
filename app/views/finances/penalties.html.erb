@@ -1,0 +1,13 @@
+<% title(get_string(:Penalties)) %>
+<% submenu(Settings::SUBMENU[:finances]) %>
+<h1><%= get_string(:Penalties)%></h1>
+<div id="left" class="left">
+	<%= error_messages_for 'penalty' %>
+	<%= render :partial => 'penalty_table' %>
+</div>
+
+<div class="right">
+	<div id="fieldset">
+		<%= render :partial => 'penalty_form' %>
+	</div>
+</div>

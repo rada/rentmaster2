@@ -1,0 +1,62 @@
+<% title(get_string(:Personal_info)) %>
+<% submenu(Settings::SUBMENU[:renters_sub]) %>
+<%= error_messages_for 'renter' %>
+<h1><%= get_string(:Personal_informations) %></h1><br />
+<div class="left">
+	<table class="property">
+		<tbody>
+			<tr>
+				<td valign="top">
+					<div class="address" style="width: 330px; padding: px">
+						<h2><%= @renter.full_name %></h2>
+						<p><%= @renter.telephone %></p>
+						<p><%= @renter.email %></p>
+						<hr />
+						<p><%= @renter.address %></p>
+						<p><span><%= @renter.psc %></span> <span><%= @renter.city %></span></p>
+					</div>
+				</td>
+				<td valign="right">
+					<%= image_tag(photo(@renter.image_small, Settings::DEFAULT_PICS[:renter])) %>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="right">
+	<% form_tag({:action => 'update_renter', :id => @renter}, :multipart => true) do %>
+	<table>
+		<tbody>
+			<tr>
+				<td valign="top">
+					<p><label for="renter_name"><%= get_string(:Name) %></label><br/>
+					<%= text_field 'renter', 'name'  %>*</p>
+					
+					<p><label for="renter_surname"><%= get_string(:Surname) %></label><br/>
+					<%= text_field 'renter', 'surname'  %>*</p>
+					
+					<p><label for="renter_email"><%= get_string(:Email) %></label><br/>
+					<%= text_field 'renter', 'email'  %>*</p>
+					
+					<p><label for="renter_telephone"><%= get_string(:Telephone) %></label><br/>
+					<%= text_field 'renter', 'telephone'  %>*</p>
+				</td>
+				<td valign="top">
+					<p><label for="renter_address"><%= get_string(:Address) %></label><br/>
+					<%= text_field 'renter', 'address'  %>*</p>
+					
+					<p><label for="renter_city"><%= get_string(:City) %></label><br/>
+					<%= text_field 'renter', 'city'  %>*</p>
+					
+					<p><label for="renter_psc"><%= get_string(:Postal_code) %></label><br/>
+					<%= text_field 'renter', 'psc'  %>*</p>
+					
+					<%= render :partial => 'manage_renter/renter_picture_upload', :object => @renter %>
+					
+					<p style="text-align: right"><%= submit_tag get_string(:Update) %></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<% end %>
+</div>

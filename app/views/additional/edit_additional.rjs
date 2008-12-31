@@ -1,0 +1,2 @@
+page[:edit].show
+page[:edit].replace_html :partial => 'edit'

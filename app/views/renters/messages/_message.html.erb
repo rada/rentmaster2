@@ -1,0 +1,11 @@
+<div id="from" class="message_from">
+		<b><%= get_string(:From) %>:</b>
+		<%= @message.from_id %>
+	</div>
+	
+	<div id="subject" class="message_from">
+		<b><%= get_string(:Subject) %>:</b> <%= @message.subject %>
+	</div>
+	<br />
+	<div id="from" class="message_content"><%= @message.content %></div>
+</div>

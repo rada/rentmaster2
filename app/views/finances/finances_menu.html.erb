@@ -1,0 +1,7 @@
+<div style="text-align: center">
+		<%= link_to(get_string(:Bills), :action => 'pending') %> |
+		<%= link_to(get_string(:Autopays), :action => 'autopays') %> |
+		<%= link_to(get_string(:Penalties), :controller => 'finances', :action => 'penalties') %> |
+		<%= link_to(get_string(:Add_bill), :controller => 'finances', :action => 'show_bill_form') %>
+	</div>
+ <img src="/images/ajax_loaders/ajax1.gif" id="indicator" style="display: none;">

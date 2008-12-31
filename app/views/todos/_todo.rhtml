@@ -1,0 +1,86 @@
+<table class="todo" width="100%" style="border-bottom: thin dotted grey">
+	<tr>
+		<td>Task manager</td>
+		<td><%= image_tag("/images/close.jpg", :align => 'right', :onclick => "$('task_manager').toggle()", :style => "cursor: pointer;") %></td>
+	</tr>
+</table>
+<%= error_messages_for 'todo' %>
+<!--[form:todo]-->
+<br/>
+<table class="todo">
+	<tr>
+		<td><label for="todo_task">*Task:</label></td>
+		<td><%= text_field 'todo', 'task' %></td>
+	</tr>
+	<tr>
+		<td><label for="todo_description">*Description:</label></td>
+		<td><%= text_area 'todo', 'description', :cols => 32, :rows => 5 %></td>
+	</tr>
+	<tr>
+		<td><label for="todo_show_to_renters"><%= get_string(:Show_to_renter) %></label></td>
+		<td><%= check_box 'todo', 'show_to_renter', :checked => 'checked' %></td>
+	</tr>
+</table>
+<%= link_to_function( get_string(:Options), "$('more_options').toggle();") %>
+<%= link_to_function( get_string(:Notification), "$('notification').toggle();") %>
+<table class="todo" id="more_options" style="display: none;">
+	<tr>
+		<td>Nemovitost</td>
+		<td id="check_property">
+			<select name="todo[property_id]">
+				<option>Vybrat nemovitost</option>
+				<% for property in User.get_properties(session[:user_id]) do %>
+				<%= selected_option_if(params[:id]==property.id.to_s, {:name => property.name, :value => property.id}) %>
+				<% end %>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Priorita</td>
+		<td id="check_pri">
+			<div>
+				<%= radio_button 'todo', 'priority', 'high' %> Vysoka
+				<%= radio_button 'todo', 'priority', 'medium' %> Stredni
+				<%= radio_button 'todo', 'priority', 'low', :checked => 'checked' %> Nizka				
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="todo_actor">Actor:</label></td>
+		<td id="actor" style="display: none;"><%= text_field 'todo', 'actor' %></td>
+		<td><input type="checkbox" onchange="$('actor').toggle()"/></td>		
+	</tr>
+	<tr>
+		<td><label for="todo_deadline">Deadline:</label></td>
+		<td id="deadline" style="display: none;">
+		<%= date_select("deadline", "todo", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+		</td>
+		<td><input type="checkbox" onchange="$('deadline').toggle()"/></td>		
+	</tr>
+	<tr>
+		<td><label for="todo_cost">Cost:</label></td>
+		<td id="check_cost"  style="display: none;">
+			<%= text_field 'todo', 'cost' %>
+		</td>
+		<td><input type="checkbox" onchange="$('check_cost').toggle()"/></td>		
+	</tr>
+</table>
+
+<hr/>
+<table class="todo" id="notification" style="display: none;">
+	<caption>Upozornit (po prihlaseni)</caption>
+	<tr>
+		<td><%= radio_button 'todo', 'notif', '1' %></td>
+		<td>Pri prihlaseni</td>
+	<tr/>
+	<tr>
+		<td><%= radio_button 'todo', 'notif', '2' %></td>
+		<td>Pouze po: 
+		<%= date_select("warn_date", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+		</td>
+	</tr>
+	<tr>	
+		<td><%= radio_button 'todo', 'notif', '0', :checked => 'checked' %></td>
+		<td>Pouze v dane sekci</td>
+	</tr>
+</table>

@@ -1,0 +1,25 @@
+<table class="brown" style="width: ;" cellspacing="1">
+	<tr>
+		<th><%= get_string(:Title) %></th>
+		<th><%= get_string(:Task) %></th>
+		<th><%= image_tag('/images/ajax_loaders/ajax_blue.gif', :id => "loader", :style => "display: none") %></th>
+	</tr>
+	
+	<% background = 0 %>
+	<% for todo in @todos %>
+	<% background = 1 - background %>
+		<tr class="back<%= background %>">
+			<td><b><span class="<%= todo.css_class %>"><%= todo.task %></span></b></td>
+			<td><%=h truncate(todo.description, 30) %></td>
+			<td><%= link_to_remote('info',
+														 :before => "$('loader').show()",
+														 :update => "info#{todo.id}",
+														 :url => {:controller => '/todos', :action => 'show_info', :id => todo.id},
+														 :complete => "$('loader').hide();$('info#{todo.id}').show()",
+														 :failure => "alert('error')") %></td>
+		</tr>
+		<tr class="back<%= background %>">
+			<td colspan="3" <%= "id='info#{todo.id}'" %> style="width: 400px; display: none"></td>
+		</tr>
+	<% end %>
+</table>

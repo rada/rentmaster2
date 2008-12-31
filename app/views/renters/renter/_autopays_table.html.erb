@@ -1,0 +1,15 @@
+<table class="detail">
+	<tr>
+		<th><%= get_string(:Object) %></th>
+		<th><%= get_string(:Price) %></th>
+		<th><%= get_string(:Repeat) %></th>
+	</tr>
+	<tr>
+		<td><%= @auto.name != '' ? @auto.name : @auto.object %></td>
+		<td><%= @auto.price %></td>
+		<td><%= @auto.repeat %> dnů</td>
+		<td>
+			<%= link_to_function 'close', "$('detail_"+@auto.id.to_s+"').visualEffect('Puff')" %>
+		</td>
+	</tr>
+</table>

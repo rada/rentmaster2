@@ -1,0 +1,26 @@
+<p><label for="fitting_property_id">Property</label><br/>
+	<select name="fitting[property_id]">
+		<option value=<%= @property.id.to_s %>><%= @property.name %></option>
+		<% for property in @properties do %>
+			<% next if property.id == @property.id %>
+			<option value=<%= property.id %>><%= property.name %></option>
+		<% end %>
+	</select>
+	
+	<p><label for="fitting_name">Name</label><br/>
+	<%= text_field 'fitting', 'name' %></p>
+		
+	<p><label for="fitting_model">Model</label><br/>
+	<%= text_field 'fitting', 'model' %></p>
+	
+	<p><label for="fitting_serial">Serial</label><br/>
+	<%= text_field 'fitting', 'serial' %></p>
+	
+	<p><label for="fitting_price">Price</label><br/>
+	<%= text_field 'fitting', 'price' %></p>
+	
+	<p><label for="fitting_count">Count</label><br/>
+	<%= text_field 'fitting', 'count' %></p>
+	
+	<p><label for="fitting_about">About</label><br/>
+	<%= text_area 'fitting', 'about' , {:rows => "4"}%></p>

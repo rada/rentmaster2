@@ -1,0 +1,2 @@
+page[:graph].replace_html :partial => 'reload_graph'
+page[:statistics_table].replace_html :partial => "statistics_table"

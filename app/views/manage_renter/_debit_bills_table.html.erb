@@ -1,0 +1,24 @@
+<table width="100%" cellspacing="4">
+    <tr>
+        <th>Předmet</th>
+        <th>Cena</th>
+        <th>Penále</th>
+        <th>Skupina</th>
+        <th>Deadline</th>
+    </tr>
+		<% for bill in @debit_bills do %>
+		<tr>
+        <td><%= bill.object %></td>
+        <td><%= bill.price %></td>
+        <td><%= number_with_precision(bill.penalty_total,2) if (bill.deadline < MyDate.today) %></td>
+        <td><%= bill.groupp %></td>
+        <td><%= MyDate.date_at(bill.deadline) %></td>
+    </tr>
+		<% end %>
+</table>
+<% if @user.typ == :admin %>
+<%= link_to(get_string(:Pay), :controller => 'finances', :action => 'pending', :id => @renter, :show => 'debit', :bills_for => 'renter') %> | 
+<% else %>
+<%= link_to(get_string(:Pay), :controller => '/renters/finances', :action => 'bills', :id => @renter, :show => 'debit') %> | 
+<% end %>
+<%= link_to_function(get_string(:Hide), "$('debit_bills_table').hide()") %>

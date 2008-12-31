@@ -1,0 +1,7 @@
+<h1><%= get_string(:New_property) %></h1>
+
+<% form_tag :action => 'create' do %>
+  <%= render :partial => 'form' %>
+  <p style="text-align: center;"><%= submit_tag get_string(:Create) %></p>
+<% end %>
+

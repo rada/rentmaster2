@@ -1,0 +1,34 @@
+<% title(get_string(:Finances)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<h1><%= @property.name %></h1>
+<div class="finances_left">
+	<div style="width: 600px">
+		<h2>Pravidelné platby</h2>
+		<% if @autopays != [] %>
+		<%= render :partial => 'finances/autopay_table' %>
+		<% else %>
+		<%= get_string(:No_defined_autopays_for_property) %>
+		<% end %>
+	</div>
+	<hr/>
+	<div id="pending_bills">
+		<h2><%= get_string(:Bills_for_property) %></h2>
+		<div id="bill_edit" style="cursor: move; display: none;"><p style="text-align: right">[x]</p></div>
+		<%= draggable_element :bill_edit %>
+		<% form_remote_tag(:update => 'bills_table',
+											 :url => {:controller => 'finances', :action => 'pay_bills'},
+											 :failure => "alert('error')") do %>
+		<div id="bills_table"><%= render :partial =>'finances/pending_bills_table' %></div>
+		<% end %>
+		
+	</div>
+</div>
+<div class="finances_right">
+	<% form_remote_tag(:before => "$('ajax_loader_line').show()",
+										 :url => {:controller => 'finances', :action => 'pending', :id => @property.id, :bills_for => 'property' },
+										 :failure => "alert('error')",
+										 :complete => "$('ajax_loader_line').hide()") do %>
+	<%= render '/finances/bill_settings' %>	
+	<% end %>
+</div>
+

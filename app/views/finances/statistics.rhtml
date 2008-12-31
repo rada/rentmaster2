@@ -1,0 +1,108 @@
+<% submenu(Settings::SUBMENU[:finances]) %>
+<h1><%= get_string(:Finances) %></h1><br />
+<div id="left" class="left">
+	<h2><%= get_string(:Actual_month) %></h2>
+	<div style="width: 100%;">
+		<h3><%= get_string(:Bills_total) %></h3>
+		<div style="width: 60%; float: right;">
+			<table class="blue" cellspacing="0" style="width: 100%">
+				<thead>
+					<tr>
+						<th><%= get_string(:Bills_total) %></th>
+						<th><%= get_string(:Value) %></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="back0">
+						<td><%= @month_bills[:bills_total].size %></td>
+						<td><%= number_to_currency(@month_bills[:value_total], 
+																				:unit => Settings::get_money_unit, 
+																				:delimiter => " ", 
+																				:separator => ",",
+																				:format => "%n %u") %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="clear: both"></div>
+	</div>
+	<div style="width: 100%;">
+		<h3><%= get_string(:Pending_bills) %></h3>
+		<div style="width: 60%; float: right">
+			<table class="blue" cellspacing="0" style="width: 100%">
+				<thead>
+					<tr>
+						<th><%= get_string(:Bills_total) %></th>
+						<th><%= get_string(:Value) %></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="back0">
+						<td><%= @month_bills[:pending_bills].total_entries %></td>
+						<td><%= number_to_currency(@month_bills[:pending_value], 
+																				:unit => Settings::get_money_unit, 
+																				:delimiter => " ", 
+																				:separator => ",",
+																				:format => "%n %u") %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="clear: both"></div>
+	</div><br />
+	<%= @bar_graph %>
+</div>
+
+<div class="right">
+	<h2><%= get_string(:Total) %></h2>
+	<div style="width: 100%;">
+		<h3><%= get_string(:Bills_total) %></h3>
+		<div style="width: 60%; float: right;">
+			<table class="blue" cellspacing="0" style="width: 100%">
+				<thead>
+					<tr>
+						<th><%= get_string(:Bills_total) %></th>
+						<th><%= get_string(:Value) %></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="back0">
+						<td><%= @bills_total[:bills_total].size %></td>
+						<td><%= number_to_currency(@bills_total[:value_total], 
+																				:unit => Settings::get_money_unit, 
+																				:delimiter => " ", 
+																				:separator => ",",
+																				:format => "%n %u") %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="clear: both"></div>
+	</div>
+	<div style="width: 100%; ">
+		<h3><%= get_string(:Pending_bills) %></h3>
+		<div style="width: 60%; float: right;">
+			<table class="blue" cellspacing="0" style="width: 100%">
+				<thead>
+					<tr>
+						<th><%= get_string(:Bills_total) %></th>
+						<th><%= get_string(:Value) %></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="back0">
+						<td><%= @bills_total[:pending_bills].size %></td>
+						<td><%= number_to_currency(@bills_total[:pending_value], 
+																				:unit => Settings::get_money_unit, 
+																				:delimiter => " ", 
+																				:separator => ",",
+																				:format => "%n %u") %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="clear: both"></div>
+	</div><br />
+	<%= @pie_graph %>
+	<div id="income"></div>
+</div>

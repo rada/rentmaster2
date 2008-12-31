@@ -1,0 +1,6 @@
+<div id="task_manager" style="display: none; z-index: 30; text-align: left;" >
+	<%= render :partial => 'todos/todo' %>
+	<center><%= submit_tag 'pridaj' %></center>				
+</div>
+<%= javascript_tag "new Draggable('task_manager', {scroll:true})" %>
+

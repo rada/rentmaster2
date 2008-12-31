@@ -1,0 +1,17 @@
+app
+config
+db
+db_export_15092008.txt
+db_export_3182008.txt
+db_export.sql
+doc
+git_log_log
+lib
+log
+public
+Rakefile
+README
+script
+test
+tmp
+vendor

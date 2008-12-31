@@ -1,0 +1,7 @@
+<h1>Editing renter</h1>
+
+<% form_tag({:action => 'update', :id => @renter}, :multipart => true) do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+

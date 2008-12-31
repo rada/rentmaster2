@@ -1,0 +1,57 @@
+<% form_tag(:controller => 'finances', :action => 'add_bill') do %>
+<div style=" width: 300px; margin: auto">
+<fieldset class="payment">
+	<legend>Příkaz k platbě</legend>
+		<p><label for="bill_object"> Predmet platby </label><br/>
+		<%= text_field 'bill', 'object' %></p>
+		
+		<p><label for="bill_price"> Cena </label><br/>
+		<%= text_field 'bill', 'price' %></p>
+		<p>
+		<%= radio_button('bill', 'category', 'in') %> Prijem
+		<%= radio_button('bill', 'category', 'out') %> Vydaj <p/>
+		
+		<p><label for="bill_group">Skupina:</label>
+		<select id="bill_groupp" name="bill[groupp]">
+			<% for group in Bill::Group do %>
+			<%= onclick_option_if(group[1]=="jine","$('other_group').show()",{:value=>group[1],:name=>group[0],:onclick=>"$('other_group').hide();$('other_group').value=''"}) %>
+			<% end %>
+		</select><br/>
+		<%= text_field 'bill', 'groupp', {:id => 'other_group', :style => "display: none"} %>
+		</p>
+		
+		<p>
+			<input type="radio" name="owner" value="property" onchange="$('bill_property_id').toggle();$('bill_renter_id').toggle()" checked='checked'/>Nemovitost 
+			<input type="radio" name="owner" value="renter" onchange="$('bill_renter_id').toggle();$('bill_property_id').toggle()" />Nájemník
+		</p>
+	
+		<p>
+		<%= collection_select('bill', 'property_id', Property.find(:all,:conditions => ["user_id = ?",session[:user_id]]),:id,:name, {:prompt => ''}) %>
+		<%= collection_select('bill','renter_id', Renter.find_by_sql(["SELECT r.id, r.property_id, r.name, r.surname 
+																																	FROM renters AS r, properties AS p 
+																																	WHERE 
+																																	r.property_id = p.id AND 
+																																	p.user_id = ?
+																																	ORDER BY r.surname ASC", session[:user_id]]),:id,:full_name2,{:prompt => ''},:style => 'display: none') %>
+		</p>
+		
+		<p id="deadline"><label for="bill_deadline"><%= get_string(:Deadline) %></label><br/>
+		<%= date_select("deadline", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+		</p>
+		<p>Přiradit penále za pozdní platbu<input type="checkbox" name="penalties" onchange="$('penalty_list').toggle()"/></p>
+		<p>
+			Platba již proběhla <input type="checkbox" name="bill_paid" value="1" onchange="$('bill_paid_on').toggle();" />
+		</p>
+		<p id="bill_paid_on" style="display: none">
+			Datum platby:<br/>
+			<%= date_select("pay_date", "", {:order => [:day, :month, :year], :use_month_numbers => true}) %>
+		</p>
+		<input type="hidden" name="nemovitost" <%= "value='#{@property.id.to_s if @property}'"%> />
+		<%= submit_tag 'Add bill', :id => 'submit' %>
+</fieldset></p>
+<div id="penalty_list" style="display: none">
+	<% for penalty in @penalties do %>
+	<input type="checkbox" name="penalty_list[]" <%= "value='#{penalty.id}'" %>/><%= penalty.name %><br />
+	<% end %>
+</div>
+<% end %>

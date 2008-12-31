@@ -1,0 +1,5 @@
+<h1>Welcome</h1>
+<p> <%= User.find(session[:user_id]).name%></p>
+<p>Dnes je <%= MyDate.now %>, <%= MyDate.time %></p>
+<p>Mate evidovane <%= link_to( @properties.size, :action => 'list', :controller => 'nemovitosti') %> nemovitosti </p>
+<p>Ubytovani jsou <%= link_to( @renters.size, :action => 'list', :controller => 'manage_renter') %> najemnici </p>

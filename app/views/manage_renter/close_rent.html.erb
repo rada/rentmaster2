@@ -1,0 +1,61 @@
+<% title(get_string(:Close_rent)) %>
+<% submenu(Settings::SUBMENU[:renter]) %>
+<h1><%= get_string(:Close_rent) %></h1>
+<%= show_close_rent_warnings(@renter) %><br />
+<div class="left">
+	<h2><%= @renter.full_name %></h2>
+	<table class="blue" cellpadding="3" cellspacing="0">
+		<thead>
+			<tr>
+				<th><%= get_string(:Total_days_spent) %></th>
+				<th style="border-left: solid 1px grey"><%= get_string(:End_rent_on_date) %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tr class="back1">
+			<td><%= MyDate::seconds_to_days(Time.now.to_i - @renter.start_date) %> <%= get_string(:Days) %></td>
+			<td style="border-left: solid 1px grey; width: 190px"><%= date_select("deadline", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %></td>
+			<td style="width: 300px; text-align: center;">
+			<% if @renter.has_unpaid_bills %>
+				<%= link_to_function(get_string(:Close_rent), "alert('#{get_string(:Cant_close_rent_while_renter_has_unpaid_bills)}')", {:style => "text-decoration: line-through"})%>
+			<% elsif !@renter.has_closed_rent %>
+				<%= link_to(get_string(:Close_rent), :action => 'end_rent', :id => @renter) %>
+			<% end %>
+			</td>
+		</tr>
+	</table>
+	<br />
+	<% if @renter.has_unpaid_bills %>
+	<table width="100%" >
+		<thead>
+			<tr>
+				<th><%= get_string(:Status) %></th>
+				<th><%= get_string(:Object_of_pay) %></th>
+				<th><%= get_string(:Deadline) %></th>
+				<th><%= get_string(:Penalty) %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for bill in @renter.get_unpaid_bills %>
+			<tr <%= "class='#{bill.late_or_wait?}'" %>>
+				<%= bill.check_status(true) %>		
+				<td><%=h bill.object %></td>
+				<td><%= MyDate::date_at(bill.deadline) %></td>
+				<td><%= number_with_precision(bill.penalty_total, 2) %></td>
+			</tr>
+			<% end %>
+			<tr>
+				<td colspan="4" class="dark_blue">
+					<%= link_to(get_string(:Pay_bills), :controller => 'finances', :action => 'pending', :id => @renter, :bills_for => 'renter') %>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<% end %>
+</div>
+<div class="right">
+	<div>
+		<h2><%= get_string(:Autopays) %></h2>
+		<%= render :partial => 'finances/autopay_table' %>
+	</div>
+</div>

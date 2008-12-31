@@ -1,0 +1,14 @@
+<table id="detede" class="detail" style="width: 50%">
+	<tr>
+		<th><%= get_string(:Name) %></th>
+		<th><%= get_string(:Price) %></th>
+		<th><%= get_string(:Repeat) %></th>
+	</tr>
+	<% for auto in @autopays %>
+	<tr>
+		<td><%= auto.object %></td>
+		<td><%= auto.price %></td>
+		<td><%= auto.repeat %> dnů</td>
+	</tr>
+	<% end %>
+</table>

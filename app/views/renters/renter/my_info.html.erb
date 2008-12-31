@@ -1,0 +1,139 @@
+<% title(get_string(:My_info)) %>
+<% submenu(Settings::SUBMENU[:renters_sub]) %>
+<h1><%= @renter.full_name %></h1>
+<br />
+<div class="left">
+	<table >
+		<tr>
+			<td><b>Property:</b></td>
+			<td><%= @renter.property.name %></td>
+			<td rowspan="7" style="width: 360px" valign="center"><%= image_tag(photo(@renter.image_small, Settings::DEFAULT_PICS[:renter])) %>
+		</tr>
+		<tr>
+			<td><b>Name:</b></td>
+			<td><%= @renter.name %> <%= @renter.surname %></td>
+		</tr>
+		<tr>
+			<td><b>Nastehovany od:</b></td>
+			<td><%= MyDate.date_at(@renter.start_date) %></td>
+		</tr>
+		<tr>
+			<td><b>Nastehovany do:</b></td>
+			<td><%= end_date(@renter.end_date) %></td>
+		</tr>
+		<tr>
+			<td><b><%= get_string(:Days_left) %></b></td>
+			<td><%= MyDate.seconds_to_days(@renter.end_date - Time.now.to_i) if @renter.end_date != 0 %></td>
+		<tr>
+			<td><b>Aktualni najem:</b></td>
+			<td> <%= @renter.rent %> </td>
+		</tr>
+		<tr id="add_autopay_rent"style="display: none;">
+			<td colspan="2">
+				<div style="border: solid thin black">
+					<% form_tag(:action => 'create_autopay_rent', :id => @renter ) do %>
+					<p><label for="autopay_object" class="right_align"><%= get_string(:Title) %>:</label> <input type="text" id="autopay_object" name="autopay[object]" value="<%= get_string(:Rent)+'('+@renter.surname+')' %>"/></label></p>
+					<p><label for="autopay_price" class="right_align"><%= get_string(:Rent) %>:</label> <input type="text" id="autopay_price" name="autopay[price]" value="<%= @renter.rent %>"/></p>
+					<p><label for="autopay_repeat" class="right_align"><%= get_string(:Days_repeat) %>: </label><input type="text" id="autopay_repeat" name="autopay[repeat]" /></p>
+					<p><label for="autopay_first_pay_3i" class="right_align"><%= get_string(:First_pay) %>: </label><%= date_select("autopay", "first_pay", {:order => [:day, :month, :year], :use_month_numbers => true}) %></p>
+					<p style="text-align: center"><%= submit_tag 'Add' %></p>
+					<% end %>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td><b>Kauce:</b></td>
+			<td></td>
+		</tr>
+	</table>
+	<p id="renter_contact">
+		<table>
+			<tr>
+				<td><b>Phone</b>:</td>
+				<td><%= @renter.telephone.to_s %></td>
+			</tr>
+			<tr>
+				<td><b>Email</b>:</td>
+				<td><%= @renter.email %></td>
+			</tr>
+			<tr>
+				<td><b>Kontaktni adresa</b>:</td>
+				<td><%= @renter.contact_address %></td>
+			</tr>
+		</table>
+	</p>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------>
+
+<div class="right">
+	<table style="width: 100%">
+		<tr>
+			<th>Dluh</th>
+			<th>Deadline</th>
+			<th>Dni měškání</th>
+		</tr>
+		<tr>
+			<td <%= "style=\"border: solid red\"" if @renter.debit[:amount] > 0 %>>
+														 <b><%= link_to_remote(@renter.debit[:amount],
+														 :before => "$('blue_loader').show(); $('debit_bills_table').show();",
+														 :update => "debit_bills_table",
+														 :url => {:controller => '/manage_renter', :action => 'show_debit_table', :id => @renter },
+														 :failure => "alert('Error')",
+														 :complete => "$('blue_loader').hide()") %></b> CZK
+			</td>
+			<td><%= @renter.debit[:deadline] != 0 ? MyDate::date_at(@renter.debit[:deadline]) : "---" %></td>
+			<td <%= "style=\"border: solid orange\"" if @renter.debit[:amount] > 0 %>><%= @renter.debit[:deadline] != 0 ? @renter.debit[:days] : "---" %></tdstyle>
+			<td id="blue_loader" style="width: 10px; display: none"><img src="/images/ajax_loaders/ajax_blue.gif" />
+		</tr>
+	</table>
+	<div id="debit_bills_table"></div>
+	<hr/>
+	<% if @new_messages.empty? %>
+	<div>
+		<h3><%= get_string(:No_new_messages) %></h3>
+		<% else %>
+		<h3><%= get_string(:You_have) %> <%= @new_messages.size %> <%= get_string(:new_messages) %></h3>
+			<table style="width: 100%">
+				<tr>
+					<th><%= get_string(:Subject) %></th>
+					<th><%= get_string(:Content) %></th>
+					<th><%= get_string(:Date) %></th>
+					<th></th>
+				</tr>
+				<% for message in @new_messages %>
+				<tr>
+					<td><%=h truncate(message.subject, 20) %></td>
+					<td><%=h truncate(message.content, 30) %></td>
+					<td><%= MyDate.date_at(message.sent_at) %></td>
+					<td><%= link_to(get_string(:Read), :controller => 'messages', :action => 'show', :id => message) %></td>
+				</tr>
+				<% end %>
+			</table>
+		<% end %>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

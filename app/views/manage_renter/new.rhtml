@@ -1,0 +1,36 @@
+<h1>New renter</h1>
+<% form_tag(:action => 'create', :multipart => true) do %>
+<div class="left">
+	<%= error_messages_for 'renter' %>
+
+<!--[form:renter]-->
+	<p><label for="renter_name">Jmeno</label><br/>
+	<%= text_field 'renter', 'name'  %>*</p>
+	
+	<p><label for="renter_Prijmeni">Prijmeni</label><br/>
+	<%= text_field 'renter', 'surname'  %>*</p>
+	
+	<p><label for="renter_email">Email</label><br/>
+	<%= text_field 'renter', 'email'  %>*</p>
+	
+	<p><label for="renter_telephone">Telefon</label><br/>
+	<%= text_field 'renter', 'telephone'  %>*</p>
+	
+	<%= render :partial => 'renter_picture_upload', :object => @renter %>
+	
+</div>
+<div class="right">
+	<p><label for="renter_property_id">Nemovitost</label><br/>
+<select name="renter[property_id]">
+	<% for property in @properties do %>
+		<%= selected_option_if(property.id.to_s == params[:id], {:value => property.id, :name => property.name}) %>
+	<% end %>
+</select></p>
+
+<p><label for="renter_start_date"><%= get_string(:Start_date) %></label><br/>
+	<%= date_select(:date, :start, {:order => [:day, :month, :year], :use_month_numbers => true})%>	</p>
+<p><label for="renter_end_date">End date</label><br/>
+	<%= date_select(:date, :end, {:order => [:day, :month, :year], :use_month_numbers => true})%>	</p>
+		  <%= submit_tag "Create" %>
+</div>
+<% end %>

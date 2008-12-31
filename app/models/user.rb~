@@ -1,0 +1,204 @@
+require 'digest/sha1'
+
+class User < ActiveRecord::Base
+  
+  has_many  :penalties
+  has_many  :properties
+  has_many  :contacts
+  has_many  :bank_accounts
+  has_one   :renter
+  
+  validates_presence_of   :name
+  validates_uniqueness_of :name
+  
+  attr_accessor :password_confirmation, :password
+  
+  def validate
+    errors.add_to_base(LocalizeHelper::get_string(:Missing_password)) if hashed_password.blank?
+  end
+  
+  def get_unread_messages
+    unread = []
+    messages = Message.find(:all, :conditions => ["to_id = ?", self.id])
+    messages.each{|message| unread << message if message.new }
+    
+    return unread
+  end
+  
+  def self.get_administrators(logged_user_id)
+    return Contact.find(:all, :conditions => ["typ = ? AND user_id = ?", :administrator, logged_user_id])
+  end
+  
+  # Returns all penalties which created user
+  # who is actuallz logged in
+  def self.get_penalties(user_id)
+    return Penalty.find(:all, :conditions => ["user_id = ?", user_id])
+  end
+  # Returns all not closed properties which 
+  # created user who is actually logged in
+  def self.get_opened_properties(logged_user_id)
+    return Property.find(:all, :conditions => ["user_id = ? AND closed = ?", logged_user_id, 0])
+  end
+  # Returns all properties which 
+  # created user who is actually logged in
+  def self.get_properties(user_id)
+    return Property.find(:all, :conditions => ["user_id = ?", user_id])
+  end
+  
+  # Returns all renters for logged user
+  def self.get_renters(user_id, order_by = nil)
+    if !order_by
+      order_by = "surname"
+    end
+    return Renter.find_by_sql(["SELECT r.* FROM renters AS r, properties AS p
+                               WHERE 
+                               r.property_id = p.id AND p.user_id = ? ORDER BY ?", user_id, order_by])
+  end
+  
+  # Returns all bills which created logged user
+  def self.get_bills(user_id, from = 0, to = MyDate::MAX_DATE)
+    bills = Bill.find_by_sql(["SELECT DISTINCT bill.* 
+                              FROM bills AS bill, renters AS renter, properties AS property
+                              WHERE 
+                              (property.user_id = ?) AND 
+                               ((bill.renter_id = renter.id AND
+                                 renter.property_id = property.id) OR
+                                (bill.property_id = property.id)) AND
+                                bill.deadline >= ? AND
+                                bill.deadline <= ? ORDER BY
+                                deadline ASC", user_id, from, to])
+    return bills
+  end
+  
+  # Returns all pending bills which created logged user
+  def self.get_pending_bills(user_id, from = 0, to = MyDate::MAX_DATE )
+    bills = Bill.find_by_sql(["SELECT DISTINCT bill.* 
+                              FROM bills AS bill, renters AS renter, properties AS property
+                              WHERE 
+                              (property.user_id = ?) AND 
+                               ((bill.renter_id = renter.id AND
+                                 renter.property_id = property.id) OR
+                                (bill.property_id = property.id)) AND
+                                bill.paid = ? ORDER BY
+                                deadline ASC", user_id, 0])
+    return bills
+  end
+  
+  # Returns all bills which created logged user
+  # Bills are apginated according to <code>page_number</code>
+  def self.get_paginated_bills(user_id, from_page, page_number)
+    return Bill.paginate_by_sql(["SELECT DISTINCT bill.* 
+                                  FROM bills AS bill, renters AS renter, properties AS property
+                                  WHERE 
+                                  (property.user_id = ?) AND 
+                                  ((bill.renter_id = renter.id AND
+                                    renter.property_id = property.id) OR
+                                   (bill.property_id = property.id)) AND
+                                  (bill.deadline > #{from_page[:date][:from]} AND
+                                   bill.deadline < #{from_page[:date][:to]})
+                                  ORDER BY
+                                  #{from_page[:order_by]} #{from_page[:order_direction]}", user_id],
+                                  :page => page_number, :per_page => from_page[:per_page])
+  end
+  
+  # Returns all bills which created logged user
+  # sorted by group
+  def self.get_bills_by_group(user_id)
+    bills_by_group = {}
+    bills = User.get_bills(user_id)
+    bills.each{ |bill|
+      if bill.groupp[0..3] == "jine"
+        group_name = "jine"
+      else
+        group_name = bill.groupp
+      end
+      
+      if bills_by_group[group_name]
+        bills_by_group[group_name] << bill
+      else
+        bills_by_group[group_name] = [bill]
+      end
+    }
+    return bills_by_group
+  end
+  
+  # Returns all autopays which created logged user
+  def self.get_autopays(user_id, category = nil)
+    if category
+      return AutoPay.find_by_sql(["SELECT a.* FROM auto_pays AS a, properties AS p
+                                   WHERE 
+                                   a.property_id = p.id AND 
+                                   p.user_id = ? AND
+                                   a.category = ? ORDER BY object", user_id, category])
+    else
+      return AutoPay.find_by_sql(["SELECT DISTINCT a.* FROM auto_pays AS a, properties AS p
+                                 WHERE a.property_id = p.id AND p.user_id = ? ORDER BY object", user_id])
+    end
+  end
+  
+  def belongs_to_user(logged_user_id)
+    if ((self.typ == :renter) && (self.admin_id == logged_user_id))
+      return true
+    elsif ((self.typ == :admin) && (self.id == logged_user_id))
+      return true
+    else
+      return false
+    end
+  end
+  
+  # MEthod used by login controller to
+  # autheticate user when he's logging in
+  def self.authenticate(name, password)
+    user = self.find_by_name(name)
+    if user
+      expected_password = encrypted_password(password, user.salt)
+      if user.hashed_password != expected_password
+        user = nil
+      end
+    end
+    return user
+  end
+
+  def update_login(params, old_password)
+    if ((self.typ == :admin) && !User.authenticate(self.name, old_password))
+      return false
+    end
+    if self.update_attributes(params)
+      return true
+    else
+      return false
+    end
+  end
+
+  def password
+    @password
+  end
+  
+  def password=(pwd)
+    @password = pwd
+    create_new_salt
+    self.hashed_password = User.encrypted_password(self.password, self.salt)
+  end
+  
+  # REturns the id of property user who created
+  # given login account
+  def self.get_admin_id(logged_user_id)
+    logged_user = User.find(logged_user_id)
+    if logged_user.typ == :renter
+      return logged_user.admin_id
+    elsif logged_user.typ == :admin
+      return logged_user_id
+    end
+  end
+  
+  private
+  
+  def self.encrypted_password(password, salt)
+    string_to_hash = password + "kominar" + salt
+    Digest::SHA1.hexdigest(string_to_hash)
+  end
+  
+  def create_new_salt
+    self.salt = self.object_id.to_s + rand.to_s
+  end
+end

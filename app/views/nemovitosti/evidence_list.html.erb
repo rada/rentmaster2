@@ -1,0 +1,237 @@
+<% title(get_string(:Evidence_list)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<div id="evidence_list" style="width: 900px; margin: auto">
+	<h2><i><%= get_string(:Evidence_list) %></i></h2>
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th style="width: 50%;"><%= get_string(:Owner_info) %></th>
+			<th><%= get_string(:Administrator_info) %></th>
+		</tr>
+		<tr>
+			<td style="border-right: solid thin black;"><%= @property.owner.name_address if @property.owner%><p></p></td>
+			<td ><%= @property.administrator.name_address if @property.administrator %><p></p></td>
+		</tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th colspan="6"><%= get_string(:Property) %></th>
+		</tr>
+		<tr><td colspan="6"></td></tr>
+		<tr>
+			<td><strong><%= get_string(:Cadaster) %></strong></td><td style="background-color: white"><%= @property.cadaster %></td>
+			<td><strong><%= get_string(:Building)%></strong></td><td style="background-color: white"><%= @property.building %></td>
+		</tr>
+		<tr><td colspan="6"></td></tr>
+		<tr>
+			<td><strong><%= get_string(:House) %></strong></td><td style="background-color: white"><%= @property.house %></td>
+			<td rowspan="2"><strong><%= get_string(:Address) %></strong></td><td style="background-color: white"><%= @property.address %><br /><%= @property.psc %> <%= @property.city %></td>
+		</tr>
+		<tr><td colspan="6"></td></tr>
+		<tr>
+			<td><strong><%= get_string(:Flat) %></strong></td><td style="background-color: white"><%= @property.flat %></td>
+		</tr>
+		<tr><td colspan="6"></td></tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th colspan="11"><%= get_string(:Flat_info_Rooms_info_in_m2) %></th>
+		</tr>
+		<tr><td colspan="11"></td></tr>
+		<tr>
+			<td style="text-align: right"><strong><%= get_string(:Floor) %></strong>&nbsp</td>							<td class="border"><%= @property.floor %></td>
+			<td style="text-align: right"><strong><%= get_string(:Space_arrangement) %></strong>&nbsp</td>	<td class="border"><%= @property.space_arrangement %></td>
+			<td style="text-align: right"><strong><%= get_string(:Cathegory) %></strong>&nbsp</td>					<td class="border"><%= @property.cathegory %></td>
+			<td style="text-align: right"><strong><%= get_string(:Room_height) %></strong>&nbsp</td>				<td class="border"><%= @property.room_height %></td>
+			<td style="text-align: right"><strong><%= get_string(:Number_of_chimneys) %></strong>&nbsp</td> <td class="border"><%= @property.chimneys %></td>
+			<td> &nbsp </td>
+		</tr>
+		<tr><td colspan="11" style="border-bottom: dotted thin"> </td></tr>
+		<tr>
+			<td colspan="11">
+				<table class="inside_evidence" cellspacing="5px"> 
+					<tr>
+						<th><%= get_string(:Heating) %></th>
+						<th><%= get_string(:Bathroom) %></th>
+						<th><%= get_string(:WC) %></th>
+						<th><%= get_string(:Warm_water) %></th>
+					</tr>
+					<tr>
+						<td style="text-align: center;"><%= @property.heating %></td>
+						<td style="text-align: center;"><%= @property.bathroom %></td>
+						<td style="text-align: center;"><%= @property.wc %></td>
+						<td style="text-align: center;"><%= @property.warm_water %></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr><td colspan="11"><hr></td>
+		<tr>
+			<td colspan="11">
+				<center>
+				<table class="inside_evidence" cellspacing="0" style="width: 95%;">
+					<tr>
+						<th style="width: 34%"><%= get_string(:Room_name) %></th>
+						<th style="width: 16%"><%= get_string(:Area_total) %></th>
+						<th style="width: 16%"><%= get_string(:Area_chargable) %></th>
+						<th style="width: 16%"><%= get_string(:Area_for_UT) %></th>
+						<th style="width: 16%"><%= get_string(:Area_for_TUV) %></th>
+					</tr>
+					<%= render :partial => 'room_area' %>
+				</table>
+				<p></p>
+				<table class="inside_evidence" cellspacing="0" style="width: 95%; align:">
+					<tr>
+						<td style="width: 34%; border: none"></td>
+						<td style="text-align: right;width: 16%;background-color: #adadac;"><b><%= @property.get_area_sum(:total) %> m<sup>2</sup></b></td>
+						<td style="text-align: right;width: 16%;background-color: #adadac;"><b><%= @property.get_area_sum(:chargable) %> m<sup>2</sup></b></td>
+						<td style="text-align: right;width: 16%;background-color: #adadac;"><b><%= @property.get_area_sum(:UT) %> m<sup>2</sup></b></td>
+						<td style="text-align: right;width: 16%;background-color: #adadac;"><b><%= @property.get_area_sum(:TUV) %> m<sup>2</sup></b></td>
+					</tr>
+				</table>
+				<p></p>
+				</center>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th><%= get_string(:Renters) %></th>
+		</tr>
+		<tr>
+			<td>
+				<center>
+				<table class="inside_evidence" cellspacing="0px" style="width: 95%;">
+					<tr>
+						<th style="text-align: left"><%= get_string(:Name) %></th>
+						<th style="text-align: left"><%= get_string(:Surname) %></th>
+						<th style="text-align: left"><%= get_string(:Accommodated_since) %></th>
+					</tr>
+					<% if @property.renters != [] %>
+					<% for renter in @property.get_actual_renters do %>
+					<tr>
+						<td><%= renter.surname %></td>
+						<td><%= renter.name %></td>
+						<td><%= MyDate::date_at(renter.actual_accommodation.from) %></td>
+					</tr>
+					<% end %>
+					<% else %>
+					<td>&nbsp</td>
+					<td>&nbsp</td>
+					<td>&nbsp</td>
+					<% end %>
+					<tr><td colspan="4" style="border: none"></td></tr>
+				</table>
+				</center>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th colspan="4"><%= get_string(:Base_rent) %></th>
+		</tr>
+		<tr><td style="width: 10%"></td><td></td><td style="width: 10%"></td><td style="width: 60%"></td></tr>
+		<tr><td></td></tr>
+		<tr>
+			<td></td>
+			<td style="text-align: right"><b><%= get_string(:Contract_rent_with_componenets) %>&nbsp</b></td>
+			<td style="width:20%; background-color: #adadac; border: solid thin "><%= najem_h %></td>
+			<td></td>
+		</tr>
+		<tr><td></td></tr>
+		<tr><td></td></tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th><%= get_string(:Room_accessories_data) %></th>
+		</tr>
+		<tr>
+			<td>
+				<center>
+					<table class="inside_evidence" cellspacing="0px" style="width: 95%;">
+					<tr>
+						<th style="width: 30%"><%= get_string(:Name) %></th>
+						<th style="width: 7%"><%= get_string(:Count) %></th>
+						<th style="width: 12%"><%= get_string(:Tarif) %></th>
+						<th style="width: 16%"><%= get_string(:Base) %></th>
+						<th style="width: 16%"><%= get_string(:Tax) %></th>
+						<th style="width: 20%"><%= get_string(:Price_with_tax) %></th>
+					</tr>
+					<%= render :partial => 'accessories_elist', :locals => {:typ => :accessory} %>
+					<tr><td style="border: none"></td></tr>
+					<tr>
+						<td colspan="5" style="border: none; text-align: right"><b><%= get_string(:Price_for_property_accessory) %></b>&nbsp</td>
+						<td style="background-color: #adadac"><%= @property.accessories_price_sum(:accessory) %></td>
+					</tr>
+					<tr><td style="border: none"></td></tr>
+					</table>
+				</center>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th><%= get_string(:Service_data) %></th>
+		</tr>
+		<tr>
+			<td>
+				<center>
+					<table class="inside_evidence" cellspacing="0px" style="width: 95%;">
+					<tr>
+						<th style="width: 30%"><%= get_string(:Name) %></th>
+						<th style="width: 7%"><%= get_string(:Person_count) %></th>
+						<th style="width: 12%"><%= get_string(:Tarif) %></th>
+						<th style="width: 16%"><%= get_string(:Base) %></th>
+						<th style="width: 16%"><%= get_string(:Tax) %></th>
+						<th style="width: 20%"><%= get_string(:Price_with_tax) %></th>
+					</tr>
+					<%= render :partial => 'accessories_elist', :locals => {:typ => :service} %>
+					<tr><td style="border: none"></td></tr>
+					<tr>
+						<td colspan="5" style="border: none; text-align: right"><b><%= get_string(:Prices_total) %></b>&nbsp</td>
+						<td style="background-color: #adadac"><%= @property.accessories_price_sum(:service) %></td>
+					</tr>
+					<tr><td style="border: none"></td></tr>
+					</table>
+				</center>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="evidence_list" cellspacing="0">
+		<tr>
+			<th colspan="3"><%= get_string(:Total_recapitulation) %></th>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<center>
+					<table class="inside_evidence" cellspacing="0px" style="width: 95%;" border>
+					<tr>
+						<th style="width: 30%"></th>
+						<th style="width: 7%"></th>
+						<th style="width: 12%"><%= get_string(:Tarif) %></th>
+						<th style="width: 16%"><%= get_string(:Base) %></th>
+						<th style="width: 16%"><%= get_string(:Tax) %></th>
+						<th style="width: 20%"><%= get_string(:Price_with_tax) %></th>
+					</tr>
+					<%= render :partial => 'accessories_elist', :locals => {:typ => :both} %>
+					
+					</table>
+				</center>
+			</td>
+		</tr>
+		<tr><td style="border-bottom: solid thin black" colspan="3"></td></tr>
+		<tr style="border-top: solid thin black">
+			<td style="text-align: left;background-color: #adadac"><b><%= get_string(:Total_month_payment_for_property_use) %></b>&nbsp</td>
+			<td style="background-color: white; font-size: large;background-color: #adadac"">
+				<div style="background-color: white; margin: 3px; border: solid thin black"><%= @property.accessories_price_sum(:both) %></div>
+			</td>
+			<td style="width: 2%; background-color: #adadac"></td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,22 @@
+<table>
+		<tr>
+			<th>Dluh</th>
+			<th>Nemovitost</th>
+			<th>Deadline</th>
+			<th>Dni měškání</th>
+		</tr>
+		<tr>
+			<td <%= "style=\"border: solid red\"" if @renter.debit[:amount] > 0 %>>
+														 <b><%= link_to_remote(@renter.debit[:amount],
+														 :before => "$('blue_loader').show()",
+														 :update => "debit_bills_table",
+														 :url => {:action => 'show_debit_table', :id => @renter },
+														 :failure => "alert('Error')",
+														 :complete => "$('blue_loader').hide(); $('debit_bills_table').show();") %></b> CZK
+			</td>
+			<td><%= @renter.property.name %></td>
+			<td><%= @renter.debit[:deadline] != 0 ? MyDate::date_at(@renter.debit[:deadline]) : "---" %></td>
+			<td <%= "style=\"border: solid orange\"" if @renter.debit[:amount] > 0 %>><%= @renter.debit[:deadline] != 0 ? @renter.debit[:days] : "---" %></tdstyle>
+			<td id="blue_loader" style="width: 10px; display: none"><img src="/images/ajax_loaders/ajax_blue.gif" />
+		</tr>
+</table>

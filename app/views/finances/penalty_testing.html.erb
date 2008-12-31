@@ -1,0 +1,24 @@
+<table>
+	<tr>
+		<th>predmet platby</th>
+		<th>cena</th>
+		<th>penalty price</th>
+		<th>penalty after</th>
+		<th>count</th>
+		<th>sum</th>
+		<th>count generated at</th>
+	</tr>
+	<% for added_penalty in @bill.added_penalties %>
+	<tr>
+		<td><%= @bill.object %></td>
+		<td><%= @bill.price %></td>
+		<td><%= added_penalty.penalty.price %></td>
+		<td><%= added_penalty.penalty.after %></td>
+		<td><%= added_penalty.count %></td>
+		<td><%= added_penalty.sum %></td>
+		<td><%= MyDate::date_at(added_penalty.count_generated_at) %></td>
+	</tr>
+	<% end %>
+</table>
+<%= link_to('nuluj', :action => 'nuluj') %>
+<%= link_to('calculate', :action => 'penalty_testing') %>

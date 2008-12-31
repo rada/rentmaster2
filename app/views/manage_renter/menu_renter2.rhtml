@@ -1,0 +1,9 @@
+<ul>	
+	<li><%= link_to 'Renter', :controller => 'manage_renter',:action => 'renter', :id => @renter %></li> 
+	<li><%= link_to get_string(:Finances), :controller => 'finances',:action => 'pending', :id => @renter.id, :bills_for => 'renter' %></li>
+	<li><%= link_to get_string(:Statistics), :controller => 'statistics', :action => 'renter', :id => @renter %></li>
+	<div style="text-align: right; float: left; margin-left: 5px;">
+			<%= link_to(get_string(:edit), {:action => 'edit', :id => @renter}, {:style => "font-size: 70%"} ) %>
+			<% link_to(get_string(:new_renter), {:action => 'new'}, {:style => "font-size: 70%; font-align: right'"} ) %>
+	</div>
+</ul>

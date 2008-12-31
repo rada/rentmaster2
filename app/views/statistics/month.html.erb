@@ -1,0 +1,26 @@
+<% title(:Finance_statistic) %>
+<h1 style="text-align: left;">Statistika pro měsíc: <%= get_string(MyDate::Month[Time.now.mon][:name].to_sym)%></h1>
+<div style="clear: both">
+	<div id="statistics_table"><%= render :partial => 'statistics_tables2' %></div>
+	<br />
+	<div id="bills_table" style="clear: both"></div>
+</div>
+<div class="graph_hider">
+	GRAPH 
+	<%= link_to_function(image_tag('/images/icons/arrow_hide.png', :id => 'graph_hide'), "new Effect.BlindUp('graph_box');new Effect.BlindUp('chart');$('graph_show').toggle();$('graph_hide').toggle() " ) %>
+	<%= link_to_function(image_tag('/images/icons/arrow_show.png', :id => 'graph_show', :style => "display: none"), "new Effect.BlindDown('graph_box');new Effect.BlindDown('chart');$('graph_hide').toggle();$('graph_show').toggle()" ) %>
+</div>
+<div id="graph_box" style="border: solid thin black">
+	<div class="graph">
+		<div id="graph" ><%= @graph %></div>
+	</div>
+	<div class="graph_settings">
+		<% form_remote_tag(:before => "$('ajax_loader_line').show()",
+											 :url => {:action => request.parameters[:action]},
+											 :failure => "alert('error')",
+											 :complete => "$('ajax_loader_line').hide();$('bills_table').hide();") do %>
+		<%= render :partial => 'graph_settings' %>
+		<% end %>
+	</div>
+	<div style="clear:both"> </div>
+</div>

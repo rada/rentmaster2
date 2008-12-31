@@ -1,0 +1,23 @@
+<table class="detail" style="width: 100%">
+	<tr>
+		<th>Nazev</th>
+		<th>Model</th>
+		<th>Výrobní číslo</th>
+		<th>Cena</th>
+		<th>Pocet</th>
+	</tr>
+	<tr>
+		<td><%= @fitting.name %></td>
+		<td><%= @fitting.model %></td>
+		<td><%= @fitting.serial %></td>
+		<td><%= @fitting.price %></td>
+		<td><%= @fitting.count %></td>
+		<td>
+			<%= link_to_function image_tag("/images/icons/green_arrow_up_small.png", :alt => get_string(:close)), "$('"+@fitting.id.to_s+"').visualEffect('fade')" %>
+			<%= link_to image_tag("/images/icons/red_cross_small.png", :alt => get_string(:delete)), { :action => 'destroy_fitting', :id => @fitting }, :confirm => 'Are you sure?', :method => :post unless request.parameters[:controller] == 'renters/renter' %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6" style="border: dotted thin black"><%= @fitting.about %></td>
+	</tr>
+</table>

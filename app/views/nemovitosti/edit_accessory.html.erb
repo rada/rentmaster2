@@ -1,0 +1,18 @@
+<% title(get_string(:Edit_accessory)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<h1><%= get_string(:Edit_accessory) %></h1><br />
+<div style="width: 300px; margin: auto">
+	<% form_tag(:action => 'edit_accessory', :id => @accessory.id, :edit => true ) do %>
+	<table>
+		<% for column in Accessory.content_columns %>
+		<% if column.name != 'typ' %>
+		<tr>
+			<td><%= get_string(column.name.to_sym) %></td>
+			<td><%= text_field 'accessory', column.name, :size => 15 %> <%= "%" if column.name == "tax" %></td>
+		</tr>
+		<% end # if %>
+		<% end # for %>
+	</table><p></p>
+	<%= submit_tag get_string(:Edit) %>
+	<% end %>
+</div>

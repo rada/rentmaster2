@@ -1,0 +1,6 @@
+<% title(get_string(:Add_bill)) %>
+<% submenu(Settings::SUBMENU[:finances]) %>
+<h1><%= get_string(:Add_bill) %></h1>
+<div style="width: auto; margin: auto">
+	<%= render :partial => '/finances/bill_form' %>
+</div>

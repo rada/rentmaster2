@@ -1,0 +1,7 @@
+<% title(get_string(:Todos)) %>
+<% submenu(Settings::SUBMENU[:renters_property]) %>
+<h1><%= get_string(:Todos_for_property) %></h1><br />
+<%= error_messages_for 'todo' %>
+<div class="left">
+	<%= render :partial => '/nemovitosti/list_todo' %>
+</div>

@@ -1,0 +1,40 @@
+<table class="blue" cellpadding="3" cellspacing="0" style="width: 100%"> 
+	<tr>
+		<th><%= get_string(:Name2) %></th>
+		<th><%= get_string(:Price) %></th>
+		<th><%= get_string(:Assigned_to) %></th>
+		<th></th><th></th><th></th>
+	</tr>
+	<% background_no = 0 %>
+	<% for auto in @autopays %>
+	<% background_no = 1 - background_no %>
+	<tr class="back<%= background_no %>">
+		<td><%= link_to_remote auto.object,
+						:before => "$('"+auto.id.to_s+"').show()",
+						:url => {:controller => 'finances', :action => 'auto_detail', :id => auto.id },
+						:failure => "alert('Error occured')",
+						:complete => "$('"+auto.id.to_s+"').hide()" %>
+				<%= image_tag("/images/icons/stop_small.png", :title => get_string(:Inactive) ) if !auto.is_active %>
+		</td>
+		<td><%= auto.price %></td>
+		<td><%= auto.assigned_to %></td>
+		<td style="width: 40px">
+			<%= link_to image_tag("/images/icons/red_cross_small.png"), { :controller => 'finances', :action => 'destroy_autopay', :id => auto }, :confirm => 'Are you sure?', :method => :post %>
+			<% if request.parameters[:action] == 'autopays' %>
+			<%= link_to_remote(image_tag("/images/icons/pencil_small.png"),
+												 :before => "$('"+auto.id.to_s+"').show()",
+												 :url => {:controller => 'finances', :action => 'edit_autopay', :id => auto },
+												 :failure => "alert('Error')",
+												 :complete => "$('"+auto.id.to_s+"').hide()") %>
+			<% end %>
+		</td>
+		<% if request.parameters[:action] == 'close_settings' %>
+		<td style="width: 20px"><input type="checkbox" name="autopays[]" value="<%= auto.id %>" /></td>
+		<% end %>
+		<td style="width: 20px"><img src="/images/ajax_loaders/ajax1.gif" id='<%= auto.id %>' style="display: none;" /></td>
+	</tr>
+	<tr class="back<%= background_no %>">
+		<td colspan="6" <%= "id=detail_"+auto.id.to_s %> style="display: none"></td>
+	</tr>
+	<% end %>
+</table>

@@ -1,0 +1,82 @@
+<% title(get_string(:Report_renter)) %>
+<% submenu(Settings::SUBMENU[:renters_sub]) %>
+<h1><%= get_string(:Report_renter) %></h1>
+<br />
+<div class="left">
+	<% form_tag({:action => 'report_renter', :id => @renter}, :multipart => true) do %>
+	<table class="property" style="width: 100%">
+		<tbody>
+			<tr>
+				<td valign="top">
+					<p><label for="renter_name"><%= get_string(:Name) %></label><br/>
+					<%= text_field 'renter', 'name'  %>*</p>
+					
+					<p><label for="renter_surname"><%= get_string(:Surname) %></label><br/>
+					<%= text_field 'renter', 'surname'  %>*</p>
+					
+					<p><label for="renter_email"><%= get_string(:Email) %></label><br/>
+					<%= text_field 'renter', 'email'  %>*</p>
+					
+					<p><label for="renter_telephone"><%= get_string(:Telephone) %></label><br/>
+					<%= text_field 'renter', 'telephone'  %>*</p>
+				</td>
+				<td valign="top">
+					<p><label for="renter_address"><%= get_string(:Address) %></label><br/>
+					<%= text_field 'renter', 'address'  %>*</p>
+					
+					<p><label for="renter_city"><%= get_string(:City) %></label><br/>
+					<%= text_field 'renter', 'city'  %>*</p>
+					
+					<p><label for="renter_psc"><%= get_string(:Postal_code) %></label><br/>
+					<%= text_field 'renter', 'psc'  %>*</p>
+					
+					<%= render :partial => 'manage_renter/renter_picture_upload', :object => @renter %>
+					
+					<p style="text-align: right"><%= submit_tag get_string(:Update) %></p>
+				</td>
+				<td valign="top">
+					<p><label for="renter_start_date"><%= get_string(:Start_date) %></label><br/>
+					<%= date_select(:date, :start, {:order => [:day, :month, :year],
+																					:use_month_numbers => true }) %>	</p>
+																					
+					<p><label for="renter_end_date"><%= get_string(:End_date) %></label><br/>
+					<%= date_select(:date, :end, {:order => [:day, :month, :year],
+																				:use_month_numbers => true,
+																				:default => {:day 	=> Time.at(@logged_renter.end_date).day,
+																										 :month => Time.at(@logged_renter.end_date).month,
+																										 :year 	=> Time.at(@logged_renter.end_date).year } }) %>	</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<% end %>
+</div>
+<div class="right">
+	<% if @logged_renter.has_reported_renters %>
+	<h2><%= get_string(:Reported_renters) %></h2>
+	<table class="blue" cellspacing="0" style="width: 100%">
+		<thead>
+			<tr>
+				<th><%= get_string(:Name) %></th>
+				<th><%= get_string(:From) %></th>
+				<th><%= get_string(:To) %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% bg_color = 0 %>
+			<% for reported_renter in @logged_renter.get_reported_renters do %>
+			<% if !reported_renter.has_closed_rent %>
+			<% bg_color = 1 - bg_color %>
+			<tr class="back<%= bg_color %>">
+				<td><%= reported_renter.full_name %></td>
+				<td><%= MyDate::date_at(reported_renter.actual_accommodation.from) %></td>
+				<td><%= MyDate::date_at(reported_renter.actual_accommodation.to) %></td>
+			</tr>
+			<% end # if %>
+			<% end # for %>
+		</tbody>
+	</table>
+	<% else %>
+		<h2><%= get_string(:No_reported_renters) %></h2>
+	<% end %>
+</div>

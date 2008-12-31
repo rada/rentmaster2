@@ -1,0 +1,12 @@
+<table>
+	<% for history_event in @bill.penalty_histories %>
+	<tr>
+		<td><%= MyDate::date_at(history_event.date_added) %></td>
+		<td><%= history_event.old_penalty_sum %></td>
+		<td>&#x2192;</td>
+		<td><%= history_event.new_penalty_sum %></td>
+		<td><%= history_event.action_performed %></td>
+	</tr>
+	<% end %>
+</table>
+<%= link_to_function(get_string(:Hide), "$('penalties#{@bill.id}').hide()") %>

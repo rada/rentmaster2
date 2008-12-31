@@ -1,0 +1,9 @@
+<table>
+	<% for temp_bill in @bill.temp_bills %>
+	<tr>
+		<td style="border-right: solid thin black"><%= number_to_currency(temp_bill.price, :unit => "CZK", :separator => ",", :delimiter => " ") %></td>
+		<td><%= MyDate.date_at(temp_bill.paid) %></td>
+	</tr>
+	<% end %>
+</table>
+<%= link_to_function(get_string(:Hide), "$('penalties#{@bill.id}').hide()") %>

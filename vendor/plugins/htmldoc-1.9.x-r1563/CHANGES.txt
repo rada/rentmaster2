@@ -1,0 +1,8 @@
+CHANGES.txt - 10/23/2004
+------------------------
+
+CHANGES IN HTMLDOC v1.9b1
+
+	- HTMLDOC now provides much better support for
+	  "wrapping" of text around images and new support for
+	  tables via the ALIGN attribute (STR #16)

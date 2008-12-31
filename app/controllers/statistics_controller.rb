@@ -1,0 +1,208 @@
+require 'localize'
+class StatisticsController < ApplicationController
+  before_filter :check_user_is_admin
+  
+  # This action will display page with statistics and
+  # grapf of income for specified month.
+  def month
+    session[:graph_settings] = get_graph_settings_from(params[:graph_settings])
+    init_graph_for(:user, session[:user_id])
+    
+    if request.xhr?
+      render :update do |page|
+        page[:graph].replace_html :partial => 'reload_graph'
+        page[:statistics_table].replace_html :partial => "statistics_tables2"
+      end
+    end
+  end
+  
+  # Action will render a table of bills which make income or
+  # outcome for specified month
+  def show_bills
+    if params[:bills]
+      @bills_to_show = Bill.find(params[:bills])
+      @bills_to_show = Bill.sort(@bills_to_show, "deadline", :ASC)
+      render :partial => 'statistics_bills_table'
+    else
+      render :text => "no bills to show"
+    end
+  end
+  
+  # This action will get data for graph in which the 3
+  # incomes are shown. 
+  def month_graph
+    # Definitions of graphs types
+    expected_bills_graph = Line.new(2, '#9933CC')
+    expected_bills_graph.key(LocalizeHelper::get_string(:Expected), 10)
+    
+    real_bills_graph = LineHollow.new(2,3,'#CC3399')
+    real_bills_graph.key(LocalizeHelper::get_string(:Actual),10)
+    
+    net_bills_graph = LineHollow.new(2,2,'#80a033')
+    net_bills_graph.key(LocalizeHelper::get_string(:Net), 10)
+    
+    expected_income_bills = Bill.find(session[:expected_income_bills_ids])
+    real_income_bills = Bill.find(session[:real_income_bills_ids])
+    net_income_bills = real_income_bills + Bill.find(session[:real_outcome_bills_ids])
+    
+    if session[:graph_settings]
+      graph_settings = session[:graph_settings]
+    else
+      graph_settings = {}
+      graph_settings[:month] = Time.now.mon
+      graph_settings[:year] = Time.now.year
+    end
+    graph_for_actual_month = ((graph_settings[:month] == Time.now.mon)&&(graph_settings[:year]==Time.now.year))
+      
+    expected_bills = Bill.get_values_for_graph(expected_income_bills,:deadline, false)
+    real_bills = Bill.get_values_for_graph(real_income_bills,:paid, false)
+    net_bills = Bill.get_values_for_graph(net_income_bills,:paid, true)
+
+    last_day_in_month = MyDate::Month[graph_settings[:month]][:days]
+    y_min = 0
+    
+    1.upto(last_day_in_month) do |day_number|
+      expected_bills[day_number][:sum] += expected_bills[day_number-1][:sum]
+      real_bills[day_number][:sum] += real_bills[day_number-1][:sum]
+      net_bills[day_number][:sum] += net_bills[day_number-1][:sum]
+      
+      y_min = expected_bills[day_number][:sum] if expected_bills[day_number][:sum] < y_min
+      y_min = net_bills[day_number][:sum] if net_bills[day_number][:sum] < y_min
+      
+      expected_bills_graph.add_data_tip(expected_bills[day_number][:sum], "#{expected_bills[day_number][:tip]}")
+      if graph_for_actual_month
+        real_bills_graph.add_data_tip(real_bills[day_number][:sum], "#{real_bills[day_number][:tip]}") if day_number <= Time.now.day
+        net_bills_graph.add_data_tip(net_bills[day_number][:sum], "#{net_bills[day_number][:tip]}") if day_number <= Time.now.day
+      else
+        real_bills_graph.add_data_tip(real_bills[day_number][:sum], "#{real_bills[day_number][:tip]}")
+        net_bills_graph.add_data_tip(net_bills[day_number][:sum], "#{net_bills[day_number][:tip]}")
+      end
+    end
+    
+    g = Graph.new
+    month_name = MyDate::Month[graph_settings[:month]][:name]
+    g.title("#{LocalizeHelper::get_string(:Income_in_month)}: #{month_name}", "{font-size: 20px; color: #736AFF}")
+    
+    if !params[:id]
+      params[:id] = "123"
+    end
+    show = {}
+    show[:expected] = true if params[:id].gsub!("1","1")
+    show[:real] = true if params[:id].gsub!("2","2")
+    show[:net] = true if params[:id].gsub!("3","3")
+    
+    g.data_sets << expected_bills_graph if show[:expected]
+    g.data_sets << real_bills_graph     if show[:real]
+    g.data_sets << net_bills_graph      if show[:net]
+  
+    g.set_tool_tip('#x_label# [#val# CZK]<br>#tip#')
+    year = graph_settings[:year]
+    month_number = graph_settings[:month]
+    x_labels = (Date.civil(year,month_number,1)..Date.civil(year,month_number,last_day_in_month)).map(&:to_s)
+    g.set_x_labels(x_labels)
+    g.set_x_label_style(10, '#000000', 2)
+    
+    if (expected_bills[last_day_in_month][:sum] >= real_bills[last_day_in_month][:sum])
+      y_max = expected_bills[last_day_in_month][:sum]
+    else
+      y_max = real_bills[last_day_in_month][:sum]
+    end
+    g.set_y_max(y_max+1000)
+    g.set_y_min(y_min)
+    g.set_y_label_steps(20)
+    g.set_y_legend("CZK", 12, "#736AFF")
+    
+    render :text => g.render
+  end
+  
+  # Action which will render page when accesing bills management
+  # from property section. It will show income graph and bills
+  # only with bills associated with specified property.
+  def property
+    @property = Property.find(:first, :conditions => ["id = ? AND user_id = ?", params[:id], session[:user_id]])
+   
+    session[:graph_settings] = get_graph_settings_from(params[:graph_settings])
+    init_graph_for(:property, @property.id)
+    @renters = []
+    for renter in @property.renters
+      renter_info = {}
+      renter_info[:name] = renter.full_name
+      renter_info[:income] = renter.calculate_income(session[:graph_settings][:month], session[:graph_settings][:year])
+      renter_info[:outcome] = renter.calculate_outcome(session[:graph_settings][:month], session[:graph_settings][:year])
+      @renters << renter_info
+      @renters = @renters.sort{|renter1, renter2| renter1[:name] <=> renter2[:name]}
+    end
+    
+    if request.xhr?
+      render :update do |page|
+        page[:graph].replace_html :partial => 'reload_graph'
+        page[:statistics_tables].replace_html :partial => "statistics_tables2"
+        page[:statistics_renters_table].replace_html :partial => "statistics_renters_table"
+      end
+    else
+      render :layout => 'nemovitosti'
+    end
+  rescue
+    redirect_to :controller => 'nemovitosti', :action => 'list'
+  end
+  
+  # Action which will render page when accesing bills management
+  # from renters section. It will show income graph and bills
+  # only with bills associated with specified renter.
+  def renter
+    @renter = Renter.find(params[:id])
+    session[:graph_settings] = get_graph_settings_from(params[:graph_settings])
+    init_graph_for(:renter, @renter.id)
+    
+    if @renter.belongs_to_user(session[:user_id])
+      session[:graph_settings] = get_graph_settings_from(params[:graph_settings])
+      if request.xhr?
+        render :update do |page|
+          page[:graph].replace_html :partial => 'reload_graph'
+          page[:statistics_tables].replace_html :partial => "statistics_tables2"
+        end
+      else
+        render :layout => 'manage_renter'
+      end
+    else
+      redirect_to :controller => 'manage_renter', :action => 'index'
+    end
+    
+#  rescue
+#    redirect_to :controller => 'manage_renter', :action => 'index'
+  end
+  
+  private
+  
+  # This action will parse settings for graph from page
+  def get_graph_settings_from(settings)
+    new_settings = {}
+    if params[:graph_settings]
+      new_settings = {}
+      new_settings[:month] = params["graph_settings"][:month].to_i
+      new_settings[:year] = params["graph_settings"][:year].to_i
+      new_settings[:lines] = params["graph_settings"][:lines]
+      new_settings[:odd_outcome] = true if params["graph_settings"][:odd_outcome]
+      session[:graph_settings] = new_settings
+    else
+      new_settings[:month] = Time.now.month
+      new_settings[:year] = Time.now.year
+    end
+    
+    return new_settings
+  end
+  
+  # This action will gather information for graph
+  # and then initializes it.
+  def init_graph_for(subject, subjects_id)
+    @income = Bill.calculate_income_for(subject, session[:graph_settings][:month], session[:graph_settings][:year], subjects_id)
+    @outcome = Bill.calculate_outcome_for(subject, session[:graph_settings][:month], session[:graph_settings][:year], subjects_id)
+    
+    session[:real_income_bills_ids] = @income[:real_bills_ids]
+    session[:expected_income_bills_ids] = @income[:expected_bills_ids]
+    session[:real_outcome_bills_ids] = @outcome[:real_bills_ids]
+    session[:expected_outcome_bills_ids] = @outcome[:expected_bills_ids]
+    @graph = open_flash_chart_object(720,500,'/statistics/month_graph', false, '/')
+  end
+  
+end

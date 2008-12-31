@@ -1,0 +1,24 @@
+<table class = "purple">
+	<caption>To do list</caption>
+	<tr>
+		<th>Added</th>
+		<th>Task</th>
+		<th>Actor</th>
+		<th>Deadline</th>
+		<th>Cost</th>
+		<th>Property</th>
+		<th></th>
+	</tr>
+	
+	<% for todo in @todos %>
+		<tr>
+			<td><%= MyDate.date_at(todo.added) %></th>
+			<td><b><%= todo.task %></b></td>
+			<td><%= todo.actor %></td>
+			<td><%= todo.deadline %></td>
+			<td><%= todo.cost unless todo.cost == nil %></td>
+			<td><%= todo.property.name unless todo.property == nil %></td>
+			<td><%= link_to('edit', :controller => 'todos', :action => 'edit', :id => todo) %></td>
+		</tr>
+	<% end %>
+</table>	

@@ -1,0 +1,22 @@
+<table>
+	<tr>
+		<th><%= get_string(:Status) %></th>
+		<th><%= get_string(:Object_of_pay) %></th>
+		<th><%= get_string(:Price) %></th>
+		<th><%= get_string(:Group) %>
+		<th><%= get_string(:Belongs_to) %></th>
+		<th><%= get_string(:Deadline) %></th>
+		<th><%= get_string(:Paid) %></th>
+	</tr>
+	<% for bill in @bills_to_show %>
+	<tr>
+		<%= bill.check_status(true) %>
+		<td><%= bill.object %></td>
+		<td><%= bill.price %></td>
+		<td><%= bill.groupp %>
+		<td><%= bill.belongs_to %></td>
+		<td><%= MyDate::date_at(bill.deadline) %></td>
+		<td><%= MyDate::date_at(bill.paid) %></td>
+	</tr>
+	<% end %>
+</table>

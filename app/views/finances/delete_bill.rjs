@@ -1,0 +1,4 @@
+page["bill_info#{@bill.id}"].visual_effect :puff
+page["#{@bill.id}"].visual_effect :puff
+page["paid#{@bill.id}"].visual_effect :puff
+

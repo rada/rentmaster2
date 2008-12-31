@@ -1,0 +1,10 @@
+<p><label for="user_name" class="login"><%= get_string(:Name2) %></label>
+			<%= text_field 'user', 'name', :size => 15 %></p>
+			
+			<p><label for="user_password" class="login"><%= get_string(:Password) %></label>
+			<%= password_field :user, :password, :size => 40 %></p>
+			
+			<p><label for="user_password_confirmation" class="login"><%= get_string(:Confirm) %></label>
+			<%= password_field :user, :password_confirmation, :size => 40 %></p>
+			
+			<%= submit_tag get_string(:Add_user), :class => 'submit'%>

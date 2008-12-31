@@ -1,0 +1,9 @@
+<%= error_messages_for 'fitting' %>
+
+<% form_remote_tag(:url => {:action => 'edit_fitting', :id => @fitting},
+									 :before => "$('edit_indicator').show()",
+									 :failure => "alert('Error')",
+									 :complete => "$('edit_indicator').hide()"	) do %>
+	<%= render :partial => 'fitting_attributes' %>
+	<%= submit_tag get_string(:Edit) %> <%= image_tag(Settings::DEFAULT_PICS[:ajax_line_green], :id => "edit_indicator", :style => "display: none") %>
+<% end %>

@@ -1,0 +1,28 @@
+<h1><%= @property.name %></h1>
+<div class="finances_left">
+	<div>
+		<h2>Pravidelné platby</h2>
+		<%= render :partial => 'finances/autopay_table' unless @autos==[] %>
+		<%= "Nemovitost nemá definované žádné pravidelé platby" if @autos==[] %>
+	</div>
+	<hr/>
+	<div id="pending_bills">
+		<h2>Čekající platby pro nemovitost</h2>
+		<% form_remote_tag(:update => 'bills_table',
+											 :url => {:action => 'process_bills'},
+											 :failure => "alert('error')") do %>
+		<div id="bills_table"><%= render :partial =>'finances/pending_bills_table' %></div>
+		<% end %>
+		
+	</div>
+</div>
+<div class="finances_right">
+	<% form_remote_tag(:before => "$('ajax_loader_line').show()",
+										 :update => 'bills_table',
+										 :url => {:controller => 'finances', :action => 'pending', :id => @property.id, :bills_for => 'property' },
+										 :failure => "alert('error')",
+										 :complete => "$('ajax_loader_line').hide()") do %>
+	<%= render '/finances/bill_settings' %>	
+	<% end %>
+	<%= session[:bills].join(" ") %>
+</div>

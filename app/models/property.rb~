@@ -1,0 +1,323 @@
+class Property < ActiveRecord::Base
+  include LocalizeHelper
+
+  has_one  :user
+  has_many :renters, :order => "surname"
+  has_many :reported_renters, :class_name => "Renter", :conditions => ["reported_by IS NOT NULL"]
+  has_many :accommodation_histories, :dependent => :destroy
+  has_many :additionals, :foreign_key => "type_id", :conditions => ["owner = ?", :property], :dependent => :destroy
+  has_many :rents, :dependent => :destroy
+  has_many :todos, :dependent => :destroy
+  has_many :todos_for_renters, :class_name => "Todo", :conditions => ["show_to_renter = ?", true], :dependent => :destroy
+  has_many :bills, :dependent => :destroy
+  has_many :fittings, :dependent => :destroy
+  has_many :auto_pays, :dependent => :destroy
+  has_many :accessories, :dependent => :destroy
+  has_many :services, :class_name => "Accessory", :conditions => ["typ = ?", :service]
+  has_many :room_areas, :dependent => :destroy
+  has_many :rooms, :through => :room_areas
+  has_and_belongs_to_many :contacts, :uniq => true
+  
+  validates_presence_of :name, :address, :psc, :city, :area, :bedrooms, :floor
+  validates_numericality_of :psc, :rent, :fees, :area, :bedrooms
+  
+  def belongs_to_user(logged_admin_id)
+    if self.user_id == logged_admin_id
+      return true
+    else
+      return false
+    end
+  end
+  
+  # When creating new property this method
+  # will create rooms in the property according
+  # to parameters from form for new property
+  def create_rooms(rooms_id_array)
+    if self.room_areas.empty?
+      1.upto(self.bedrooms) do 
+        room_area = RoomArea.new(:property_id => self.id,
+                                 :room_id => Room.find_by_name("Room").id)
+        room_area.save
+      end
+    end
+    for room_id in rooms_id_array do
+      room_area = RoomArea.new(:property_id => self.id,
+                               :room_id => room_id)
+      room_area.save
+    end
+  end
+  
+  # When deleting property this method deletes its
+  # data according to what user decided to delete
+  def delete_data(data_to_delete)
+    if data_to_delete
+      for data in data_to_delete do
+        case data
+        when "todos"
+          self.todos.each{|todo| todo.destroy}
+        when "fittings"
+          self.fittings.each{|fitting| fitting.destroy}
+        when "services"
+          self.services.each{|service| service.destroy}
+        when "accessories"
+          self.accessories.each{|accessory| accessory.destroy if accessory.typ == :accessory}
+        end
+      end
+    else
+      return
+    end
+  end
+  
+  # This method is called when user wants to close
+  # property. Method will process renters accroding
+  # to users setting from webpage. Renters can be
+  # left in property, or moved to another or their
+  # rent can be closed.
+  def process_renters(renter_action, property_id_array, logged_user_id)
+    for renter in self.renters do
+      case renter_action[renter.id.to_s]
+      when "move"
+        new_property_id = property_id_array[renter.id.to_s]
+        renter.move_to_property(new_property_id, logged_user_id)
+      when "close_rent"
+        if !renter.has_unpaid_bills
+          renter.close_rent
+        end
+      end
+    end
+  end
+  
+  # This method will stop generating autopays
+  # for property by updating the date after which
+  # the autopay shold not generate bills.
+  def stop_autopays(autopay_id_array, logged_user_id)
+    if autopay_id_array
+      for autopay_id in autopay_id_array do
+        autopay = AutoPay.find(autopay_id)
+        if autopay.belongs_to_user(logged_user_id)
+          autopay.stop_generating(Time.now)
+        end
+      end
+    end
+  end
+  
+  # Mark given property as closed so no new
+  # renters can be accommodated in property.
+  def close(date_time)
+    self.update_attributes({:closed => date_time})
+  end
+  
+  # REturns administrator of property
+  def administrator
+    if self.administrator_id
+      return Contact.find(self.administrator_id)
+    else
+      return false
+    end
+  end
+  
+  # REturns owner of property
+  def owner
+    if self.owner_id
+      return Contact.find(self.owner_id)
+    else
+      return false
+    end
+  end
+  
+#   
+  def get_area
+    return self.area.to_s + " m<sup>2</sup>"
+  end
+  
+  # Checks if property is closed
+  def is_closed
+    if ((self.closed) && self.closed > 0 && self.closed < Time.now.to_i)
+      return true
+    else
+      return false
+    end
+  end
+  
+  # Return renters which are currently accomodated in property.
+  # Their rent is not closed.
+  def get_actual_renters
+    actual_renters = []
+    self.renters.each{|renter| 
+     actual_renters << renter if !renter.has_closed_rent
+    }
+    return actual_renters
+  end
+  
+  # Return the value if attribute passed in parameter
+  def get_attribute(attribute)
+    case attribute
+      when :bathroom
+        return self.bathroom
+      when :heating
+        return self.heating
+      when :warm_water
+        return self.warm_water
+      when :wc
+        return self.wc
+      else
+        return nil
+      end 
+  end
+  
+  # This method is used to fill html input tags
+  # with default values when creating property.
+  def get_value_for(room)
+    rooms = {:heating =>     LocalizeHelper::get_string(:Central_heating),
+             :bathroom =>    LocalizeHelper::get_string(:Own_in_appartement), 
+             :wc =>          LocalizeHelper::get_string(:Own_in_appartement),
+             :warm_water =>  LocalizeHelper::get_string(:Central) }
+              
+    if ((rooms.include?(room)) && (self.get_attribute(room) != ""))
+      return self.get_attribute(room)
+    elsif rooms.include?(room)
+      return rooms[room]
+    end
+  end
+  
+  # Returns notes defined for property
+  def notes
+    return Note.find(:all, :conditions => ["type_id = ? AND owner = ?", self.id, :property ])
+  end
+  
+  # Returns additional information defined for property
+  def get_additionals
+    return Additional.find(:all, :conditions => ["type_id = ? AND owner = ?", self.id, 'property'])
+  end
+  
+  # Returns autopays defined for property
+  def get_autopays
+    return AutoPay.find(:all, :conditions => ["property_id = ?", self.id])
+  end
+  
+  # Returns autopays which are active at the time
+  # it means that they are still generating bills.
+  def get_active_autopays
+    todays_end_time = Time.utc(Time.now.year, Time.now.month, Time.now.day + 1).to_i
+    return AutoPay.find(:all, :conditions => ["property_id = ? AND (end_pay > ? OR end_pay = 0)", self.id, todays_end_time])
+  end
+  
+  def get_area_sum(area_type)
+    area_sum = 0    
+    case area_type
+    when :total
+      for room_area in self.room_areas
+        area_sum += room_area.total
+      end
+    when :chargable
+      for room_area in self.room_areas
+        area_sum += room_area.chargable
+      end
+    when :UT
+      for room_area in self.room_areas
+        area_sum += room_area.UT
+      end
+    when :TUV
+      for room_area in self.room_areas
+        area_sum += room_area.TUV
+      end
+    end
+    
+    return area_sum
+  end
+  
+  def has_accessories_percept
+    if (self.has_accessories && self.has_services)
+      return false
+    else
+      return true
+    end
+  end
+  
+  # Checks is property has accessories
+  def has_accessories
+    if self.accessories != []
+      self.accessories.each{|accessory| return true if accessory.typ == :accessory}
+    else
+      return false
+    end
+  end
+  
+  # Checks is property has services
+  def has_services
+    if self.services != []
+      return true
+    else
+      return false
+    end
+  end
+  
+  # Calculates price for accessories or services or
+  # both. It is used for calulating rent and generating
+  # evidence list
+  def accessories_price_sum(typ)
+    price_sum = 0
+    case typ
+      when :both
+        self.accessories.each{|accessory| price_sum += accessory.price_total  }
+#        self.services.each{|service| price_sum += service.price_total  }
+      when :service
+        self.services.each{|service| price_sum += service.price_total }
+      when :acccessory
+        self.accessories.each{|accessory| price_sum += accessory.price_total if accessory.typ == :accessory }
+    end
+    
+    return price_sum
+  end
+  
+  # This method calculates and returns price
+  # for rent which comes from accessories and 
+  # services defined in property
+  def rent_percept_for_renter
+    rent_value = 0
+    self.accessories.each{|accessory|
+      rent_value += ((accessory.base + accessory.tarif)*( 1 + (accessory.tax/100) ))
+    }
+    return rent_value
+  end
+  
+  def room_areas_sorted
+    return self.room_areas.sort{|room_area1, room_area2| room_area1.room.name <=> room_area2.room.name}
+  end
+  
+  def get_paid_bills(date, sort_by, sort_direction)
+    return Bill.get_paid_bills_for(:property, self.id, date, sort_by, sort_direction)
+  end
+  
+  def get_all_bills(date, sort_by, sort_direction)
+    return Bill.get_all_bills_for(:property, self.id, date, sort_by, sort_direction)
+  end
+  
+  def get_pending_bills(date, sort_by, sort_direction)
+    return Bill.get_pending_bills_for(:property, self.id, date, sort_by, sort_direction)
+  end
+  
+  # MEthod return todos for property which 
+  # can be showed to renters accommodated
+  # in property
+  def get_todos_for_renters
+    return Todo.find(:all, :conditions => ["property_id = ? AND show_to_renter = ?", self.id, true])
+  end
+    
+  def self.add_room(room)
+#    Rooms_name << room if room.is_a?(String)
+     room = Room.new({"name" => room})
+     room.save     
+  end
+  
+  # MEthod calculates total price of rent from
+  # renters rents  
+  def renters_rent
+    rent = 0
+    for renter in self.renters do
+      rent += renter.rent
+    end
+    return rent
+  end
+  
+end

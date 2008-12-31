@@ -1,0 +1,25 @@
+<% title(get_string(:Finances)) %>
+<% submenu(Settings::SUBMENU[:renters_sub]) %>
+<h1><%= get_string(:Finances) %></h1>
+<div class="finances_left">
+	<div>
+		<h2><%= get_string(:Autopays) %></h2>
+		<%= render '/renters/finances/autopay_table' unless @autos==[] %>
+		<%= get_string(:No_autopays_defined)  if @autos==[] %>
+	</div>
+	<hr/>
+	<% form_remote_tag(:update => 'bills_table',
+										 :url => {:controller => 'renters/finances', :action => 'process_bills'},
+										 :failure => "alert('error')") do %>
+		<div id="bills_table"><%= render :partial => 'pending_bills_table' %></div>
+	<% end %>
+</div>
+<!---------------------------------------------------------------------------------------------------------------->
+<div class="finances_right">
+	<% form_remote_tag(:before => "$('ajax_loader_line').show()",
+										 :url => {:action => 'bills'},
+										 :failure => "alert('error')",
+										 :complete => "$('ajax_loader_line').hide()") do %>
+	<%= render '/finances/bill_settings' %>
+	<% end %>
+</div>

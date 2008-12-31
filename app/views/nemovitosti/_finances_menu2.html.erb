@@ -1,0 +1,7 @@
+<%= link_to('Zobrazit všetky platby', :action => 'show_all_bills', :id => @property) %>
+	<%= link_to('Pøidat pravidelnou platbu', :controller => 'finances', :action => 'autopays', :id => @property) %><br/>
+	<%= link_to_function('Pøíkaz k platbì', "new Effect.toggle('payment', 'blind')") %>
+	 <img src="/images/ajax_loaders/ajax1.gif" id="indicator" style="display: none;"/><br/><br/>
+	 <div id="payment" style="display: none">
+	 	<%= render :partial => 'finances/bill_form' %>
+	 </div>

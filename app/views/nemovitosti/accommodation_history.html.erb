@@ -1,0 +1,48 @@
+<% title(get_string(:Accommodation_history)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<div class="left">
+	<h2><%= get_string(:Actually_accommodated_renters) %></h2>
+	<table class="blue" cellspacing="0" cellpading="3" style="width: 500px">
+		<thead>
+			<tr>
+				<th><%= get_string(:Name) %></th>
+				<th><%= get_string(:From) %></th>
+				<th><%= get_string(:To) %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% bg_color = 0 %>
+			<% for renter in @property.get_actual_renters do %>
+			<% bg_color = 1 - bg_color %>
+			<tr class="back<%= bg_color %>">
+				<td><%= link_to(renter.full_name, :controller => 'manage_renter', :action => 'renter', :id => renter.id) %></td>
+				<td><%= MyDate::date_at(renter.actual_accommodation.from) %></td>
+				<td><%= MyDate::date_at(renter.actual_accommodation.to)%></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	<h2><%= get_string(:History_of_accommodated_renters) %></h2>
+	<table class="blue" cellspacing="0" cellpading="3" style="width: 500px">
+		<thead>
+			<tr>
+				<th><%= get_string(:Name) %></th>
+				<th><%= get_string(:From) %></th>
+				<th><%= get_string(:To) %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for accommodation in @property.accommodation_histories do %>
+			<% bg_color = 1 - bg_color %>
+			<% if accommodation.renter.has_closed_rent %>
+			<tr class="back<%= bg_color %>">
+				<td><%= link_to(accommodation.renter.full_name, :controller => 'manage_renter', :action => 'renter', :id => accommodation.renter.id) %></td>
+				<td><%= MyDate::date_at(accommodation.from) %></td>
+				<td><%= MyDate::date_at(accommodation.to) %></td>
+			</tr>
+			<% end %>
+			<% end %>
+		</tbody>
+	</table>
+</div>

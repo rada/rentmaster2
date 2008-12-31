@@ -1,0 +1,35 @@
+<%= link_to 'New renter', :action => 'new' %>
+<% for renter in @renters %>
+<div style="border: solid thin black; width: 300px; float: left; margin: 5px; padding: 3px">
+	<table style="width: 100%">
+		<tr>
+			<td>
+			  <strong><%= link_to(renter.full_name.upcase, :action => 'renter', :id => renter) %></strong><br />
+			</td>
+			<td rowspan="4" align="right">
+				<%= link_to(image_tag(photo(renter.image_small, Settings::DEFAULT_PICS[:renter]), :size => "100x100", :style => "text-align: right"), :action => 'renter', :id => renter) %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<% if renter.has_closed_rent %>
+				<strong><span style="color: red;"><%= get_string(:closed_rent) %></span></strong>
+			<% else %>
+				<br />
+			<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<%= link_to(renter.property.name, :controller => 'nemovitosti', :action => 'detail', :id => renter.property) %><br />
+				<%= number_to_currency(renter.rent, :unit => "CZK", :delimiter => ' ', :separator => ",", :format => "%n %u") %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= renter.telephone %><br />
+					<%= renter.email %>
+			</td>
+		</tr>
+	</table>
+</div>
+<% end %>

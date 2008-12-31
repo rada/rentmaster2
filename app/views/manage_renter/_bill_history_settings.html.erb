@@ -1,0 +1,70 @@
+<h2><%= get_string(:Finance_history) %></h2>
+	<fieldset>
+		<legend><%= get_string(:Parameters_of_finance_history) %></legend>
+		<p>
+			<label for="history_format_html">
+			 	<input type="radio" id="history_format_html" name="history[format]" value="html" checked="checked"/><%= get_string(:html) %>
+			</label>
+	
+			<label for="history_format_pdf">
+				<input type="radio" id="history_format_pdf" name="history[format]" value="pdf" /><%= get_string(:pdf) %>
+			</label>
+		</p>
+		<hr/>
+		<p>
+			<label for="history_month_year">
+				<input type="radio" id="history_month_year" name="history[date_type]" value="month_year" checked="checked" onclick="$('month_year').show(); $('date').hide()"/>
+				<%= get_string(:Month_Year) %>
+			</label>
+			<label for="history_date">
+				<input type="radio" id="history_date" name="history[date_type]" value="date" onclick="$('month_year').hide(); $('date').show()"/>
+				<%= get_string(:Date) %>
+			</label>
+		</p>
+		<p id="month_year">
+			<label for="history_month">
+				<select id="history_month" name="history[month]">
+					<option value="1"><%= get_string(:January) %></option>
+					<option value="2"><%= get_string(:February) %></option>
+					<option value="3"><%= get_string(:March) %></option>
+					<option value="4"><%= get_string(:April) %></option>
+					<option value="5"><%= get_string(:May) %></option>
+					<option value="6"><%= get_string(:June) %></option>
+					<option value="7"><%= get_string(:July) %></option>
+					<option value="8"><%= get_string(:August) %></option>
+					<option value="9"><%= get_string(:September) %></option>
+					<option value="10"><%= get_string(:October) %></option>
+					<option value="11"><%= get_string(:November) %></option>
+					<option value="12"><%= get_string(:December) %></option>
+				</select>
+				<%= get_string(:Month) %>
+			</label>
+			<label for="history_year" name="history[year]">
+				<select>
+					<%= start_year = Time.at(@renter.start_date).year %>
+					<% start_year.upto(Time.now.year) do |year| %>
+					<option value="<%= year %>"><%= year %></option>
+					<% end%>
+				</select>
+				<%= get_string(:Year) %>
+			</label>
+		</p>
+		<p id="date" style="display: none">
+			<%= get_string(:From) %>:
+			<%= date_select("history", "from", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.at(@renter.start_date).year, :end_year => Time.now.year}) %>
+
+			<%= get_string(:To) %>:
+			<%= date_select("history", "to", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.at(@renter.start_date).year, :end_year => Time.now.year}) %>
+		</p>
+		<hr/>
+		<p>
+			<label for="penalty_history">
+			<input type="checkbox" id="penalty_history" name="history[include_penalty_history]" value="true"/><%= get_string(:Include_penalty_history) %>
+			</label>
+		</p>
+		<p>
+			<label for="unpaid_bills">
+			<input type="checkbox" id="unpaid_bills" name="history[include_unpaid_bills]" value="true"/><%= get_string(:Include_unpaid_bills) if @renter.has_unpaid_bills %>
+			</label>
+		</p>	
+	</fieldset>

@@ -1,0 +1,12 @@
+	<% for accessory in @property.accessories do %>
+	<% if accessory.typ == typ %>
+	<tr>
+		<td><%= accessory.name %></td>
+		<td><%= accessory.count %></td>
+		<td><%= accessory.tarif %></td>
+		<td><%= accessory.base %></td>
+		<td><%= accessory.tax %></td>
+		<td align="center"><%= accessory.price_with_tax * accessory.count %></td>
+	</tr>
+	<% end %>
+	<% end %>

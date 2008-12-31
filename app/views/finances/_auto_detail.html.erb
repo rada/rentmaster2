@@ -1,0 +1,23 @@
+<table class="detail" style="width: 100%">
+	<tr>
+		<th>Předmět platby</th>
+		<th>Částka</th>
+		<th>Kategorie</th>
+		<th>Skupina</th>
+		<th>Opakování každých </th>
+		<th>Vytvořeno</th>
+		<th><%= get_string(:Generation_end) %></th>
+	</tr>
+	<tr>
+		<td><%= @auto.object %></td>
+		<td><%= @auto.price %></td>
+		<td><%= @auto.category %></td>
+		<td><%= @auto.groupp %></td>
+		<td><%= @auto.repeat %> <%= get_string(:Days) %></td>
+		<td><%= MyDate.date_at(@auto.added) %></td>
+		<td><%= MyDate::date_at(@auto.end_pay) if (@auto.end_pay && (@auto.end_pay != 0 ))%>
+		<td>
+			<%= link_to_function('close', "$('detail_"+@auto.id.to_s+"').visualEffect('Puff')",{:style => "color: black"}) %>
+		</td>
+	</tr>
+</table>

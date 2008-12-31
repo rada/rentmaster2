@@ -1,0 +1,52 @@
+<div style = "">
+ <table >
+ 	<tr>
+ 		<td>
+		 	<div class = "address">
+		 		<b>Adress:</b><br/>
+				<%= address_h %></div>
+			<div class="address" id="najem">
+				<table>
+					<tr>
+						<td><b><%= get_string(:Rent) + ":" %></b></td>
+						<td align = "right"><%= najem_h %></td>
+					</tr>
+					<tr>
+						<td><b><%= get_string(:Fees) + ":" %></b></td>
+						<td align = "right"><%= fees_h %></td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		<td rowspan="2" >
+			<center>
+				<div class = "foto" style = "float: right"><%= image_tag photo_h(@property.photo) %></div>
+			</center>
+		</td>
+		</tr>
+		<tr>
+			<td>
+				<%= hidden_div_if(!@property.notes, {:id => "note", :class => "address"}) %>
+			
+					<b><%= get_string(:Notes) %>:</b><br/>
+					<% @property.reload %>					
+					<% for note in @property.notes %>
+						<%= note.content %> <br/>
+					<% end %>
+				</div>
+				
+				<p style="font-size: small; padding-left: 5px;"><%= link_to_function('Add note', "new Effect.toggle('add_note', 'blind')") %></p>
+				
+				<div id="add_note" style="display: none">					
+				<% form_tag(:action => 'add_note', :id => @property) do %>
+						<p><%= text_area 'note', 'content', {:cols => 25, :rows => 3, :value => '' } %></p>
+						<%= submit_tag 'Pridej poznamku' %>	
+				</div> 
+				<% end %>
+			</td>
+		</tr>
+ </table>
+ <div class="about">
+ 	<%=h @property.about %>
+ </div>	
+</div>

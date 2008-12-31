@@ -1,0 +1,98 @@
+<% title(get_string(:New_rent)) %>
+<h1><%= get_string(:New_rent) %></h1>
+<%= error_messages_for 'rent' %>
+<% form_tag(:controller => '/manage_renter', :action => 'create_rent', :id => @renter.id ) do %>
+	<div class='left'>
+		<p>
+			<h2><%= get_string(:Select_type_of_rent) %></h2>
+			<input id="simple_rent_radio" type="radio" name="rent[typ]" value="simple" checked="checked" onclick="$('percept_rent').hide();"/>
+			<label for="simple_rent_radio"><%= get_string(:Simple) %></label>
+			<input id="percept_rent_radio" type="radio" name="rent[typ]" value="percept" onclick="$('percept_rent').show();$('rent_price').value='<%= @property.has_accessories_percept ? @property.rent_percept_for_renter : '' %>'" />
+			<label for="percept_rent_radio"><%= get_string(:With_percept) %></label>
+		</p>
+		<div id="percept_rent" style="display: none">
+			<table style="width: 100%">
+				<tr>
+					<th><%= get_string(:Item_name2) %></th>
+					<th><%= get_string(:Count) %></th>
+					<th><%= get_string(:Tarif) %></th>
+					<th><%= get_string(:Base) %></th>
+					<th><%= get_string(:Tax) %></th>
+					<th style="width: 30px"><%= get_string(:Price_with_tax) %></th>
+				</tr>
+				<% for accessory in @property.accessories do %>
+				<% if accessory.typ == :accessory %>
+				<tr>
+					<td><%= accessory.name %></td>
+					<td><%= accessory.count %></td>
+					<td><%= accessory.tarif %></td>
+					<td><%= accessory.base %></td>
+					<td><%= accessory.tax %></td>
+					<td style="text-align: right"><%= accessory.base + ((accessory.tax)/100)*(accessory.base) %></td>
+				</tr>
+				<% end #if %>
+				<% end #for %>
+			</table>
+			
+			<table style="width: 100%">
+				<tr>
+					<th><%= get_string(:Service_name2) %></th>
+					<th><%= get_string(:Tarif) %></th>
+					<th><%= get_string(:Base) %></th>
+					<th><%= get_string(:Tax) %></th>
+					<th style="width: 30px"><%= get_string(:Price_with_tax) %></th>
+				</tr>
+				<% for service in @property.services do %>
+				<tr>
+					<td><%= service.name %></td>
+					<td><%= service.tarif %></td>
+					<td><%= service.base %></td>
+					<td><%= service.tax %></td>
+					<td style="text-align: right"><%= service.base + ((service.tax)/100)*(service.base) %></td>
+				</tr>
+				<% end %>
+			</table>
+		</div>
+		<div>
+			<p style="text-align: right">
+				<%= get_string(:Rent_value) %>:
+				<input type="text" id="rent_price" name="rent[price]" value="" size="15" style="text-align: right"/>
+			</p>
+		</div>
+		<hr />
+		<p>
+			<input type="checkbox" name="add_autopay_rent" value="true" onclick="new Effect.toggle('autopay_rent', 'blind')"" id="add_autopay"/>
+			<label for="add_autopay"><%= get_string(:Create_autopay_for_rent) %></label>
+		</p>
+		<div id="autopay_rent" style="display: none; border: dashed 1px green; padding: 5px; width: 300px">
+			<p><label for="auto_pay_object"> Predmet platby (Nazev) </label><br/>
+			<%= text_field 'auto_pay', 'object', :value => "najem_#{@renter.surname.downcase}" %></p>
+			
+			<p><label for="auto_pay">První platba</label><br/>
+			<%= date_select("first", "", {:order => [:day, :month, :year], :use_month_numbers => true, :start_year => Time.now.year}) %>
+			</p>
+			
+			Pravidelne opakovat platbu každých<br/>
+			<select name="times">
+				<% 1.upto(31) do |i| %>
+				<option value=<%= i %>><%= i %></option>
+				<% end %>
+			</select>
+			<select name="period" >
+				<option id="day" value="1"><%= get_string(:Days) %></option>
+				<option id="week" value="7"><%= get_string(:Weeks) %></option>
+				<option id="month" value="31"><%= get_string(:Months) %></option>
+			</select>
+			<p>
+			  <input type="checkbox" id="penalties" name="penalties" onchange="$('penalty_list').toggle()"/>
+			  <label for="penalties"><%= get_string(:Add_penalty_for_late_pay) %></label>
+			</p>
+			<div id="penalty_list" style="display: none; border: solid thin green; float: none; margin-top: 9px; margin-left: 5px; padding: 5px; background-color: white;">
+				<% for penalty in @penalties do %>
+				<input type="radio" id="penalty<%= penalty.id %>" name="penalty_id" <%= "value='#{penalty.id}'" %>/><label for="penalty<%= penalty.id %>"><%= penalty.name %></label><br />
+				<% end %>
+			</div>
+		</div>
+	<p style="text-align: right;"><%= submit_tag get_string(:Create_rent) %></p>
+	</div>
+<% end %>

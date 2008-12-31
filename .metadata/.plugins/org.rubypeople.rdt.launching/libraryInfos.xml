@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="D:\Program Files\InstantRails-2.0-win\ruby" version="1.8.6" vmTypeId="org.rubypeople.rdt.launching.StandardVMType">
+<bootpath>
+<entry path="D:/Program Files/InstantRails-2.0-win/ruby/lib/ruby/site_ruby/1.8"/>
+<entry path="D:/Program Files/InstantRails-2.0-win/ruby/lib/ruby/site_ruby/1.8/i386-msvcrt"/>
+<entry path="D:/Program Files/InstantRails-2.0-win/ruby/lib/ruby/site_ruby"/>
+<entry path="D:/Program Files/InstantRails-2.0-win/ruby/lib/ruby/1.8"/>
+<entry path="D:/Program Files/InstantRails-2.0-win/ruby/lib/ruby/1.8/i386-mswin32"/>
+</bootpath>
+</libraryInfo>
+</libraryInfos>

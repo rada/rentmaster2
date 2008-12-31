@@ -1,0 +1,12 @@
+<%= error_messages_for 'user' %>
+<div>
+	<fieldset>
+		<legend><%= get_string(:Please_fill_username_and_password) %></legend>
+		
+		<% form_tag(:action => 'add_new_property_user') do %>
+		<%= render :partial => 'new_user' %>		
+		
+		<% end %>
+	</fieldset>
+</div>
+

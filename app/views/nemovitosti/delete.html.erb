@@ -1,0 +1,33 @@
+<% title(get_string(:Delete_property)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<h1><%= get_string(:Delete_property) %>: <%= @property.name %></h1>
+<br/>
+<div class="left">
+	<div id="detail" class="nemovitost-detail">
+	<%= render(:partial => "property", :object => @property) %>
+	</div>
+	<h2><%= get_string(:Delete_also) %></h2>
+	<% form_tag(:controller => 'nemovitosti', :action => 'delete', :id => @property) do %>
+	<table>
+		<tbody>
+			<% for data in [:todos, :fittings, :services, :accessories] do %>
+			<tr>
+				<td><input type="checkbox" id="<%= data.to_s %>" name="data[]" value="<%= data.to_s %>" checked="checked"/></td>
+				<td><label for="<%= data.to_s %>"><%= get_string(data) %></label></td>
+				<td><%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:detail], :style => "border: none", :title => get_string(:Detail)),
+																:before => "$('"+data.to_s+"_indicator').show()",
+																:update => "right",
+																:url => {:action => 'show_data', :data => data, :id => @property},
+																:failure => "alert('Error')",
+																:complete => "$('"+data.to_s+"_indicator').hide()") %></td>
+				<td><%= image_tag(Settings::DEFAULT_PICS[:ajax_blue], :id => "#{data.to_s}_indicator", :style => "display: none" )%></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<p style="text-align: right"><%= submit_tag get_string(:Delete) %></p>
+	<% end %>
+</div>
+<div class="right" id="right">
+	
+</div>

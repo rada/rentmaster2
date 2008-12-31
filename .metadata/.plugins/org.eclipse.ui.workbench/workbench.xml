@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench progressCount="37" version="2.0">
+<workbenchAdvisor/>
+<window height="768" maximized="true" width="1024" x="44" y="44">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar>
+<itemSize x="160"/>
+</perspectiveBar>
+<coolbarLayout locked="0">
+<coolItem id="group.file" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="98" y="22"/>
+<coolItem id="additions" itemType="typeGroupMarker"/>
+<coolItem id="com.aptana.ide.jaxer.ActionSet" itemType="typeToolBarContribution" x="100" y="22"/>
+<coolItem id="com.aptana.ide.server.cloud.ActionSet" itemType="typeToolBarContribution" x="100" y="22"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="124" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="37" y="22"/>
+<coolItem id="org.eclipse.ui.WorkingSetActionSet" itemType="typeToolBarContribution" x="50" y="22"/>
+<coolItem id="org.radrails.rails.ui.RailsElementCreationActionSet" itemType="typeToolBarContribution" x="37" y="22"/>
+<coolItem id="org.radrails.rails.ui.railsActions" itemType="typeToolBarContribution" x="119" y="22"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="185" y="22"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="group.help" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
+</coolbarLayout>
+<page focus="true" label="Workspace - RadRails">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+</editorArea>
+</editors>
+<views>
+<view id="com.aptana.ide.js.ui.views.FileExplorerView" partName="File">
+<viewState/>
+</view>
+<view id="com.aptana.ide.scripting.SnippetsView" partName="Snippets"/>
+<view id="com.aptana.ide.js.ui.views.profilesView" partName="References">
+<viewState/>
+</view>
+<view id="com.aptana.gems.ui.ViewGems" partName="RubyGems"/>
+<view id="org.rubypeople.rdt.testunit.views.TestUnitView" partName="Test::Unit">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+<view id="org.rubypeople.rdt.ui.RubyExplorer" partName="Ruby Explorer">
+<viewState isWindowWorkingSet="false" layout="1" org.rubypeople.rdt.ui.packages.linktoeditor="0" rootMode="1" workingSetName="">
+<customFilters userDefinedPatternsEnabled="false">
+<xmlDefinedFilters>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.AllMembersFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.NonPublicFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.FieldsFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.NonRubyElementFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.NonSharedProjectsFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.StaticsFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.ImportDeclarationFilter" isEnabled="true"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.RubyFileFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer_patternFilterId_.*" isEnabled="true"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.ClosedProjectsFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.NonRubyProjectsFilter" isEnabled="false"/>
+<child filterId="org.rubypeople.rdt.ui.RubyExplorer.LibraryFilter" isEnabled="false"/>
+</xmlDefinedFilters>
+</customFilters>
+</viewState>
+</view>
+<view id="com.aptana.ide.server.ui.serversView" partName="Servers">
+<viewState/>
+</view>
+<view id="com.aptana.ide.core.ui.AptanaNavigator" partName="Project">
+<viewState LINK_NAVIGATOR_TO_EDITOR="0" sorter="1">
+<filters>
+<filter element=".tmp*~" isEnabled="true"/>
+<filter element="CVS" isEnabled="true"/>
+<filter element="*.DS_Store" isEnabled="true"/>
+<filter element="*.project" isEnabled="true"/>
+<filter element=".*" isEnabled="true"/>
+<filter element=".*" isEnabled="true"/>
+<filter element="*.xml" isEnabled="false"/>
+<filter element="*.yml" isEnabled="false"/>
+<filter element="*.gem" isEnabled="false"/>
+<filter element="*.so" isEnabled="false"/>
+</filters>
+<selection>
+<element path="/rentmaster_3.12.2008"/>
+</selection>
+</viewState>
+</view>
+<view id="org.radrails.rails.ui.ViewGenerators" partName="Generators"/>
+<view id="org.radrails.rails.ui.ViewRailsPlugins" partName="Rails Plugins"/>
+<view id="com.aptana.ide.js.ui.views.problemsView" partName="Validation">
+<viewState/>
+</view>
+<view id="org.eclipse.eclipsemonkey.views.ScriptsView" partName="Scripts">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
+<view id="com.aptana.rdt.ViewRakeTasks" partName="Rake Tasks"/>
+<view id="com.aptana.ide.samples.SamplesView" partName="Samples"/>
+</views>
+<perspectives activePart="org.rubypeople.rdt.ui.RubyExplorer" activePerspective="org.radrails.rails.ui.PerspectiveRails">
+<perspective editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="com.aptana.ide.core.ui.WebPerspectiveFactory" id="com.aptana.ide.js.ui.WebPerspective" label="Aptana"/>
+<alwaysOnActionSet id="com.aptana.ide.core.ui.actionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.framework.jaxer.server.win32.actionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.server.jetty.menuActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.intro.menuActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.update.actionSet"/>
+<alwaysOnActionSet id="eclipsemonkeyAction.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.openExternalFile"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.WorkingSetActionSet"/>
+<alwaysOnActionSet id="org.eclipse.update.ui.softwareUpdates"/>
+<alwaysOnActionSet id="org.rubypeople.rdt.debug.ui.RDTDebugActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.debug.ui.JSDebugActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.jaxer.ActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.scripting.actionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.server.cloud.ActionSet"/>
+<show_view_action id="com.aptana.ide.scripting.SnippetsView"/>
+<show_view_action id="com.aptana.ide.core.ui.AptanaNavigator"/>
+<show_view_action id="com.aptana.ide.js.ui.views.FileExplorerView"/>
+<show_view_action id="com.aptana.ide.js.ui.views.profilesView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="com.aptana.ide.js.ui.views.problemsView"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.eclipse.ui.views.BookmarkView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ui.views.PropertySheet"/>
+<show_view_action id="com.aptana.ide.syncing.views.SyncManagerView"/>
+<show_view_action id="com.aptana.ide.js.docgen.views.visualscriptdoc"/>
+<show_view_action id="com.aptana.ide.logging.LogView"/>
+<show_view_action id="com.aptana.ide.server.ui.serversView"/>
+<show_view_action id="com.aptana.ide.debug.ui.AJAXMonitorView"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.SQLUntitledFileWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.CssUntitledWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.ERBUntitledWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.HtmlUntitledWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.JsUntitledWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.ScriptDocUntitledWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.UntitledTextFileWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.file.XmlUntitledWizard"/>
+<perspective_action id="com.aptana.ide.js.ui.WebPerspective"/>
+<perspective_action id="com.aptana.ide.db.PerspectiveFactory"/>
+<perspective_action id="org.radrails.rails.ui.PerspectiveRails"/>
+<view id="com.aptana.ide.js.ui.views.profilesView"/>
+<view id="com.aptana.ide.js.ui.views.FileExplorerView"/>
+<view id="com.aptana.ide.core.ui.AptanaNavigator"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="com.aptana.ide.samples.SamplesView"/>
+<view id="org.eclipse.eclipsemonkey.views.ScriptsView"/>
+<view id="com.aptana.ide.scripting.SnippetsView"/>
+<view id="com.aptana.ide.js.ui.views.problemsView"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="com.aptana.ide.server.ui.serversView"/>
+<layout>
+<mainWindow>
+<info folder="true" part="leftTop">
+<folder activePageID="com.aptana.ide.js.ui.views.profilesView" appearance="2" expanded="2">
+<page content="com.aptana.ide.js.ui.views.profilesView" label="References"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.74950296" ratioLeft="754" ratioRight="252" relationship="2" relative="leftTop">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.19980119" ratioLeft="201" ratioRight="805" relationship="2" relative="leftTop"/>
+<info folder="true" part="right" ratio="0.8" ratioLeft="644" ratioRight="161" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="com.aptana.ide.samples.SamplesView" label="Samples"/>
+<page content="com.aptana.ide.js.ui.views.walkthrough.WalkthroughView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="rightBottom" ratio="0.7994429" ratioLeft="574" ratioRight="144" relationship="4" relative="right">
+<folder activePageID="org.eclipse.eclipsemonkey.views.ScriptsView" appearance="2" expanded="2">
+<page content="org.eclipse.eclipsemonkey.views.ScriptsView" label="Scripts"/>
+<page content="com.aptana.ide.scripting.SnippetsView" label="Snippets"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="bottom" ratio="0.7994429" ratioLeft="574" ratioRight="144" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="com.aptana.ide.js.ui.views.problemsView" appearance="2" expanded="2">
+<page content="com.aptana.ide.js.ui.views.problemsView" label="Validation"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="com.aptana.ide.framework.jaxer.interactiveConsole" label="LabelNotFound"/>
+<page content="com.aptana.ide.server.ui.serversView" label="Servers"/>
+<page content="com.aptana.ide.ui.ViewPlugins" label="LabelNotFound"/>
+<page content="com.aptana.ide.documentation.jquery.visualjquery" label="LabelNotFound"/>
+<page content="com.aptana.ide.js.ui.views.GenericScriptableView:*" label="LabelNotFound"/>
+<page content="com.aptana.ide.logging.LogView" label="LabelNotFound"/>
+<page content="com.aptana.ide.framework.jaxer.monitor" label="LabelNotFound"/>
+<page content="com.aptana.ide.syncing.views.SyncManagerView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="left" ratio="0.2994429" ratioLeft="215" ratioRight="503" relationship="4" relative="leftTop">
+<folder activePageID="com.aptana.ide.js.ui.views.FileExplorerView" appearance="2" expanded="2">
+<page content="com.aptana.ide.js.ui.views.FileExplorerView" label="File"/>
+<page content="com.aptana.ide.js.ui.views.FileExplorerView:*" label="LabelNotFound"/>
+<page content="com.aptana.ide.core.ui.AptanaNavigator" label="Project"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+<perspective editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.radrails.rails.internal.ui.RailsPerspectiveFactory" id="org.radrails.rails.ui.PerspectiveRails" label="RadRails"/>
+<alwaysOnActionSet id="com.aptana.ide.core.ui.actionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.framework.jaxer.server.win32.actionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.server.jetty.menuActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.intro.menuActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.update.actionSet"/>
+<alwaysOnActionSet id="eclipsemonkeyAction.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.openExternalFile"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.WorkingSetActionSet"/>
+<alwaysOnActionSet id="org.eclipse.update.ui.softwareUpdates"/>
+<alwaysOnActionSet id="org.rubypeople.rdt.debug.ui.RDTDebugActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.radrails.rails.ui.RailsElementCreationActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.jaxer.ActionSet"/>
+<alwaysOnActionSet id="com.aptana.ide.server.cloud.ActionSet"/>
+<alwaysOnActionSet id="org.radrails.rails.ui.railsActions"/>
+<alwaysOnActionSet id="org.rubypeople.rdt.ui.rubyActionSet"/>
+<show_view_action id="org.rubypeople.rdt.ui.views.RIView"/>
+<show_view_action id="com.aptana.ide.server.ui.serversView"/>
+<show_view_action id="com.aptana.ide.logging.LogView"/>
+<show_view_action id="org.rubypeople.rdt.testunit.views.TestUnitView"/>
+<show_view_action id="org.rubypeople.rdt.ui.RubyExplorer"/>
+<show_view_action id="org.radrails.rails.ui.ViewRailsPlugins"/>
+<show_view_action id="org.radrails.rails.ui.ViewGenerators"/>
+<show_view_action id="com.aptana.rdt.ViewRakeTasks"/>
+<show_view_action id="com.aptana.rdt.ui.views.RailsAPIView"/>
+<show_view_action id="com.aptana.rdt.ui.views.RubyCoreAPIView"/>
+<show_view_action id="com.aptana.rdt.ui.views.RubyStdLibAPIView"/>
+<show_view_action id="org.epic.regexp.views.RegExpView"/>
+<show_view_action id="com.aptana.gems.ui.ViewGems"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.rubypeople.rdt.ui.RDocView"/>
+<new_wizard_action id="org.rubypeople.rdt.ui.wizards.RubyNewClassWizard"/>
+<new_wizard_action id="org.rubypeople.rdt.testunit.wizards.RubyNewTestCaseWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.ERBNewWizard"/>
+<new_wizard_action id="org.radrails.rails.ui.wizards.NewWizardProject"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.rubypeople.rdt.ui.wizards.RubyNewFileWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.HtmlNewWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.CssNewWizard"/>
+<new_wizard_action id="com.aptana.ide.editors.wizards.JsNewWizard"/>
+<new_wizard_action id="org.radrails.server.ui.WizardNewServer"/>
+<perspective_action id="org.radrails.db.ui.PerspectiveData"/>
+<perspective_action id="com.aptana.ide.js.ui.WebPerspective"/>
+<perspective_action id="org.eclipse.debug.ui.DebugPerspective"/>
+<view id="org.rubypeople.rdt.ui.RubyExplorer"/>
+<view id="org.rubypeople.rdt.testunit.views.TestUnitView"/>
+<view id="com.aptana.ide.server.ui.serversView"/>
+<view id="org.radrails.rails.ui.ViewGenerators"/>
+<view id="com.aptana.rdt.ViewRakeTasks"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.radrails.rails.ui.ViewRailsPlugins"/>
+<view id="com.aptana.gems.ui.ViewGems"/>
+<view id="com.aptana.ide.core.ui.AptanaNavigator"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<layout>
+<mainWindow>
+<info folder="true" part="topLeft">
+<folder activePageID="org.rubypeople.rdt.ui.RubyExplorer" appearance="2" expanded="2">
+<page content="org.rubypeople.rdt.ui.RubyExplorer" label="Ruby Explorer"/>
+<page content="org.rubypeople.rdt.testunit.views.TestUnitView" label="Test::Unit"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.7496063" ratioLeft="952" ratioRight="318" relationship="2" relative="topLeft">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.2" ratioLeft="254" ratioRight="1016" relationship="2" relative="topLeft"/>
+<info folder="true" part="consoleArea" ratio="0.74916387" ratioLeft="672" ratioRight="225" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="com.aptana.ide.core.ui.AptanaNavigator" appearance="2" expanded="2">
+<page content="com.aptana.ide.server.ui.serversView" label="Servers"/>
+<page content="org.radrails.rails.ui.ViewGenerators" label="Generators"/>
+<page content="com.aptana.rdt.ViewRakeTasks" label="Rake Tasks"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.radrails.rails.ui.ViewRailsPlugins" label="Rails Plugins"/>
+<page content="com.aptana.gems.ui.ViewGems" label="RubyGems"/>
+<page content="com.aptana.ide.core.ui.AptanaNavigator" label="Project"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
+<part id="6"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@f2486b" ratio="0.49944258" ratioLeft="448" ratioRight="449" relationship="4" relative="topLeft">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory>
+<editors>
+<editor factoryID="com.aptana.ide.server.jetty.PortalFactory" id="com.aptana.ide.server.jetty.PortalEditor"/>
+</editors>
+<item active="true" historyLabel="My Aptana" index="0"/>
+</navigationHistory>
+<stickyState>
+<perspective IMemento.internal.id="org.radrails.rails.ui.PerspectiveRails"/>
+</stickyState>
+<input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+<trimItem IMemento.internal.id="com.aptana.ide.intro.StartPageAction"/>
+<trimItem IMemento.internal.id="com.aptana.ide.intro.messaging.AptanaMessenger"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList/>
+</workbench>

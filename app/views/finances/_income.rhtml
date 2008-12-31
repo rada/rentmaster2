@@ -1,0 +1,18 @@
+<table>
+	<tr>
+		<th>Najemnik</th>
+		<th>Nemovitost</th>
+		<th>Predmet</th>
+		<th>Skupina</th>
+		<th>Cena</th>
+	</tr>
+<% for bill in @bills %>			
+	<tr>
+		<td><%= bill.renter.full_name if bill.renter %></td>
+		<td><%= bill.property.name if bill.property %></td>
+		<td><%= bill.object %></td>
+		<td><%= bill.groupp %></td>
+		<td><%= bill.price %></td>
+	</tr>		
+<% end %>
+</table>

@@ -1,0 +1,7 @@
+<%= error_messages_for 'bill' %>
+<%= error_messages_for 'auto_pay' %>
+<%= error_messages_for 'penalty' %>
+
+<%= render :partial => 'bill_form' if params[:bill] %>
+<%= render :partial => 'autopay_form' if params[:auto_pay] %>
+<%= render :partial => 'penalty_form' if params[:penalty] %>

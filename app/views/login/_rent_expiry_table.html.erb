@@ -1,0 +1,14 @@
+<table>
+	<tr>
+		<th><%= get_string(:Renter) %></th>
+		<th><%= get_string(:Rent_end_date) %></th>
+		<th><%= get_string(:Account_balance) %></th>
+	</tr>
+	<% for renter in @renters do %>
+	<tr>
+		<td><%= link_to(renter.full_name, :controller => 'manage_renter', :action => 'renter', :id => renter) %></td>
+		<td><%= MyDate::date_at(renter.end_date) %></td>
+		<td><%= renter.debit[:amount] %></td>
+	</tr>
+	<% end %>
+</table>

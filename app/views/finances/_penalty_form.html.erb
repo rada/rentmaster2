@@ -1,0 +1,17 @@
+<fieldset>
+	<legend>Definovat penále</legend>
+	<% form_tag(:action => 'add_penalty') do %>
+	<p><label for="penalty_name">Název penále</label><br/>
+	<%= text_field 'penalty', 'name' %></p>
+	
+	<p><label for="penalty_after">Aplikovat po každých(x dnech)</label><br/>
+	<%= text_field 'penalty', 'after' %></p>
+	
+	<p><label for="penalty_price">Penále</label><br/>
+	<input type="radio" name="penalty[percent]" value="0" checked="checked"/>Pevná částka
+	<input type="radio" name="penalty[percent]" value="1"/>Procenta z dluhu<br /><br />
+	<%= text_field 'penalty', 'price', :dir => 'right' %></p>
+	
+	<%= submit_tag 'Add' %>
+	<% end %>
+</fieldset>

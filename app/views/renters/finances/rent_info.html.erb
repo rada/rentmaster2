@@ -1,0 +1,78 @@
+<% title(get_string(:Rent_info)) %>
+<h1><%= get_string(:Rent_info) %></h1><br />
+<div class="left">
+	<div class="address" id="actual_rent">
+		<h2><%= get_string(:Rent) %></h2>
+		<table>
+			<tbody>
+				<tr class="back1">
+					<td><b><%= get_string(:Actual_rent) %>:</b></td>
+					<td><%= number_to_currency(@renter.actual_rent.price, :unit => "CZK", :delimiter => " ", :separator => ",", :format => "%n %u") %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<% if @renter.actual_rent.typ == :percept %>
+	<h2><%= get_string(:Rent_percept) %></h2>
+	<table style="width: 100%">
+				<tr>
+					<th><%= get_string(:Item_name2) %></th>
+					<th><%= get_string(:Count) %></th>
+					<th><%= get_string(:Tarif) %></th>
+					<th><%= get_string(:Base) %></th>
+					<th><%= get_string(:Tax) %></th>
+					<th style="width: 30px"><%= get_string(:Price_with_tax) %></th>
+				</tr>
+				<% for accessory in @renter.property.accessories do %>
+				<% if accessory.typ == :accessory %>
+				<tr>
+					<td><%= accessory.name %></td>
+					<td><%= accessory.count %></td>
+					<td><%= accessory.tarif %></td>
+					<td><%= accessory.base %></td>
+					<td><%= accessory.tax %></td>
+					<td style="text-align: right"><%= accessory.base + ((accessory.tax)/100)*(accessory.base) %></td>
+				</tr>
+				<% end #if %>
+				<% end #for %>
+			</table>
+			
+			<table style="width: 100%">
+				<tr>
+					<th><%= get_string(:Service_name2) %></th>
+					<th><%= get_string(:Tarif) %></th>
+					<th><%= get_string(:Base) %></th>
+					<th><%= get_string(:Tax) %></th>
+					<th style="width: 30px"><%= get_string(:Price_with_tax) %></th>
+				</tr>
+				<% for service in @renter.property.services do %>
+				<tr>
+					<td><%= service.name %></td>
+					<td><%= service.tarif %></td>
+					<td><%= service.base %></td>
+					<td><%= service.tax %></td>
+					<td style="text-align: right"><%= service.base + ((service.tax)/100)*(service.base) %></td>
+				</tr>
+				<% end %>
+			</table>
+	<% end %>
+</div>
+<div class="right">
+	<div>
+		<b><%= get_string(:Rent_history) %></b>
+		<table width="100%;">
+			<tr>
+				<th><%= get_string(:Rent) %></th>
+				<th><%= get_string(:From) %></th>
+				<th><%= get_string(:Note) %></th>
+			</tr>
+			<% for rent in @renter.rents do %>
+			<tr>
+				<td><%= number_to_currency(rent.price, :unit => "CZK", :delimiter => " ", :separator => ",", :format => "%n %u") %></td>
+				<td><%= MyDate::date_at(rent.from_date) %></td>
+				<td><%= rent.note %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

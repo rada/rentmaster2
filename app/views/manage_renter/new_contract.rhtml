@@ -1,0 +1,10 @@
+<h1>New contract</h1>
+<textarea cols="50" id="contract_text" name="contract[text]" rows="25">contract</textarea>
+
+<div>
+	<% form_tag ({:action => 'upload_file'}, {:multipart => 'true'}) do %>
+		Smlouva: <br/>
+		<%= file_field_tag 'Smlouva' %>
+		<%= submit_tag 'Upload' %>
+	<% end %>
+</div>

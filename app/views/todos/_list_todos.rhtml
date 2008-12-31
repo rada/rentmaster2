@@ -1,0 +1,14 @@
+<tr>
+	<td><%= MyDate.date_at(list_todos.added) %></th>
+	<td><b><%= list_todos.task %></b></td>
+	<td><%= list_todos.actor %></td>
+	<td><%= MyDate::date_at(list_todos.deadline) %></td>
+	<td><%= list_todos.cost unless list_todos.cost == nil %></td>
+	<td><%= list_todos.property.name unless list_todos.property == nil %></td>
+	<td><%= link_to_remote('edit',
+ 													:update => 'todo_form',
+													:url => {:controller => 'todos', :action => 'edit', :id => list_todos},
+													:complete => "$('task_manager2').show()",
+													:failure => "alert('error')" ) %></td>
+	<td><%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :controller => 'todos', :action => 'destroy', :id => list_todos) %></td>
+</tr>

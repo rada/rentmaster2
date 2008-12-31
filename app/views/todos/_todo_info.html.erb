@@ -1,0 +1,23 @@
+
+<div style="border-bottom: solid thin black; padding: 5px;">
+	<table class="blue" cellspacing="0">
+		<tr>
+			<th><%= get_string(:Deadline) %></th>
+			<th><%= get_string(:Actor) %></th>
+			<th><%= get_string(:Cost) %></th>
+		</tr>
+		<tr class="back0">
+			<td><%= @todo.deadline ? MyDate::date_at(@todo.deadline) : "---" %></td>
+			<td><%= @todo.actor ? @todo.actor : "---" %></td>
+			<td><%= @todo.cost ? 
+							number_to_currency(@todo.cost, :unit => "", :separator => ",", :delimiter => " ", :format => "%n %u") : "---" %></td>
+		</tr>
+	</table>
+	<p><%=h @todo.description %></p>
+	<p><%= link_to_function(image_tag(Settings::DEFAULT_PICS[:hide], :style => "border: none"), "$('info#{@todo.id}').hide();") %>
+	<% if !@todo.fulfilled %>
+	<%= link_to(image_tag(Settings::DEFAULT_PICS[:ok],:title => get_string(:Fulfilled), :style => "border: none"),:action => 'fulfilled', :id => @todo) if @user.typ != :renter %>
+	<% end %>
+	<%= link_to(image_tag(Settings::DEFAULT_PICS[:delete],:title => get_string(:Delete), :style => "border: none"), :action => 'destroy', :id => @todo, :confirm => "#{get_string(:Are_you_sure)}?") if @user.typ != :renter %>
+	</p>
+</div>

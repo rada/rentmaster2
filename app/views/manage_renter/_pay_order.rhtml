@@ -1,0 +1,52 @@
+	<% form_tag(:action => 'add_bill', :id => @renter) do %>
+		<p><label for="bill_object"> Predmet platby </label><br/>
+		<%= text_field 'bill', 'object' %></p>
+		
+		<p><label for="bill_price"> Cena </label><br/>
+		<%= text_field 'bill', 'price' %></p>
+		
+	
+		<%= radio_button('bill', 'category', 'in') %> Prijem
+		<%= radio_button('bill', 'category', 'out') %> Vydaj <br/><br/>
+		
+		<p><label for="bill_group">Skupina:</label>
+		<%= select(:bill, :groupp, Bill::Group ) %></p>
+		
+		<p><label for="bill_deadline"><%= get_string(:Deadline) %></label><br/>
+		<select name="day">
+			<option value="">Den</option>
+			<% 1.upto(31) do |i| %>
+				
+				<%= selected_option_if(Time.now.day == i, :value => i) %>
+				
+			<% end %>
+		</select>
+		
+		<select name="month">
+			<option value="">Mesic</option>
+			<% 1.upto(12) do |i| %>
+				
+				<%= selected_option_if(Time.now.mon == i, :value => i) %>
+				
+			<% end %>
+		</select>
+		<input type="text" value=<%= Time.now.year %> name="year" size="4"><br/>
+		Pravidelne opakovat platbu <input type="checkbox" id="regular_bill" value="no" onchange="$('bill_repeat').toggle();" /><br/>
+		<%= text_field 'bill', 'repeat', {:value => '1/31', :style => "display: none"} %>
+		<%= text_field 'bill', 'renter_id', {:value => @renter.id, :style => "display: none" } %>
+		<%= text_field 'bill', 'property_id', {:value => @renter.property_id, :style => "display: none" } %><br/>
+		<%= submit_tag 'Add bill' %>
+	<% end %>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

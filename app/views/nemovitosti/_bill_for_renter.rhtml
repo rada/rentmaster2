@@ -1,0 +1,1 @@
+<%= collection_select(:bill, :renter_id, Renter.find(:all, :order => "surname"), :id, :full_name, {:prompt => "Vyber nájemníka"}) %>

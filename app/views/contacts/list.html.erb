@@ -1,0 +1,31 @@
+<% title(get_string(:Contacts)) %>
+<%= error_messages_for 'contact' %>
+<h1><%= get_string(:Contacts)%></h1>
+<div class="finances_left">
+	<table class="blue" cellspacing="0">
+		<tr >
+				<% for column in Contact.content_columns %>
+				<th><%= get_string(column.human_name).to_sym %></th>
+				<% end %>
+		</tr>
+		<% bg_color = 0 %>
+		<% for contact in @contacts %>
+		<% bg_color = 1 - bg_color %>
+		<tr class="back<%= bg_color %>">
+			<% for column in Contact.content_columns %>
+			<td><%=h contact.send(column.name) %></td>
+			<% end %>
+			<td><%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :controller => 'contacts', :action => 'delete', :id => contact) %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+<div class="finances_right" >
+	<% form_tag(:action => 'add_contact') do %>
+	<fieldset>
+	<legend><%= get_string(:New_contact) %></legend>
+	<%= render :partial => 'add_form' %>
+	<%= submit_tag get_string(:Add) %>
+	<% end %>
+	</fieldset>
+</div>

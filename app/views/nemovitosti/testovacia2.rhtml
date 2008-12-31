@@ -1,0 +1,84 @@
+<select>
+	<option value="1">jedna</option>
+	<option value="2" selected="selected">dva</option>
+</select>
+
+<%= select(:bills, :group, Bill::Group ) %>
+
+<%= Property.count_by_sql "SELECT COUNT(*) FROM properties" %><br/>
+<%= Date::Month[2][:days] %>
+<select>
+	<option value="">Den</option>
+	<% 1.upto(31) do |i| %>
+		<option value=<%= i %> name="day" ><%= i %></option>
+	<% end %>
+</select>
+
+<select>
+	<option value="">Mesic</option>
+	<% 1.upto(12) do |i| %>
+		<option value=<%= i %> name="month" ><%= i %></option>
+	<% end %>
+</select>
+
+<input type="text" value=<%= Time.now.year%> size="4">
+
+
+		<input id="bill_repeat" name="bill[repeat]" size="30" type="text" value="1/31" />
+		<input id="bill_property_id" name="bill[property_id]" size="30" style="display: none;" type="text" value="1" />
+		<input id="bill_renter_id" name="bill[renter_id]" size="30" style="display: none;" type="text" value="1" />
+--------------------------------------------------------------------------------------------------   <br/>
+<%= link_to_function 'close', "$(1.to_s ).toggle()" %>
+<%= link_to_function "Toggle DIV", "$('foo').toggle()" %>
+
+<%= text_field 'bill', 'added', {:style => "display: none;", :value => Time.now.to_i} %>
+<div id="foo" style="display: none;">
+<!-- Loading Theme file(s) -->
+    <link rel="stylesheet" href="http://www.zapatec.com/website/main/../ajax/zpcal/themes/wood.css" />
+
+<!-- Loading Calendar JavaScript files -->
+    <script type="text/javascript" src="http://www.zapatec.com/website/main/../ajax/zpcal/../utils/zapatec.js"></script>
+    <script type="text/javascript" src="http://www.zapatec.com/website/main/../ajax/zpcal/src/calendar.js"></script>
+<!-- Loading language definition file -->
+    <script type="text/javascript" src="http://www.zapatec.com/website/main/../ajax/zpcal/lang/calendar-en.js"></script>
+
+
+<%= collection_select(:bills, :object, Bill.find(:all), :id, :object, {:prompt => true}, {:onclick => "sel()"}) %>
+
+<%= select(:bill, :renter_id, Renter.find(:all).collect {|p| [ p.name, p.id ] }, {:prompt => 'Select Person'}) %>
+
+<select id="bills_renter_id" name="bills[renter_id]">
+<option value="14">nove dvere</option>
+<option value="15">nove okno</option>
+<option value="18">Rent_122007</option>
+<option value="19" onclick="sel();"> Rent_122007</option>
+<option value="20" onclick = "alert('Huraa!');">Rent_122007</option></select>
+
+<p id = "new_select">new_select</p>
+<a href="#" onclick="sel();">ajax</a>
+<script type="text/javascript">
+	function sel(){
+		new Ajax.Updater('new_select','/nemovitosti/testik');
+	}
+</script>
+
+<p><%= link_to_remote "Update with Javascript Helper", :url =>
+   "/nemovitosti/testik", :update => "new_select" %></p>
+
+
+    <input type="text" id="calendar" name="calendar" />
+    <button id="trigger">...</button>
+    <script type="text/javascript">//<![CDATA[
+      Zapatec.Calendar.setup({
+        firstDay          : 1,
+        range             : [2008.01, 2100.12],
+        electric          : false,
+        inputField        : "calendar",
+        button            : "trigger",
+        ifFormat          : "%d.%m.%Y",
+        daFormat          : "%Y/%m/%d"
+      });
+    //]]></script>
+
+</div>   
+dasd

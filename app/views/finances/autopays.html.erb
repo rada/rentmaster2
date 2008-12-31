@@ -1,0 +1,12 @@
+<% title(get_string(:Autopays)) %>
+<% submenu(Settings::SUBMENU[:finances]) %>
+<h1><%= get_string(:Autopays) %></h1><br />
+<div id="left" class="left">
+	<%= error_messages_for 'auto_pay' %>
+	<%= render :partial => 'autopay_table' %>
+</div>
+<div class="right">
+	<div id="fieldset">
+		<%= render :partial => 'autopay_form' %>
+	</div>
+</div>

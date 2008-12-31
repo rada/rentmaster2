@@ -1,0 +1,7 @@
+if params[:form] == "penalty"
+  page[:left].replace_html :partial => 'penalty_table'
+  page[:fieldset].replace_html :partial => 'penalty_form'
+else
+  page[:left].replace_html :partial => 'autopay_table'
+  page[:fieldset].replace_html :partial => 'autopay_form'
+end

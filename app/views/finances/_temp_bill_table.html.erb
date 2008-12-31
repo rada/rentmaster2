@@ -1,0 +1,21 @@
+<td></td>
+<td></td>
+<td style="text-align: right;"><b><%= get_string(:Paid) %>:</b></td>
+<td colspan="5">
+	<table cellpading="1" cellspacing="1" style="width: 100%">
+		<% for temp_bill in @bill.temp_bills %>
+		<tr>
+			<td style="background-color: #e6e6f8;width: 60px">
+			<%= link_to_function(temp_bill.price, "$('partial_amount#{@bill.id}').value='#{@bill.temp_bills_sum}';new Effect.Highlight('partial_amount#{@bill.id}', {startcolor: '#f98926', endcolor: '#fffffff' }); return false;") %>
+			</td>
+			<td style="background-color: #e6e6f8;width: 68px"><%= temp_bill.penalty if temp_bill.penalty > 0 %></td>
+			<td style="background-color: #e6e6f8;"><%= get_string(:On_day) %>: <%= MyDate::date_at(temp_bill.paid) %></td>
+			<td style="background-color: #e6e6f8;text-align: right;"><b><%= get_string(:Note)%>:</b> <%=h temp_bill.note %></td>
+		</tr>
+		<% end %>
+	</table>
+</td>
+<td><%= link_to_function(get_string(:Hide), "$('paid#{@bill.id}').hide()") %></td>
+<td></td>
+<td></td>
+<td></td>

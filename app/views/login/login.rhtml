@@ -1,0 +1,19 @@
+<div>
+	<fieldset>
+		<legend><%= get_string(:Please_log_in) %></legend>
+		
+		<% form_tag do %>
+		<p><label for="name" class="login"><%= get_string(:Name2) %></label>
+		<%= text_field_tag :name, params[:name] %></p>
+		
+		<p><label for="password" class="login"><%= get_string(:Password) %></label>
+		<%= password_field_tag :password %></p>
+		
+		<p><%= link_to(get_string(:Register_new_user), :action => 'register') %></p>
+		
+		<p><%= submit_tag "Login" %></p>
+		
+		<% end %>
+	</fieldset>
+</div>
+

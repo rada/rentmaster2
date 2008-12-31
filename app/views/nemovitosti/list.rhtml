@@ -1,0 +1,17 @@
+<div style="text-align: right; float: left; margin-left: 5px;">
+	<%= link_to(get_string(:new_property), {:action => 'new'}, {:style => "font-size: 70%; font-align: right'"} ) %>
+</div><br />
+		<% for property in @properties %>
+		<div class="nemovitost">
+			<center>		
+			<div class="foto">
+			<%= link_to image_tag( photo_h(property.photo), :border => "0" ), :action => 'detail', :id => property %>
+			</div>
+			<div class="address">
+				<span style="color: red"><b><%= "(#{get_string(:Closed)})" if property.is_closed %></b></span>
+				<%= address_brief_h(property) %><hr>
+				<%= get_string(:Renters) %>: <%= property.get_actual_renters.size %>
+			</div>
+			</center>
+		</div>	
+		<% end %>

@@ -1,0 +1,49 @@
+<% title(get_string(:Property)) %>
+<% submenu(Settings::SUBMENU[:property]) %>
+<h1><%=h @property.name %> <%= "(#{get_string(:Closed)})" if @property.is_closed %></h1>
+<%= show_warnings(@property.id) if !@property.is_closed %>
+<br/>
+<div class="left" style="border: none">
+	<div id="detail" class="nemovitost-detail">
+	<%= render(:partial => "property", :object => @property) %>
+	</div> 
+</div>
+
+<!------------------------------------------------------------------------------------------------------------------------>
+
+<div class="right" style="border: none">
+	<fieldset class="owner">
+		<legend><%= get_string(:Owner) %></legend>
+		<div id="owner">
+			<% if ((@property.owner_id ) && (@property.owner_id != 0)) %>
+			<p><%= link_to_function(@property.owner.name, "$('owner_info').toggle()") %></p>
+			<div id="owner_info" style="display: none;">
+				<p><%= @property.owner.address %></p>
+				<p><%= get_string(:Tel)%>: <%=h @property.owner.telephone1 %>, <%=h @property.owner.telephone2 %></p>
+				<%= @property.owner.email if @property.owner.email %>
+			</div>
+			<% end %>
+		</div>
+	</fieldset>
+	
+	<fieldset class="owner">
+		<legend><%= get_string(:Administrator) %></legend>
+		<div>
+			<% if ((@property.administrator_id) && (@property.administrator_id != 0)) %>
+			<p><%= link_to_function(@property.administrator.name, "$('admin_info').toggle()") %></p>
+			<div id="admin_info" style="display: none;">
+				<p><%= @property.administrator.address %></p>
+				<p><%= get_string(:Tel)%>: <%=h @property.administrator.telephone1 %>, <%=h @property.administrator.telephone2 %></p>
+				<%= @property.administrator.email if @property.administrator.email %>
+			</div>
+			<% end %>
+		</div>
+	</fieldset>
+	<%= link_to_function( 'Pridat ukol', "$('task_manager').toggle()") %> <br/>
+	<% form_tag({:controller => 'todos', :action => 'add_todo', :id => @property}) do %>
+		<%= render :partial => 'layouts/task_manager' %>
+	<% end %>
+	<div id="todos">
+		<%= render :partial => 'list_todo' %>
+	</div>
+</div>

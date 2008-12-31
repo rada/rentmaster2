@@ -1,0 +1,33 @@
+<table class="blue" cellspacing="0" style="width: 100%">
+	<tr>
+		<th>Nazev</th>
+		<th>Cena</th>
+		<th><%= get_string(:Count) %></th>
+		<th></th>
+	</tr>
+	<% background_no = 0 %>
+	<% for fitting in @property.fittings %>
+	<% background_no = 1 - background_no %>
+	<tr class="back<%= background_no %>" id="fitting<%= fitting.id %>">
+		<td><%= link_to_remote fitting.name,
+				:before => "$('indicator"+fitting.id.to_s+"').show()",
+				:url => {:action => 'fitting_detail', :id => fitting.id.to_s },
+				:failure => "alert('Error occured')",
+				:complete => "$('indicator"+fitting.id.to_s+"').hide()" %>
+		</td>
+		<td><%= fitting.price %></td>
+		<td><%= fitting.count %></td>
+		<td>
+			<%= link_to_remote(image_tag(Settings::DEFAULT_PICS[:edit], {:style => "border: none", :title => get_string(:Edit)}),
+												 :url => {:controller => 'nemovitosti', :action => 'show_fitting_edit_form', :id => fitting},
+												 :before => "$('indicator"+fitting.id.to_s+"').show()",
+												 :update => "add_fitting",
+												 :failure => "alert('Error')",
+												 :complete => "$('add_fitting').show(); $('indicator"+fitting.id.to_s+"').hide()") if request.parameters[:action] != 'show_data' %>
+			<%= link_to image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none", :title => get_string(:delete)), { :action => 'destroy_fitting', :id => fitting }, :confirm => 'Are you sure?', :method => :post %>
+		</td>
+		<td style="width: 20px"><img src="/images/ajax_loaders/ajax1.gif" id=<%= "indicator"+fitting.id.to_s %> style="display: none;"/></td>
+		</tr>
+	<tr class="back<%= background_no %>"><td colspan="4" id=<%= fitting.id.to_s %> style="display: none"></td></tr>
+	<% end %>
+</table>

@@ -1,0 +1,30 @@
+<fieldset>
+			<legend><%= get_string(:Graph) %></legend>
+			<p><%= get_string(:Show) %>:</p>
+			<p>
+				<select name="graph_settings[month]">
+				<% 1.upto(12) do |month|%>
+				<%= selected_option_if(Time.now.mon == month, {:value => month, :name => get_string(MyDate::Month[month][:name]).to_sym }) %>
+				<% end %>
+				</select>
+				<select name="graph_settings[year]">
+					<% 2000.upto(Time.now.year + 5) do |year| %>
+					<%= selected_option_if(year == Time.now.year, {:value => year}) %>
+					<% end %>
+				</select>
+			</p>
+			<hr/>
+			<p><%= get_string(:Income) %>:</p>
+			<p><label for="expected">
+			<input id="expected" type="checkbox" name="graph_settings[lines]" value="expected" checked="checked" onclick="selectGraphs()"/><%= get_string(:Expected) %></label></p>
+			
+			<p><label for="real">	
+			<input id="real" type="checkbox" name="graph_settings[lines]" value="real" checked="checked" onclick="selectGraphs()"/><%= get_string(:Real) %></label></p>
+			
+			<p><label for="net">
+			<input id="net" type="checkbox" name="graph_settings[lines]" value="net" checked="checked" onclick="selectGraphs()"/><%= get_string(:Net) %></label></p>	
+			
+			<hr/>
+			<p style="text-align: center;"><%= submit_tag get_string(:Show), :onclick => "$('expected').checked=true;$('real').checked=true;$('net').checked=true" %></p>
+			<p style="text-align: center;"><img style="display: none;" src="/images/ajax_loaders/ajax_blue_line.gif" id="ajax_loader_line"></p>
+		</fieldset>

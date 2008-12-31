@@ -1,0 +1,16 @@
+<div class="left">
+	<table>
+		<tr>
+			<th>Profese</th>
+			<th>Contact</th>
+		</tr>
+		<% for contact in @contacs %>
+		<tr>
+			<td><%= contact.profesion %></td>
+			<td><%= contact.name %></td>
+			<td><%= contact.telephone %></td>
+		</tr>
+	</table>
+</div>
+
+<div class="right"></div>

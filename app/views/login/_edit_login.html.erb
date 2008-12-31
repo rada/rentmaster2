@@ -1,0 +1,25 @@
+<h2><%= get_string(:Change_login) %></h2>
+<fieldset>
+			<legend><%= get_string(:Change_login) %></legend>
+			<% form_tag(:action => 'update_login') do %>
+		
+			<h3><%= get_string(:User) %>: <%= @user.name %></h3>
+			<%= hidden_field 'user', 'name', :size => 15 %></p>
+			
+			<p><b><%= get_string(:Password) %>:</b></p>
+			<p><label for="old_password" class="login">*<%= get_string(:Old) %></label>
+			<%= password_field_tag :old_password, '', {:size => 40} %></p>
+			
+			<p><label for="user_password" class="login"><%= get_string(:New) %></label>
+			<%= password_field :user, :password, :size => 40 %></p>
+			
+			<p><label for="user_password_confirmation" class="login"><%= get_string(:Confirm) %></label>
+			<%= password_field :user, :password_confirmation, :size => 40 %></p>
+			
+			<%= submit_tag get_string(:Update_user), :class => 'submit'%>
+			<hr/>
+			<p style="font-size: 80%; color: grey">
+				*<%= get_string(:Leave_blank_when_changing_renters_password) %>
+			
+			<% end %>
+</fieldset>

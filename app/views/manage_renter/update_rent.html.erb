@@ -1,0 +1,35 @@
+<h2><%= get_string(:Already_generated_bills) %></h2>
+<div class="left">
+	<% form_tag(:controller => '/finances', :action => 'delete_bills', :id => @renter.id) do %>
+	<p><%= get_string(:These_bills_were_generted_before_rent_change_Choose_what_to_do) %></p>
+	<p><%= get_string(:Selected_bills_will_be_deleted) %>:</p>
+	<table cellpadding="1" cellspacing="1">
+		<tr>
+			<th></th>
+			<th><%= get_string(:Object) %></th>
+			<th><%= get_string(:Price) %></th>
+			<th><%= get_string(:Penalty) %></th>
+			<th><%= get_string(:Deadline) %></th>
+		</tr>
+		<% for bill in @generated_bills %>
+		<tr id="bill<%= bill.id %>">
+			<td><input type="checkbox" name="delete[]" value="<%= bill.id %>" /></td>
+			<td><%= bill.object %></td>
+			<td><%= bill.price %></td>
+			<td <%= "id='penalty#{bill.id}'"%>><%= link_to_remote(number_with_precision(bill.penalty_total,2),
+																														:before => "$('loader#{bill.id}').show()",
+																														:update => 'penalties'+bill.id.to_s,
+																														:url => {:controller => 'finances', :action => 'show_penalty_history', :id => bill.id},
+																														:complete => "$('penalties#{bill.id}').show();$('loader#{bill.id}').hide()",
+																														:failure => "alert('error')")  if (bill.deadline < MyDate.today) %></td>
+			<td><%= MyDate::date_at(bill.deadline) %></td>
+			<td><span <%= "id='loader#{bill.id}'" %> style="display: none"><img src="/images/ajax_loaders/ajax_blue.gif" /></span></td>
+		</tr>
+		<tr>	
+			<td colspan="5"  <%= "id='penalties#{bill.id}'" %>></td>
+		</tr>
+		<% end %>
+	</table>
+	<p style="text-align: right;"><%= submit_tag get_string(:Continue) %></p>
+	<% end %>
+</div>

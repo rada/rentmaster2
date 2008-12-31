@@ -1,0 +1,16 @@
+<table class = "purple" style="width: 800px;">
+	<tr>
+		<th><%= get_string(:Title) %></th>
+		<th><%= get_string(:Task) %></th>
+		<th><%= get_string(:Belongs_to) %></th>
+	</tr>
+	
+	<% for todo in @todos %>
+		<tr <%= "id='task#{todo.id}'" %>>
+			<td><%= todo.task %></td>
+			<td><%= todo.description %></td>
+			<td><%= todo.property.name if todo.property %></td>
+		</tr>
+		<tr <%= "id='info#{todo.id}'" %>></tr>
+	<% end %>
+</table>

@@ -1,0 +1,6 @@
+<% for renter in @renters do%>
+	<div>
+		<%= renter.full_name %>
+		<%= link_to 'info', :action => 'renter', :controller => 'manage_renter', :id => renter.id %>
+	</div>
+<% end %>

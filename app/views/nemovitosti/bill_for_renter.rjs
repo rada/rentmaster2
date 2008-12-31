@@ -1,0 +1,2 @@
+page[:payment].replace_html :partial => 'bill_for_renter'
+page[:payment].visual_effect :appear

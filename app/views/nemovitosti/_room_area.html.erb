@@ -1,0 +1,36 @@
+<table class="blue" cellspacing="0" style="width: 100%">
+	<tr>
+		<th><%= get_string(:Room_name) %></th>
+		<th><%= get_string(:Area_total) %></th>
+		<th><%= get_string(:Area_chargable) %></th>
+		<th><%= get_string(:Area_for_UT) %></th>
+		<th><%= get_string(:Area_for_TUV) %></th>
+		<th></th><th></th>
+	</tr>
+	<% background = 0 %>
+<% if request.parameters[:action] == 'fittings' %>
+	<% for room_area in @property.room_areas_sorted do %>
+	<% background = 1 - background %>
+	<tr class="back<%= background %>">
+		<td><%= get_string(room_area.room.name.to_sym) %><input type="hidden" name="rooms[]" value="<%= room_area.id %>"/> </td>
+		<td style="text-align: center;"><input class="blue" type="text" size="6" value="<%= room_area.total %>" name="<%= room_area.id %>[total]" /> </td>
+		<td style="text-align: center;"><input class="blue" type="text" size="6" value="<%= room_area.chargable %>" name="<%= room_area.id %>[chargable]" /></td>
+		<td style="text-align: center;"><input class="blue" type="text" size="6" value="<%= room_area.UT %>" name="<%= room_area.id %>[UT]" /></td>
+		<td style="text-align: center;"><input class="blue" type="text" size="6" value="<%= room_area.TUV %>" name="<%= room_area.id %>[TUV]" /></td>
+		<td>m<sup>2</sup></td>
+		<td><%= link_to(image_tag(Settings::DEFAULT_PICS[:delete], :style => "border: none"), :action => 'delete_room', :id => room_area) %></td>
+	</tr>
+	<% end %>
+<% else %>
+	<% for room_area in @property.room_areas_sorted do %>
+	<% background = 1 - background %>
+	<tr class="back<%= background %>">
+		<td style="text-align: left;"><%= get_string(room_area.room.name.to_sym) %></td>
+		<td style="text-align: right;"><%= room_area.total %></td>
+		<td style="text-align: right;"><%= room_area.chargable %></td>
+		<td style="text-align: right;"><%= room_area.UT %></td>
+		<td style="text-align: right;"><%= room_area.TUV %></td>
+	</tr>
+	<% end %>
+<% end %>
+</table>

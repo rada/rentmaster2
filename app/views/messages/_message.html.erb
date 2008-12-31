@@ -1,0 +1,8 @@
+<div id="from" class="message_from">
+		<b><%= get_string(:From) %>:</b>
+		<%= @message.from %><br />
+		<b><%= get_string(:Subject) %>:</b> <%= @message.subject %>
+	</div>
+	<br />
+	<div id="from" class="message_content"><%= @message.content.gsub("\n", "<br />") %></div>
+</div>

@@ -1,0 +1,8 @@
+<div class="menu_small" style="color: #80ff80;">
+		<%= @renter.full_name %>
+</div>
+<div style="text-align: center;">
+	<%= link_to get_string(:Property_info), :controller => 'renters/renter', :action => 'my_accommodation', :id => @renter %> | 
+	<%= link_to get_string(:Fittings), :controller => 'renters/renter', :action => 'fittings', :id => @renter %> | 
+	<%= link_to get_string(:Todos), :controller => 'renters/renter', :action => 'todos', :id => @renter %> | 
+</div>

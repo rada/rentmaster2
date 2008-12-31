@@ -1,0 +1,76 @@
+/*  body and font definitions */
+html {
+padding:0px;
+margin:0px;
+}
+body {
+background-color: #e1ddd9;
+font-size: 12px;
+font-family: Verdana, Arial, SunSans-Regular, Sans-Serif;
+color:#564b47;
+padding:0px;
+margin:0px;
+}
+p, h2, pre {
+margin: 0px;
+padding: 5px 20px 5px 20px;
+}
+a {
+color: #ff66cc;
+font-size: 11px;
+background-color:transparent;
+text-decoration: none;
+}
+pre {
+color: #564b47;
+font-size: 11px;
+background-color:transparent;
+font-family: Courier, Monaco, Monospace;
+}
+.alignright {
+margin-top: 0;
+text-align: right;
+font-size: 10px;
+}
+h2 {
+font-size:14px;
+padding-top:10px;
+text-transform:uppercase;
+color: #564b47;
+background-color: transparent;
+}
+h1 {
+font-size: 11px;
+text-transform:uppercase;
+text-align: right;
+color: #564b47;
+background-color: #90897a;
+padding:5px 15px;
+margin:0px
+}
+strong {
+font-size: 13px;
+}
+/*  positioning-layers static and absolute */
+#left {
+position: absolute;
+left: 0px;
+width: 190px;
+color: #564b47;
+margin: 0px;
+padding: 0px;
+}
+#content {
+margin: 0px 190px 0px 190px;
+border-left: 2px solid #564b47;
+border-right: 2px solid #564b47;
+padding: 0px;
+background-color: #ffffff;
+}
+#right {
+position: absolute;
+right: 0px;
+width: 190px;
+color: #564b47;
+margin: 0px;
+padding: 0px;

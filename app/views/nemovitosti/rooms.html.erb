@@ -1,0 +1,16 @@
+<% form_tag(:controller => 'nemovitosti', :action => "edit_room" ) do %>
+<% 1.upto(@property.rooms) do |room_int| %>
+	<fieldset>
+		<legend><%= get_string(:Room) %> <%= room_int %></legend>
+		
+		<p><label for="room<%= room_int %>"><%= get_string(:Name) %></label>
+		<input id="room<%= room_int %>" name="room<%= room_int %>[name]" type="text"  /></p>
+		
+		<p><%= get_string(:Housed) %>:</p>
+		<% for renter in @property.renters %>
+		<p><input type="radio" name="room<%= room_int %>[renter]<%= renter.id %>" value="<%= renter.id%>"/><%= renter.full_name %></p>
+		<% end %>
+		
+		
+	</fieldset>
+<% end %>

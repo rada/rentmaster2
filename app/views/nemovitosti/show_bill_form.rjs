@@ -1,0 +1,1 @@
+page[:payment].replace_html :partial => 'finances/bill_form'

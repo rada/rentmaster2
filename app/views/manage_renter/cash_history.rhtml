@@ -1,0 +1,26 @@
+
+
+<div id="partial_history">
+	<table cellpadding="4">
+		<tr>
+			<th>Stav</th>
+			<th>Predmet platby</th>
+			<th>Cena</th>
+			<th>Skupina</th>
+			<th>Deadline</th>
+			<th>Pridana</th>
+		</tr>
+		<% for bill in @bills do %>
+		<tr>
+			<%= bill.check_status %>
+			<td><%= bill.object %></td>
+			<td><%= bill.price %></td>
+			<td><%= bill.groupp %></td>
+			<td><%= MyDate.date_at(bill.deadline.to_i) %></td>
+			<td><%= MyDate.date_at(bill.added.to_i) %></td>
+		</tr>
+		<% end %>	
+	</table>
+	
+	
+</div>

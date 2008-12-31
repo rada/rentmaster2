@@ -1,0 +1,27 @@
+<p style="float: right; padding-rigth: 5px; font-size: 70%">
+	<%= link_to('CZ', :controller => request.parameters[:controller], :action => request.parameters[:action], :id => request.parameters[:id], :lang => 'cz') %> | 
+	<%= link_to('EN', :controller => request.parameters[:controller], :action => request.parameters[:action], :id => request.parameters[:id], :lang => 'en') %> &nbsp
+</p>
+<br /><br />
+|
+<%= link_to get_string(:My_info), :controller => 'renter', :action => 'my_info', :id => @renter.id %>
+|
+<%= link_to get_string(:My_accommodation), :controller => 'renter', :action => 'my_accommodation', :id => @renter.id %>
+|
+<%= link_to get_string(:Rent_info), :controller => '/renters/finances', :action => 'rent_info' %>
+|
+<%= link_to get_string(:Finances_info), :controller => 'renters/finances', :action => 'bills', :id => @renter.id, :show => 'month' %>
+|
+<% if @user.get_unread_messages.size == 0 %>
+<%= link_to get_string(:My_messages), :controller => '/messages', :action => 'list', :id => @renter.id %>
+<% else %>
+<%= link_to get_string(:My_messages), :controller => '/messages', :action => 'list', :id => @renter.id %> <%= "(#{@user.get_unread_messages.size})" %>
+<% end %>
+|
+<% if @user %>
+<div id="login" style="margin-right: 5px">
+	<p style="text-align: right; font-size: 70%; color: #464646">
+	<%= link_to get_string(:Logout), :controller => '/login', :action => 'logout' %>
+	</p>
+</div>
+<% end %>

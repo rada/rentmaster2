@@ -1,0 +1,1 @@
+page["bill#{@bill.id}"].replace_html :partial => 'bill_info'
